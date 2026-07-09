@@ -1,0 +1,244 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  background: #000;
+  color: #fff;
+}
+
+body {
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  overflow-x: hidden;
+}
+
+.page {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+  animation: pageIn 0.8s ease-out both;
+}
+
+.shirts {
+  position: absolute;
+  top: 5.5vh;
+  left: 5.5vw;
+  display: flex;
+  gap: 2.2vw;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.shirt {
+  width: clamp(105px, 10vw, 170px);
+  height: auto;
+  object-fit: contain;
+  filter: contrast(1.05);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  animation: fadeDown 0.8s ease-out both;
+}
+
+.shirt-black {
+  animation-delay: 0.1s;
+}
+
+.shirt:hover {
+  transform: scale(1.05);
+}
+
+.hero {
+  position: absolute;
+  top: 26vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(64vw, 860px);
+  text-align: center;
+  z-index: 3;
+  animation: fadeUp 0.9s ease-out 0.15s both;
+}
+
+.hero-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+  mix-blend-mode: screen;
+}
+
+.instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: clamp(8px, 1.3vh, 16px);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-size: clamp(13px, 1.15vw, 18px);
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.instagram:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+.insta-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+  color: #fff;
+  text-decoration: none;
+}
+
+.bottom-left {
+  position: absolute;
+  left: 5.2vw;
+  bottom: 11vh;
+  width: min(22vw, 230px);
+  z-index: 2;
+  animation: fadeUp 0.9s ease-out 0.3s both;
+}
+
+.scars-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+  mix-blend-mode: screen;
+}
+
+.bottom-right {
+  position: absolute;
+  right: 6vw;
+  bottom: 13vh;
+  color: #fff;
+  font-size: clamp(13px, 1.15vw, 18px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 2;
+  animation: fadeUp 0.9s ease-out 0.38s both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero {
+  animation-name: heroIn;
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 18px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 760px) {
+  .page {
+    min-height: 100svh;
+  }
+
+  .shirts {
+    top: 4.5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 6vw;
+  }
+
+  .shirt {
+    width: min(34vw, 145px);
+  }
+
+  .hero {
+    top: 31vh;
+    width: 88vw;
+  }
+
+  .instagram {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .bottom-left {
+    left: 5vw;
+    bottom: 7vh;
+    width: 39vw;
+    max-width: 165px;
+  }
+
+  .bottom-right {
+    right: 5vw;
+    bottom: 8vh;
+    max-width: 45vw;
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: right;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero {
+    top: 34vh;
+    width: 92vw;
+  }
+
+  .shirts {
+    top: 5vh;
+  }
+
+  .shirt {
+    width: 36vw;
+  }
+
+  .bottom-left {
+    width: 42vw;
+  }
+
+  .bottom-right {
+    bottom: 7.5vh;
+    font-size: 10px;
+  }
+}
