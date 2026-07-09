@@ -153,9 +153,9 @@ body {
     transform: translateX(-50%);
     gap: 6vw;
   }
-  .shirt { width: min(35vw, 155px); }
+  .shirt { width: min(29vw, 122px); }
   .hero { top: 49%; width: 88vw; }
-  .instagram { margin-top: 10px; font-size: 13px; }
+  .instagram { margin-top: 10px; font-size: 13px; padding: 10px 18px; }
   .insta-icon { width: 17px; height: 17px; }
   .bottom-left { left: 5vw; bottom: 7vh; width: 38vw; max-width: 155px; }
   .bottom-right { right: 5vw; bottom: 8vh; max-width: 45vw; font-size: 11px; line-height: 1.2; text-align: right; letter-spacing: 0.06em; }
@@ -164,7 +164,7 @@ body {
 @media (max-width: 430px) {
   .hero { top: 50%; width: 92vw; }
   .shirts { top: 5vh; }
-  .shirt { width: 38vw; }
+  .shirt { width: 30vw; max-width: 118px; }
   .bottom-left { width: 41vw; }
   .bottom-right { bottom: 7.5vh; font-size: 10px; }
 }
