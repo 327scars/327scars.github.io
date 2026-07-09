@@ -4,8 +4,7 @@
   padding: 0;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   min-height: 100%;
   background: #000;
@@ -28,24 +27,32 @@ body {
 
 .shirts {
   position: absolute;
-  top: 5.5vh;
-  left: 5.5vw;
+  top: 4.5vh;
+  left: 4.6vw;
   display: flex;
-  gap: 2.2vw;
+  gap: 2.1vw;
   align-items: flex-start;
-  z-index: 2;
+  z-index: 20;
 }
 
 .shirt {
-  width: clamp(105px, 10vw, 170px);
+  width: clamp(125px, 11.4vw, 205px);
   height: auto;
   object-fit: contain;
-  filter: contrast(1.05);
+  filter: contrast(1.04);
   transition: transform 0.25s ease, opacity 0.25s ease;
   animation: fadeDown 0.8s ease-out both;
+  display: block;
+}
+
+.shirt-white {
+  z-index: 1;
 }
 
 .shirt-black {
+  z-index: 4;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.05);
   animation-delay: 0.1s;
 }
 
@@ -55,13 +62,14 @@ body {
 
 .hero {
   position: absolute;
-  top: 26vh;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: min(64vw, 860px);
+  transform: translate(-50%, -50%);
+  width: min(62vw, 860px);
   text-align: center;
-  z-index: 3;
-  animation: fadeUp 0.9s ease-out 0.15s both;
+  z-index: 5;
+  animation: heroIn 0.9s ease-out 0.15s both;
+  pointer-events: none;
 }
 
 .hero-logo {
@@ -74,42 +82,42 @@ body {
 .instagram {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
-  margin-top: clamp(8px, 1.3vh, 16px);
+  margin-top: clamp(8px, 1.2vh, 15px);
   color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Arial Black", Impact, Haettenschweiler, sans-serif;
   font-weight: 900;
-  font-size: clamp(13px, 1.15vw, 18px);
-  letter-spacing: 0.08em;
+  font-size: clamp(13px, 1.05vw, 17px);
+  letter-spacing: 0.055em;
   text-decoration: underline;
+  text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 999;
+  pointer-events: auto;
+  cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .instagram:hover {
   transform: translateY(-2px);
-  opacity: 0.8;
+  opacity: 0.86;
 }
 
 .insta-icon {
   width: 18px;
   height: 18px;
-  border-radius: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 1;
-  background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
-  color: #fff;
-  text-decoration: none;
+  display: inline-block;
+  flex: 0 0 auto;
 }
 
 .bottom-left {
   position: absolute;
   left: 5.2vw;
-  bottom: 11vh;
-  width: min(22vw, 230px);
+  bottom: 8.5vh;
+  width: min(20vw, 215px);
   z-index: 2;
   animation: fadeUp 0.9s ease-out 0.3s both;
 }
@@ -118,13 +126,12 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  mix-blend-mode: screen;
 }
 
 .bottom-right {
   position: absolute;
-  right: 6vw;
-  bottom: 13vh;
+  right: 4.5vw;
+  bottom: 11vh;
   color: #fff;
   font-size: clamp(13px, 1.15vw, 18px);
   letter-spacing: 0.08em;
@@ -133,112 +140,31 @@ body {
   animation: fadeUp 0.9s ease-out 0.38s both;
 }
 
-@keyframes pageIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeDown {
-  from {
-    opacity: 0;
-    transform: translateY(-18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero {
-  animation-name: heroIn;
-}
-
-@keyframes heroIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 18px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
+@keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes heroIn { from { opacity: 0; transform: translate(-50%, calc(-50% + 18px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
 
 @media (max-width: 760px) {
-  .page {
-    min-height: 100svh;
-  }
-
+  .page { min-height: 100svh; }
   .shirts {
-    top: 4.5vh;
+    top: 4.6vh;
     left: 50%;
     transform: translateX(-50%);
     gap: 6vw;
   }
-
-  .shirt {
-    width: min(34vw, 145px);
-  }
-
-  .hero {
-    top: 31vh;
-    width: 88vw;
-  }
-
-  .instagram {
-    margin-top: 10px;
-    font-size: 13px;
-  }
-
-  .bottom-left {
-    left: 5vw;
-    bottom: 7vh;
-    width: 39vw;
-    max-width: 165px;
-  }
-
-  .bottom-right {
-    right: 5vw;
-    bottom: 8vh;
-    max-width: 45vw;
-    font-size: 11px;
-    line-height: 1.2;
-    text-align: right;
-    letter-spacing: 0.06em;
-  }
+  .shirt { width: min(35vw, 155px); }
+  .hero { top: 49%; width: 88vw; }
+  .instagram { margin-top: 10px; font-size: 13px; }
+  .insta-icon { width: 17px; height: 17px; }
+  .bottom-left { left: 5vw; bottom: 7vh; width: 38vw; max-width: 155px; }
+  .bottom-right { right: 5vw; bottom: 8vh; max-width: 45vw; font-size: 11px; line-height: 1.2; text-align: right; letter-spacing: 0.06em; }
 }
 
 @media (max-width: 430px) {
-  .hero {
-    top: 34vh;
-    width: 92vw;
-  }
-
-  .shirts {
-    top: 5vh;
-  }
-
-  .shirt {
-    width: 36vw;
-  }
-
-  .bottom-left {
-    width: 42vw;
-  }
-
-  .bottom-right {
-    bottom: 7.5vh;
-    font-size: 10px;
-  }
+  .hero { top: 50%; width: 92vw; }
+  .shirts { top: 5vh; }
+  .shirt { width: 38vw; }
+  .bottom-left { width: 41vw; }
+  .bottom-right { bottom: 7.5vh; font-size: 10px; }
 }
