@@ -3,30 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SCARS 327</title>
-  <meta name="description" content="SCARS 327 — boutique bientôt disponible." />
+  <title>scars327</title>
+  <meta name="description" content="scars327 — boutique bientôt disponible." />
+  <meta property="og:title" content="scars327" />
+  <meta property="og:description" content="Boutique bientôt disponible." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/site-logo.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="page">
-    <section class="shirts" aria-label="Aperçu des t-shirts">
-      <img src="assets/white-shirt.png" alt="T-shirt blanc Scars 327" class="shirt shirt-white" />
-      <img src="assets/black-shirt.png" alt="T-shirt noir Scars 327" class="shirt shirt-black" />
+  <div class="intro" aria-hidden="true">
+    <img src="assets/site-logo.png" alt="" class="intro-logo" />
+  </div>
+
+  <main>
+    <section class="page page-home" aria-label="Accueil Scars 327">
+      <section class="hero">
+        <img src="assets/hero-pachave.jpg" alt="327 PACHAVE PAS!" class="hero-logo" />
+        <a class="instagram" href="https://www.instagram.com/327scars?igsh=MW13dHhydmlmdnVoeQ%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir Instagram 327SCARS">
+          <img class="insta-icon" src="assets/instagram-logo.svg" alt="" aria-hidden="true" />
+          <span>SUIVRE @327SCARS</span>
+        </a>
+      </section>
+
+      <section class="bottom-left" aria-label="Slogan Scars Fits Everybody">
+        <img src="assets/scars-fits-clean.png" alt="SCARS FITS EVERYBODY" class="scars-logo" />
+      </section>
+
+      <p class="bottom-right">BOUTIQUE BIENTÔT DISPO...</p>
     </section>
 
-    <section class="hero" aria-label="Accueil Scars 327">
-      <img src="assets/hero-pachave.jpg" alt="327 PACHAVE PAS!" class="hero-logo" />
-      <a class="instagram" href="https://www.instagram.com/scars327/" target="_blank" rel="noopener noreferrer" aria-label="Instagram SCARS327">
-        <img class="insta-icon" src="assets/instagram-logo.svg" alt="Instagram" />
-        <span>@SCARS327</span>
-      </a>
+    <section class="page page-products" aria-label="Aperçu des t-shirts Scars 327">
+      <div class="product-wrap">
+        <img src="assets/white-shirt.png" alt="T-shirt blanc Scars 327" class="product-shirt product-white" />
+        <img src="assets/black-shirt.png" alt="T-shirt noir Scars 327" class="product-shirt product-black" />
+      </div>
     </section>
-
-    <section class="bottom-left" aria-label="Slogan Scars Fits Everybody">
-      <img src="assets/scars-fits-clean.png" alt="SCARS FITS EVERYBODY" class="scars-logo" />
-    </section>
-
-    <p class="bottom-right">BOUTIQUE BIENTÔT DISPO...</p>
   </main>
 </body>
 </html>
