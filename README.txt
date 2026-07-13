@@ -1,5 +1,4 @@
-SCARS327 v36
-- Monogrammes retirés des fonds des visuels t-shirts
-- Monogrammes conservés autour des t-shirts uniquement
-- Grille du monogramme mieux coordonnée/centrée sur les pages produits
-- Monogramme sur fond noir téléphone légèrement moins visible
+SCARS327 v37
+- Fond autour des t-shirts rendu transparent dans les images
+- Fond blanc téléphone uniformisé
+- Monogramme sur fond blanc téléphone légèrement plus foncé
