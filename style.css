@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 * {
   box-sizing: border-box;
   margin: 0;
@@ -235,4 +236,285 @@ main {
   .bottom-right { bottom: 7.5vh; font-size: 10px; }
   .product-page { padding: 3.5vh 2vw; }
   .product-shirt { width: 98vw; max-height: 95svh; }
+}
+
+/* Access screen: DVD TOUCH HERE + pixel login sequence before the gold logo animation */
+
+.access-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: block;
+  overflow: hidden;
+  background: #000;
+  transition: opacity 0.52s ease, visibility 0.52s ease;
+}
+
+.touch-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: min(76vw, 340px);
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--dvd-color, rgba(255, 255, 255, 0.68));
+  background: rgba(0, 0, 0, 0.94);
+  color: var(--dvd-color, rgba(255, 255, 255, 0.62));
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: clamp(22px, 5vw, 34px);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--dvd-color, #fff) 16%, transparent),
+    0 0 26px color-mix(in srgb, var(--dvd-color, #fff) 18%, transparent);
+  animation: touchBlink 1.95s ease-in-out infinite;
+  will-change: transform, color, border-color;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-box:active {
+  filter: brightness(1.35);
+}
+
+.login-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 740px);
+  transform: translate(-50%, -50%) scale(0.99);
+  display: none;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  opacity: 0;
+  color: #fff;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  image-rendering: pixelated;
+}
+
+.login-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.74fr) minmax(250px, 1.2fr);
+  align-items: center;
+  gap: 16px;
+}
+
+.login-label {
+  color: rgba(255, 255, 255, 0.90);
+  font-size: clamp(10px, 1.15vw, 14px);
+  line-height: 1.2;
+  text-align: right;
+  text-transform: none;
+  letter-spacing: -0.05em;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.72), 0 0 18px rgba(255,255,255,0.08);
+  white-space: nowrap;
+}
+
+.login-input {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: rgba(0,0,0,0.88);
+  color: rgba(255,255,255,0.94);
+  border: 1px solid rgba(255,255,255,0.78);
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.22),
+    inset -1px -1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px rgba(0,0,0,0.80),
+    0 0 22px rgba(255,255,255,0.05);
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: none;
+  font-size: clamp(8px, 1.02vw, 13px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.login-input.is-active {
+  border-color: rgba(255,255,255,0.96);
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.32),
+    inset -1px -1px 0 rgba(255,255,255,0.12),
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 0 24px rgba(255,255,255,0.16);
+}
+
+.field-value {
+  display: inline-block;
+  color: rgba(255,255,255,0.96);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.86);
+}
+
+.typing-caret {
+  display: none;
+  width: 0.7em;
+  height: 1.15em;
+  margin-left: 0.16em;
+  background: rgba(255,255,255,0.88);
+  animation: caretBlink 0.58s step-end infinite;
+  flex: 0 0 auto;
+}
+
+.login-input.is-active .typing-caret {
+  display: inline-block;
+}
+
+.shop-open-button {
+  justify-self: center;
+  margin-top: 4px;
+  min-width: min(72vw, 300px);
+  min-height: 42px;
+  padding: 0 24px;
+  border: 2px solid #111;
+  background: #bfbfb7;
+  color: rgba(22,22,22,0.92);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: clamp(9px, 1.18vw, 13px);
+  line-height: 1;
+  text-transform: lowercase;
+  letter-spacing: -0.05em;
+  cursor: pointer;
+  box-shadow:
+    inset 3px 3px 0 rgba(255,255,255,0.78),
+    inset -3px -3px 0 rgba(0,0,0,0.36),
+    0 4px 0 #060606;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.shop-open-button:hover,
+.shop-open-button.is-hovered {
+  background: #d0d0c7;
+}
+
+.shop-open-button.is-pressed {
+  transform: translateY(3px);
+  box-shadow:
+    inset 2px 2px 0 rgba(255,255,255,0.56),
+    inset -2px -2px 0 rgba(0,0,0,0.38),
+    0 1px 0 #060606;
+}
+
+.fake-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 36px;
+  z-index: 10002;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(50vw, 58vh, 0);
+  transition: transform 0.42s cubic-bezier(.21,.82,.22,1), opacity 0.12s ease;
+  background: url("assets/cursor-arrow.svg") center / contain no-repeat;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.55));
+  image-rendering: pixelated;
+  transform-origin: 3px 3px;
+}
+
+.fake-cursor.is-hand {
+  width: 28px;
+  height: 36px;
+  background-image: url("assets/cursor-hand.svg");
+}
+
+.fake-cursor.is-hidden {
+  opacity: 0 !important;
+}
+
+body.cursor-ready .fake-cursor {
+  opacity: 1;
+}
+
+body.access-login .touch-box {
+  display: none;
+}
+
+body.access-login .login-panel {
+  display: grid;
+  animation: loginPanelIn 0.35s ease-out forwards;
+}
+
+body.access-done .access-screen {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* The gold logo animation starts only after the access sequence. */
+.intro {
+  opacity: 0;
+  visibility: hidden;
+  animation: none;
+}
+
+.intro-logo {
+  opacity: 0;
+  animation: none;
+}
+
+body.show-intro .intro {
+  opacity: 1;
+  visibility: visible;
+  animation: introOut 2.15s ease forwards;
+}
+
+body.show-intro .intro-logo {
+  animation: introLogo 1.85s ease both;
+}
+
+body:not(.show-intro) .hero,
+body:not(.show-intro) .bottom-left,
+body:not(.show-intro) .bottom-right {
+  opacity: 0;
+  animation: none;
+}
+
+body.show-intro .hero {
+  animation: heroIn 0.9s ease-out 1.9s both;
+}
+
+body.show-intro .bottom-left {
+  animation: fadeUp 0.85s ease-out 2.05s both;
+}
+
+body.show-intro .bottom-right {
+  animation: fadeUp 0.85s ease-out 2.15s both;
+}
+
+@keyframes touchBlink {
+  0%, 100% { opacity: 0.42; }
+  50% { opacity: 0.86; }
+}
+
+@keyframes loginPanelIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.985) translateY(8px); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); }
+}
+
+@keyframes caretBlink {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+
+@media (max-width: 760px) {
+  .touch-box { height: 68px; width: min(84vw, 340px); }
+  .login-panel { width: 94vw; gap: 12px; }
+  .login-row { grid-template-columns: minmax(108px, 0.48fr) minmax(0, 1fr); gap: 8px; }
+  .login-label { font-size: clamp(7px, 2vw, 10px); letter-spacing: -0.09em; }
+  .login-input { height: 34px; padding: 0 8px; font-size: clamp(6.2px, 1.78vw, 9px); letter-spacing: -0.08em; }
+  .shop-open-button { min-height: 40px; min-width: min(76vw, 300px); font-size: 8.5px; }
+}
+
+@media (max-width: 430px) {
+  .touch-box { height: 64px; width: min(86vw, 315px); }
+  .login-panel { width: 95vw; gap: 10px; }
+  .login-row { grid-template-columns: 104px minmax(0, 1fr); gap: 7px; }
+  .login-label { font-size: 6.8px; }
+  .login-input { height: 32px; padding: 0 6px; font-size: 6.1px; letter-spacing: -0.11em; }
+  .shop-open-button { min-height: 38px; font-size: 7.7px; }
 }

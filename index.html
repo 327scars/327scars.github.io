@@ -20,6 +20,32 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="access-screen" id="accessScreen" aria-live="polite">
+    <button class="touch-box" id="touchBox" type="button" aria-label="Démarrer l’accès boutique">
+      <span>TOUCH HERE</span>
+    </button>
+
+    <div class="login-panel" id="loginPanel" aria-label="Accès boutique" aria-hidden="true">
+      <div class="login-row">
+        <span class="login-label">identifiant :</span>
+        <div class="login-input" id="identifierField">
+          <span class="field-value" id="identifierText"></span><span class="typing-caret" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="login-row">
+        <span class="login-label">mot de passe :</span>
+        <div class="login-input" id="passwordField">
+          <span class="field-value" id="passwordText"></span><span class="typing-caret" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <button class="shop-open-button" id="shopButton" type="button">open my shop</button>
+    </div>
+
+    <div class="fake-cursor" id="fakeCursor" aria-hidden="true"></div>
+  </div>
+
   <div class="intro" aria-hidden="true">
     <img src="assets/site-logo.png" alt="" class="intro-logo" />
   </div>
@@ -50,5 +76,6 @@
       <img src="assets/black-shirt.png" alt="T-shirt noir Scars 327" class="product-shirt product-black" />
     </section>
   </main>
+  <script src="script.js"></script>
 </body>
 </html>
