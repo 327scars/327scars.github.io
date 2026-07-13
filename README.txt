@@ -1,6 +1,5 @@
-SCARS327 v34
-- Monogramme téléphone recentré
-- Grains et rayons retirés sur mobile
-- Retour sur PACHAVE PAS mieux recentré après l’animation
-- Fond blanc du t-shirt noir harmonisé
-- Monogramme sur fond blanc légèrement plus foncé
+SCARS327 v36
+- Monogrammes retirés des fonds des visuels t-shirts
+- Monogrammes conservés autour des t-shirts uniquement
+- Grille du monogramme mieux coordonnée/centrée sur les pages produits
+- Monogramme sur fond noir téléphone légèrement moins visible

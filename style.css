@@ -62,13 +62,18 @@ main {
 .page-home::before,
 .product-page-white::before {
   background-image: url("assets/monogram-dark.png");
-  opacity: 0.26;
+  opacity: 0.24;
 }
 
 .product-page-black::before {
   background-image: url("assets/monogram-light.png");
-  opacity: 0.24;
+  opacity: 0.28;
 }
+
+.product-page::before {
+  background-position: center top;
+}
+
 
 .hero,
 .bottom-left,
@@ -251,7 +256,7 @@ body.archive-revealed .archive-link {
 
 
 .product-page-black {
-  background: #f2f2f2;
+  background: #ffffff;
 }
 
 .product-page-black .product-shirt {
@@ -302,7 +307,19 @@ body.archive-revealed .archive-link {
   .page::before,
   .archive-page::before {
     background-size: 96px auto;
-    background-position: center center;
+    background-position: center top;
+  }
+
+  .access-screen::before,
+  .intro::before,
+  .page-home::before,
+  .product-page-white::before,
+  .archive-page::before {
+    opacity: 0.19;
+  }
+
+  .product-page-black::before {
+    opacity: 0.27;
   }
 
   .intro-logo { width: 88vw; }
@@ -323,7 +340,19 @@ body.archive-revealed .archive-link {
   .page::before,
   .archive-page::before {
     background-size: 82px auto;
-    background-position: center center;
+    background-position: center top;
+  }
+
+  .access-screen::before,
+  .intro::before,
+  .page-home::before,
+  .product-page-white::before,
+  .archive-page::before {
+    opacity: 0.17;
+  }
+
+  .product-page-black::before {
+    opacity: 0.27;
   }
 
   .hero { top: 48.2%; width: 94vw; }
@@ -784,7 +813,7 @@ body.access-loading .server-loading {
 
   .archive-page::before {
     background-size: 96px auto;
-    background-position: center center;
+    background-position: center top;
   }
 }
 
@@ -793,7 +822,7 @@ body.access-loading .server-loading {
 
   .archive-page::before {
     background-size: 82px auto;
-    background-position: center center;
+    background-position: center top;
   }
 
   .archive-code {
