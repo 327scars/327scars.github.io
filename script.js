@@ -1,3 +1,11 @@
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+function goToTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
 const CLIENT_ID = "client";
 const PASSWORD = "scarsfitseverybody327";
 const ACCESS_SEQUENCE_MS = 3270;
@@ -240,6 +248,7 @@ async function clickShopButton() {
 }
 
 function openDirectShop() {
+  goToTop();
   if (accessScreen) accessScreen.remove();
   document.body.classList.add("show-intro", "shop-direct", "archive-revealed");
   document.body.classList.remove("access-login", "cursor-ready", "access-loading", "access-done");
@@ -259,11 +268,15 @@ function launchGoldenIntro() {
   if (sequenceFinished) return;
   sequenceFinished = true;
   document.body.classList.add("access-done");
+  goToTop();
 
   window.setTimeout(() => {
     if (accessScreen) accessScreen.remove();
+    goToTop();
     document.body.classList.add("show-intro");
     revealArchiveLink();
+    window.setTimeout(goToTop, 1200);
+    window.setTimeout(goToTop, 2400);
   }, 520);
 }
 
@@ -343,6 +356,12 @@ if (DIRECT_SHOP_ENTRY) {
     if (!accessStarted) resetDvdPosition();
   });
 
-  window.addEventListener("load", startDvdAnimation);
-  if (document.readyState !== "loading") startDvdAnimation();
+  window.addEventListener("load", () => {
+    goToTop();
+    startDvdAnimation();
+  });
+  if (document.readyState !== "loading") {
+    goToTop();
+    startDvdAnimation();
+  }
 }
