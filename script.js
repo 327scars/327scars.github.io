@@ -23,7 +23,7 @@ const shopButton = document.getElementById("shopButton");
 const fakeCursor = document.getElementById("fakeCursor");
 const serverLoading = document.getElementById("serverLoading");
 
-const DVD_COLORS = [
+const DVD_COLORS = shuffleArray([
   "rgba(255, 255, 255, 0.70)",
   "rgba(255, 42, 42, 0.72)",
   "rgba(255, 191, 0, 0.74)",
@@ -31,19 +31,32 @@ const DVD_COLORS = [
   "rgba(0, 218, 255, 0.72)",
   "rgba(128, 87, 255, 0.72)",
   "rgba(255, 74, 207, 0.72)"
-];
+]);
 
 let dvdAnimationFrame = null;
 let dvdX = 0;
 let dvdY = 0;
 let dvdDx = 1.35;
 let dvdDy = 1.05;
-let currentColor = 0;
+let currentColor = Math.floor(Math.random() * DVD_COLORS.length);
 let lastFrameTime = null;
 let accessStarted = false;
 let sequenceFinished = false;
 let activeMove = null;
 let lastDvdColorChange = 0;
+
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function shuffleArray(list) {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 function sleep(ms) {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
@@ -83,10 +96,12 @@ function setDvdColor() {
 
 function applyDvdMotionProfile() {
   const isMobile = window.innerWidth <= 760;
-  const baseDx = isMobile ? 0.42 : 1.35;
-  const baseDy = isMobile ? 1.72 : 1.05;
-  dvdDx = (dvdDx < 0 ? -1 : 1) * baseDx;
-  dvdDy = (dvdDy < 0 ? -1 : 1) * baseDy;
+  const baseDx = isMobile ? randomBetween(0.22, 0.62) : randomBetween(0.9, 1.75);
+  const baseDy = isMobile ? randomBetween(1.1, 2.35) : randomBetween(0.78, 1.45);
+  const dirX = Math.random() < 0.5 ? -1 : 1;
+  const dirY = Math.random() < 0.5 ? -1 : 1;
+  dvdDx = dirX * baseDx;
+  dvdDy = dirY * baseDy;
 }
 
 function resetDvdPosition() {
@@ -99,8 +114,8 @@ function resetDvdPosition() {
   const maxY = Math.max(0, window.innerHeight - height);
 
   if (dvdX === 0 && dvdY === 0) {
-    dvdX = Math.max(0, Math.round(maxX / 2));
-    dvdY = Math.max(0, Math.round(maxY / 2));
+    dvdX = Math.max(0, Math.round(Math.random() * maxX));
+    dvdY = Math.max(0, Math.round(Math.random() * maxY));
   } else {
     dvdX = Math.min(Math.max(0, dvdX), maxX);
     dvdY = Math.min(Math.max(0, dvdY), maxY);
@@ -147,12 +162,15 @@ function animateDvd(time) {
   }
 
   if (bounced) {
-    const colorDelay = window.innerWidth <= 760 ? 1150 : 360;
+    const colorDelay = window.innerWidth <= 760 ? 900 : 260;
     if (!lastDvdColorChange || time - lastDvdColorChange > colorDelay) {
-      currentColor += 1;
+      currentColor = Math.floor(Math.random() * DVD_COLORS.length);
       setDvdColor();
       lastDvdColorChange = time;
     }
+    const bounceRemix = window.innerWidth <= 760 ? 0.16 : 0.24;
+    dvdDx += (dvdDx > 0 ? 1 : -1) * randomBetween(-bounceRemix, bounceRemix);
+    dvdDy += (dvdDy > 0 ? 1 : -1) * randomBetween(-bounceRemix, bounceRemix);
   }
 
   touchBox.style.transform = `translate3d(${dvdX}px, ${dvdY}px, 0)`;
