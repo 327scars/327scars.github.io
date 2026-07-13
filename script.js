@@ -1,6 +1,8 @@
 const CLIENT_ID = "client";
 const PASSWORD = "scarsfitseverybody327";
 const ACCESS_SEQUENCE_MS = 3270;
+const ARCHIVE_REVEAL_MS = 7230;
+const DIRECT_SHOP_ENTRY = new URLSearchParams(window.location.search).get("shop") === "1";
 
 const accessScreen = document.getElementById("accessScreen");
 const touchBox = document.getElementById("touchBox");
@@ -11,6 +13,7 @@ const identifierText = document.getElementById("identifierText");
 const passwordText = document.getElementById("passwordText");
 const shopButton = document.getElementById("shopButton");
 const fakeCursor = document.getElementById("fakeCursor");
+const serverLoading = document.getElementById("serverLoading");
 
 const DVD_COLORS = [
   "rgba(255, 255, 255, 0.70)",
@@ -36,6 +39,33 @@ let lastDvdColorChange = 0;
 
 function sleep(ms) {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+let audioCtx = null;
+
+function ensureAudio() {
+  if (!audioCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (Ctx) audioCtx = new Ctx();
+  }
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+}
+
+function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.018) {
+  ensureAudio();
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.value = freq;
+  gain.gain.value = gainValue;
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  const now = audioCtx.currentTime;
+  gain.gain.setValueAtTime(gainValue, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+  osc.start(now);
+  osc.stop(now + duration);
 }
 
 function setDvdColor() {
@@ -191,7 +221,8 @@ async function clickShopButton() {
   await moveCursorTo(shopButton, 0.52, 0.56, 360);
   setCursorHand(true);
   shopButton.classList.add("is-hovered");
-  await sleep(110);
+  playBeep(640, 0.045, "triangle", 0.018);
+  await sleep(90);
 
   const cursorBaseTransform = fakeCursor ? fakeCursor.style.transform : "";
   if (fakeCursor) {
@@ -200,11 +231,28 @@ async function clickShopButton() {
   }
 
   shopButton.classList.add("is-pressed");
-  await sleep(105);
+  playBeep(780, 0.08, "sawtooth", 0.016);
+  await sleep(96);
 
   if (fakeCursor) fakeCursor.style.transform = cursorBaseTransform;
   shopButton.classList.remove("is-pressed");
   await sleep(90);
+}
+
+function openDirectShop() {
+  if (accessScreen) accessScreen.remove();
+  document.body.classList.add("show-intro", "shop-direct", "archive-revealed");
+  document.body.classList.remove("access-login", "cursor-ready", "access-loading", "access-done");
+
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
+function revealArchiveLink() {
+  window.setTimeout(() => {
+    document.body.classList.add("archive-revealed");
+  }, ARCHIVE_REVEAL_MS);
 }
 
 function launchGoldenIntro() {
@@ -215,13 +263,22 @@ function launchGoldenIntro() {
   window.setTimeout(() => {
     if (accessScreen) accessScreen.remove();
     document.body.classList.add("show-intro");
+    revealArchiveLink();
   }, 520);
+}
+
+function showServerLoading() {
+  document.body.classList.add("access-loading");
+  if (serverLoading) serverLoading.setAttribute("aria-hidden", "false");
 }
 
 async function runAccessSequence() {
   if (accessStarted) return;
   accessStarted = true;
   const startedAt = performance.now();
+
+  ensureAudio();
+  playBeep(520, 0.045, "square", 0.016);
 
   if (dvdAnimationFrame) {
     window.cancelAnimationFrame(dvdAnimationFrame);
@@ -234,52 +291,58 @@ async function runAccessSequence() {
   identifierText.textContent = "";
   passwordText.textContent = "";
 
-  await sleep(210);
+  await sleep(120);
   document.body.classList.add("cursor-ready");
   showCursor();
   setCursorHand(false);
 
-  // Le curseur se pose plutôt vers la droite du rectangle avant d'écrire.
-  await moveCursorTo(identifierField, 0.88, 0.53, 390);
-  await typeInto(identifierField, identifierText, CLIENT_ID, 48);
+  await moveCursorTo(identifierField, 0.88, 0.53, 220);
+  await typeInto(identifierField, identifierText, CLIENT_ID, 34);
 
-  await sleep(120);
+  await sleep(60);
   setCursorHand(false);
-  await moveCursorTo(passwordField, 0.92, 0.53, 390);
-  await typeInto(passwordField, passwordText, PASSWORD, 34);
+  await moveCursorTo(passwordField, 0.92, 0.53, 220);
+  await typeInto(passwordField, passwordText, PASSWORD, 22);
 
   clearActiveFields();
-  await sleep(110);
+  await sleep(70);
   await clickShopButton();
 
+  hideCursor();
+  showServerLoading();
+
   const elapsed = performance.now() - startedAt;
-  await sleep(Math.max(0, ACCESS_SEQUENCE_MS - elapsed));
+  await sleep(Math.max(420, ACCESS_SEQUENCE_MS - elapsed));
   launchGoldenIntro();
 }
 
-if (touchBox) {
-  touchBox.addEventListener("click", runAccessSequence);
-  touchBox.addEventListener("touchend", (event) => {
-    event.preventDefault();
-    runAccessSequence();
-  }, { passive: false });
-}
+if (DIRECT_SHOP_ENTRY) {
+  openDirectShop();
+} else {
+  if (touchBox) {
+    touchBox.addEventListener("click", runAccessSequence);
+    touchBox.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      runAccessSequence();
+    }, { passive: false });
+  }
 
-if (shopButton) {
-  shopButton.addEventListener("click", () => {
-    if (passwordText.textContent === PASSWORD && identifierText.textContent === CLIENT_ID) {
-      launchGoldenIntro();
-    }
+  if (shopButton) {
+    shopButton.addEventListener("click", () => {
+      if (passwordText.textContent === PASSWORD && identifierText.textContent === CLIENT_ID) {
+        launchGoldenIntro();
+      }
+    });
+  }
+
+  window.addEventListener("keydown", (event) => {
+    if ((event.key === "Enter" || event.key === " ") && !accessStarted) runAccessSequence();
   });
+
+  window.addEventListener("resize", () => {
+    if (!accessStarted) resetDvdPosition();
+  });
+
+  window.addEventListener("load", startDvdAnimation);
+  if (document.readyState !== "loading") startDvdAnimation();
 }
-
-window.addEventListener("keydown", (event) => {
-  if ((event.key === "Enter" || event.key === " ") && !accessStarted) runAccessSequence();
-});
-
-window.addEventListener("resize", () => {
-  if (!accessStarted) resetDvdPosition();
-});
-
-window.addEventListener("load", startDvdAnimation);
-if (document.readyState !== "loading") startDvdAnimation();
