@@ -32,6 +32,7 @@ let lastFrameTime = null;
 let accessStarted = false;
 let sequenceFinished = false;
 let activeMove = null;
+let lastDvdColorChange = 0;
 
 function sleep(ms) {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
@@ -42,8 +43,17 @@ function setDvdColor() {
   touchBox.style.setProperty("--dvd-color", DVD_COLORS[currentColor % DVD_COLORS.length]);
 }
 
+function applyDvdMotionProfile() {
+  const isMobile = window.innerWidth <= 760;
+  const baseDx = isMobile ? 0.42 : 1.35;
+  const baseDy = isMobile ? 1.72 : 1.05;
+  dvdDx = (dvdDx < 0 ? -1 : 1) * baseDx;
+  dvdDy = (dvdDy < 0 ? -1 : 1) * baseDy;
+}
+
 function resetDvdPosition() {
   if (!touchBox || accessStarted) return;
+  applyDvdMotionProfile();
 
   const width = touchBox.offsetWidth || 340;
   const height = touchBox.offsetHeight || 76;
@@ -99,8 +109,12 @@ function animateDvd(time) {
   }
 
   if (bounced) {
-    currentColor += 1;
-    setDvdColor();
+    const colorDelay = window.innerWidth <= 760 ? 1150 : 360;
+    if (!lastDvdColorChange || time - lastDvdColorChange > colorDelay) {
+      currentColor += 1;
+      setDvdColor();
+      lastDvdColorChange = time;
+    }
   }
 
   touchBox.style.transform = `translate3d(${dvdX}px, ${dvdY}px, 0)`;

@@ -50,9 +50,10 @@ main {
 }
 
 .intro-logo {
-  width: min(54vw, 620px);
-  max-width: 82%;
+  width: min(70vw, 860px);
+  max-width: 80%;
   height: auto;
+  image-rendering: auto;
   animation: introLogo 1.85s ease both;
 }
 
@@ -220,7 +221,7 @@ main {
 @keyframes heroIn { from { opacity: 0; transform: translate3d(-50%, calc(-50% + 18px), 0); } to { opacity: 1; transform: translate3d(-50%, -50%, 0); } }
 
 @media (max-width: 760px) {
-  .intro-logo { width: 78vw; }
+  .intro-logo { width: 88vw; }
   .hero { top: 45%; width: 92vw; }
   .instagram { margin-top: 13px; font-size: 12px; padding: 12px 17px 11px; gap: 8px; }
   .insta-icon { width: 17px; height: 17px; }
@@ -502,19 +503,78 @@ body.show-intro .bottom-right {
 
 
 @media (max-width: 760px) {
-  .touch-box { height: 68px; width: min(84vw, 340px); }
-  .login-panel { width: 94vw; gap: 12px; }
-  .login-row { grid-template-columns: minmax(108px, 0.48fr) minmax(0, 1fr); gap: 8px; }
-  .login-label { font-size: clamp(7px, 2vw, 10px); letter-spacing: -0.09em; }
-  .login-input { height: 34px; padding: 0 8px; font-size: clamp(6.2px, 1.78vw, 9px); letter-spacing: -0.08em; }
-  .shop-open-button { min-height: 40px; min-width: min(76vw, 300px); font-size: 8.5px; }
+  .touch-box {
+    height: 52px;
+    width: min(62vw, 245px);
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing: 0.10em;
+  }
+
+  .login-panel {
+    width: min(88vw, 420px);
+    gap: 10px;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+
+  .login-row {
+    grid-template-columns: 106px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .login-label {
+    font-size: clamp(6.7px, 1.85vw, 9px);
+    letter-spacing: -0.10em;
+  }
+
+  .login-input {
+    height: 30px;
+    padding: 0 7px;
+    font-size: clamp(5.6px, 1.58vw, 8px);
+    letter-spacing: -0.10em;
+  }
+
+  .shop-open-button {
+    min-height: 34px;
+    min-width: min(54vw, 220px);
+    padding: 0 14px;
+    font-size: 7.4px;
+    box-shadow:
+      inset 2px 2px 0 rgba(255,255,255,0.78),
+      inset -2px -2px 0 rgba(0,0,0,0.36),
+      0 3px 0 #060606;
+  }
 }
 
 @media (max-width: 430px) {
-  .touch-box { height: 64px; width: min(86vw, 315px); }
-  .login-panel { width: 95vw; gap: 10px; }
-  .login-row { grid-template-columns: 104px minmax(0, 1fr); gap: 7px; }
-  .login-label { font-size: 6.8px; }
-  .login-input { height: 32px; padding: 0 6px; font-size: 6.1px; letter-spacing: -0.11em; }
-  .shop-open-button { min-height: 38px; font-size: 7.7px; }
+  .touch-box {
+    height: 48px;
+    width: min(64vw, 225px);
+    font-size: 16px;
+  }
+
+  .login-panel {
+    width: min(88vw, 350px);
+    gap: 9px;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+  .login-row {
+    grid-template-columns: 94px minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .login-label { font-size: 6.25px; }
+
+  .login-input {
+    height: 28px;
+    padding: 0 6px;
+    font-size: 5.25px;
+    letter-spacing: -0.12em;
+  }
+
+  .shop-open-button {
+    min-height: 32px;
+    min-width: min(58vw, 205px);
+    font-size: 6.8px;
+  }
 }
