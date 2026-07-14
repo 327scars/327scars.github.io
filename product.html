@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCARS327 — Uncased 327 T-shirt</title>
+  <meta name="description" content="SCARS327 — Uncased 327 t-shirt product file." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="stylesheet" href="style.css?v=80" />
+</head>
+<body class="product-file-body">
+  <main class="product-file-page" id="productFilePage">
+    <a class="story-back" id="backToStarters" href="story.html?phase=choice">← retour aux starters</a>
+
+    <div class="language-switch product-language-switch" aria-label="Choisir la langue">
+      <button class="lang-button is-active" type="button" data-lang="fr">🇫🇷 FR</button>
+      <button class="lang-button" type="button" data-lang="en">🇬🇧 EN</button>
+    </div>
+
+    <section class="product-file-layout">
+      <div class="viewer-wrap" aria-label="Vue 360 du produit">
+        <div class="viewer-hint" id="viewerHint">tournez-le</div>
+
+        <div class="viewer-mode-switch" id="viewerModes">
+          <button type="button" class="viewer-mode-button is-active" data-mode="rotate">360</button>
+          <button type="button" class="viewer-mode-button" data-mode="front">face avant</button>
+          <button type="button" class="viewer-mode-button" data-mode="back">face arrière</button>
+        </div>
+
+        <div class="shirt-viewer" id="shirtViewer">
+          <div class="shirt-360" id="shirt360">
+            <img class="shirt-face shirt-face-front" id="viewerFront" alt="T-shirt devant" draggable="false" />
+            <img class="shirt-face shirt-face-back" id="viewerBack" alt="T-shirt dos" draggable="false" />
+          </div>
+        </div>
+      </div>
+
+      <aside class="product-info-panel">
+        <p class="product-file-tag">UNCASED 327 T-SHIRT</p>
+        <h1 id="productTitle">???</h1>
+        <p class="product-description" id="productDescription">???</p>
+
+        <dl class="product-specs" id="productSpecs"></dl>
+
+        <a class="checkout-button" href="https://www.instagram.com/327scars?igsh=MW13dHhydmlmdnVoeQ%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" id="checkoutButton">
+          AJOUTER DANS LE PANIER / ADD TO CART — ???
+        </a>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const copy = {
+      fr: {
+        hint: "tournez-le / rotate it",
+        back: "← retour aux starters",
+        modes: { rotate: "360", front: "face avant", back: "face arrière" },
+        checkout: "ajouter dans le panier / add to cart — ???",
+        specs: [
+          ["status", "???"],
+          ["drop", "???"],
+          ["prix", "???"],
+          ["tailles", "???"],
+          ["composition", "???"],
+          ["livraison", "???"]
+        ],
+        products: {
+          white: {
+            title: "starter blanc — ???",
+            description: "description : ???"
+          },
+          black: {
+            title: "starter noir — ???",
+            description: "description : ???"
+          },
+          pink: {
+            title: "starter rose — ???",
+            description: "description : ???"
+          }
+        }
+      },
+      en: {
+        hint: "rotate it / tournez-le",
+        back: "← back to starters",
+        modes: { rotate: "360", front: "front", back: "back" },
+        checkout: "add to cart / ajouter dans le panier — ???",
+        specs: [
+          ["status", "???"],
+          ["drop", "???"],
+          ["price", "???"],
+          ["sizes", "???"],
+          ["composition", "???"],
+          ["shipping", "???"]
+        ],
+        products: {
+          white: {
+            title: "white starter — ???",
+            description: "description: ???"
+          },
+          black: {
+            title: "black starter — ???",
+            description: "description: ???"
+          },
+          pink: {
+            title: "pink starter — ???",
+            description: "description: ???"
+          }
+        }
+      }
+    };
+
+    const productAssets = {
+      white: { front: "assets/white-shirt-front-v55.png", back: "assets/white-shirt-back-v55.png" },
+      black: { front: "assets/black-shirt-front-v55.png", back: "assets/black-shirt-back-v55.png" },
+      pink: { front: "assets/pink-shirt-front-v55.png", back: "assets/pink-shirt-back-v55.png" }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const item = productAssets[params.get("item")] ? params.get("item") : "black";
+    let lang = params.get("lang") || localStorage.getItem("scars327_lang") || "fr";
+    let mode = "rotate";
+
+    const viewer = document.getElementById("shirtViewer");
+    const shirt = document.getElementById("shirt360");
+    const front = document.getElementById("viewerFront");
+    const back = document.getElementById("viewerBack");
+    const titleEl = document.getElementById("productTitle");
+    const descEl = document.getElementById("productDescription");
+    const specsEl = document.getElementById("productSpecs");
+    const hintEl = document.getElementById("viewerHint");
+    const backLink = document.getElementById("backToStarters");
+    const checkoutButton = document.getElementById("checkoutButton");
+    const modeButtons = document.querySelectorAll(".viewer-mode-button");
+    const langButtons = document.querySelectorAll(".lang-button");
+
+    document.body.classList.add("product-file-" + item);
+    front.src = productAssets[item].front;
+    back.src = productAssets[item].back;
+
+    function normalize(deg) {
+      let next = deg % 360;
+      if (next < 0) next += 360;
+      return next;
+    }
+
+    let dragging = false;
+    let startX = 0;
+    let startAngle = 0;
+    let angle = 0;
+
+    function setAngle(nextAngle) {
+      angle = normalize(nextAngle);
+      shirt.style.setProperty("--rotation", angle + "deg");
+    }
+
+    function renderCopy() {
+      localStorage.setItem("scars327_lang", lang);
+      const langPack = copy[lang];
+      const product = langPack.products[item];
+
+      titleEl.textContent = product.title;
+      descEl.textContent = product.description;
+      hintEl.textContent = langPack.hint;
+      backLink.textContent = langPack.back;
+      backLink.href = `story.html?phase=choice&lang=${lang}&item=${item}`;
+      checkoutButton.textContent = langPack.checkout;
+
+      specsEl.innerHTML = langPack.specs.map(([key, value]) => `<div><dt>${key}</dt><dd>${value}</dd></div>`).join("");
+
+      modeButtons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.mode === mode);
+        const key = button.dataset.mode;
+        button.textContent = langPack.modes[key];
+      });
+
+      langButtons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.lang === lang);
+      });
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      if (mode === "front") setAngle(0);
+      if (mode === "back") setAngle(180);
+      renderCopy();
+    }
+
+    modeButtons.forEach((button) => {
+      button.addEventListener("click", () => setMode(button.dataset.mode));
+    });
+
+    langButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        lang = button.dataset.lang;
+        renderCopy();
+      });
+    });
+
+    viewer.addEventListener("pointerdown", (event) => {
+      if (mode !== "rotate") return;
+      dragging = true;
+      startX = event.clientX;
+      startAngle = angle;
+      viewer.setPointerCapture(event.pointerId);
+      viewer.classList.add("is-dragging");
+      event.preventDefault();
+    });
+
+    viewer.addEventListener("pointermove", (event) => {
+      if (!dragging || mode !== "rotate") return;
+      const delta = event.clientX - startX;
+      setAngle(startAngle + delta * 0.52);
+      event.preventDefault();
+    });
+
+    function stopDragging() {
+      dragging = false;
+      viewer.classList.remove("is-dragging");
+    }
+
+    viewer.addEventListener("pointerup", stopDragging);
+    viewer.addEventListener("pointercancel", stopDragging);
+    viewer.addEventListener("dragstart", (event) => event.preventDefault());
+
+    function tick() {
+      if (mode === "rotate" && !dragging) {
+        setAngle(angle + 0.028);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    renderCopy();
+    setMode("rotate");
+    tick();
+  </script>
+</body>
+</html>

@@ -10,6 +10,7 @@ const CLIENT_ID = "client";
 const PASSWORD = "scarsfitseverybody327";
 const ACCESS_SEQUENCE_MS = 3270;
 const ARCHIVE_REVEAL_MS = 7230;
+const STAY_INTERRUPT_MS = 32700;
 const DIRECT_SHOP_ENTRY = new URLSearchParams(window.location.search).get("shop") === "1";
 
 const accessScreen = document.getElementById("accessScreen");
@@ -22,6 +23,12 @@ const passwordText = document.getElementById("passwordText");
 const shopButton = document.getElementById("shopButton");
 const fakeCursor = document.getElementById("fakeCursor");
 const serverLoading = document.getElementById("serverLoading");
+const stayOverlay = document.getElementById("stayOverlay");
+const wastedOverlay = document.getElementById("wastedOverlay");
+const shopOverOverlay = document.getElementById("shopOverOverlay");
+const continueButton = document.getElementById("continueButton");
+const quitButton = document.getElementById("quitButton");
+const shopCountdown = document.getElementById("shopCountdown");
 
 const DVD_COLORS = shuffleArray([
   "rgba(255, 255, 255, 0.70)",
@@ -44,6 +51,10 @@ let accessStarted = false;
 let sequenceFinished = false;
 let activeMove = null;
 let lastDvdColorChange = 0;
+let stayTimer = null;
+let stayOverlayShown = false;
+let shopCountdownTimer = null;
+let stayActivityListening = false;
 
 function randomBetween(min, max) {
   return Math.random() * (max - min) + min;
@@ -87,6 +98,131 @@ function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.01
   gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
   osc.start(now);
   osc.stop(now + duration);
+}
+
+
+function playTone(freq, start, duration, type = "square", gainValue = 0.025) {
+  ensureAudio();
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
+  gain.gain.setValueAtTime(0.0001, audioCtx.currentTime + start);
+  gain.gain.exponentialRampToValueAtTime(gainValue, audioCtx.currentTime + start + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + start + duration);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(audioCtx.currentTime + start);
+  osc.stop(audioCtx.currentTime + start + duration + 0.02);
+}
+
+
+
+
+function playUiSelectSound() {
+  ensureAudio();
+  if (!audioCtx) return;
+  playTone(620, 0, 0.055, "square", 0.014);
+  playTone(410, 0.052, 0.07, "triangle", 0.011);
+}
+
+function playWastedLikeSound() {
+  ensureAudio();
+  if (!audioCtx) return;
+
+  // Different GTA-like dark stinger: low hit + reversed-feel swell + descending chords. No sample used.
+  const now = audioCtx.currentTime;
+
+  const master = audioCtx.createGain();
+  master.gain.setValueAtTime(0.0001, now);
+  master.gain.exponentialRampToValueAtTime(0.052, now + 0.04);
+  master.gain.setValueAtTime(0.046, now + 0.95);
+  master.gain.exponentialRampToValueAtTime(0.0001, now + 2.35);
+  master.connect(audioCtx.destination);
+
+  // Heavy sub hit
+  const sub = audioCtx.createOscillator();
+  const subGain = audioCtx.createGain();
+  sub.type = "sine";
+  sub.frequency.setValueAtTime(48, now);
+  sub.frequency.exponentialRampToValueAtTime(31, now + 0.95);
+  subGain.gain.setValueAtTime(0.34, now);
+  subGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.05);
+  sub.connect(subGain);
+  subGain.connect(master);
+  sub.start(now);
+  sub.stop(now + 1.12);
+
+  // Minor chord drop, more serious, less goofy
+  const chord = [
+    { f: 174.61, d: 0.00, g: 0.13 },
+    { f: 207.65, d: 0.035, g: 0.09 },
+    { f: 261.63, d: 0.07, g: 0.07 },
+    { f: 130.81, d: 0.42, g: 0.11 },
+    { f: 98.00, d: 0.78, g: 0.12 }
+  ];
+
+  chord.forEach(({ f, d, g }, i) => {
+    const osc = audioCtx.createOscillator();
+    const filter = audioCtx.createBiquadFilter();
+    const gain = audioCtx.createGain();
+
+    osc.type = i < 3 ? "triangle" : "sawtooth";
+    osc.frequency.setValueAtTime(f, now + d);
+    osc.frequency.exponentialRampToValueAtTime(f * 0.78, now + d + 1.25);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(850, now + d);
+    filter.frequency.exponentialRampToValueAtTime(190, now + d + 1.45);
+
+    gain.gain.setValueAtTime(g, now + d);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + d + 1.55);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(master);
+    osc.start(now + d);
+    osc.stop(now + d + 1.62);
+  });
+
+  // Quiet dark noise tail
+  const buffer = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * 0.85), audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i += 1) {
+    const fade = 1 - i / data.length;
+    data[i] = (Math.random() * 2 - 1) * fade * fade * 0.55;
+  }
+
+  const noise = audioCtx.createBufferSource();
+  const bp = audioCtx.createBiquadFilter();
+  const noiseGain = audioCtx.createGain();
+  noise.buffer = buffer;
+  bp.type = "bandpass";
+  bp.frequency.setValueAtTime(260, now + 0.18);
+  bp.Q.setValueAtTime(0.55, now + 0.18);
+  noiseGain.gain.setValueAtTime(0.020, now + 0.18);
+  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.03);
+  noise.connect(bp);
+  bp.connect(noiseGain);
+  noiseGain.connect(master);
+  noise.start(now + 0.18);
+  noise.stop(now + 1.05);
+}
+
+function playRetroLoseSound() {
+  ensureAudio();
+  if (!audioCtx) return;
+
+  // Retro losing-jingle style, altered and synthesized.
+  const notes = [987.77, 783.99, 659.25, 523.25, 391.99, 329.63, 261.63];
+  notes.forEach((freq, index) => {
+    playTone(freq, index * 0.095, 0.115, "square", 0.020);
+  });
+
+  // small low fall at the end
+  playTone(196, 0.72, 0.32, "triangle", 0.018);
+  playTone(130.81, 0.84, 0.42, "triangle", 0.016);
 }
 
 function setDvdColor() {
@@ -266,14 +402,129 @@ async function clickShopButton() {
 }
 
 function openDirectShop() {
-  goToTop();
+  const targetHash = window.location.hash;
+  if (!targetHash) goToTop();
   if (accessScreen) accessScreen.remove();
   document.body.classList.add("show-intro", "shop-direct", "archive-revealed");
   document.body.classList.remove("access-login", "cursor-ready", "access-loading", "access-done");
 
-  if (window.history && window.history.replaceState) {
-    window.history.replaceState({}, document.title, window.location.pathname);
+  if (targetHash) {
+    window.setTimeout(() => {
+      const target = document.querySelector(targetHash);
+      if (target) target.scrollIntoView({ block: "start", behavior: "auto" });
+    }, 80);
   }
+
+  startStayInterruptTimer();
+
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({}, document.title, window.location.pathname + targetHash);
+  }
+}
+
+
+function chooseStayMode() {
+  let nextMode = "wasted";
+  try {
+    const previous = window.localStorage.getItem("scars327-stay-mode");
+    nextMode = previous === "wasted" ? "shop" : "wasted";
+    window.localStorage.setItem("scars327-stay-mode", nextMode);
+  } catch (error) {
+    nextMode = Math.random() < 0.5 ? "wasted" : "shop";
+  }
+  return nextMode;
+}
+
+function hideStayOverlay() {
+  stayOverlayShown = true;
+  if (stayTimer) {
+    window.clearTimeout(stayTimer);
+    stayTimer = null;
+  }
+  if (shopCountdownTimer) {
+    window.clearInterval(shopCountdownTimer);
+    shopCountdownTimer = null;
+  }
+  if (stayOverlay) {
+    stayOverlay.setAttribute("aria-hidden", "true");
+    stayOverlay.dataset.mode = "";
+  }
+  document.body.classList.remove("stay-overlay-on", "stay-locked");
+}
+
+function runShopCountdown() {
+  if (!shopCountdown) return;
+  let remaining = 15;
+  shopCountdown.textContent = String(remaining);
+  shopCountdown.classList.toggle("is-gold", [3, 2, 7].includes(remaining));
+
+  shopCountdownTimer = window.setInterval(() => {
+    remaining -= 1;
+    shopCountdown.textContent = String(remaining);
+    shopCountdown.classList.toggle("is-gold", [3, 2, 7].includes(remaining));
+
+    if (remaining <= 0) {
+      window.clearInterval(shopCountdownTimer);
+      shopCountdownTimer = null;
+      hideStayOverlay();
+    }
+  }, 1000);
+}
+
+function showStayOverlay() {
+  if (stayOverlayShown || !stayOverlay) return;
+  stayOverlayShown = true;
+  const mode = chooseStayMode();
+  stayOverlay.dataset.mode = mode;
+  stayOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("stay-overlay-on", "stay-locked");
+
+  if (mode === "shop") {
+    playRetroLoseSound();
+    runShopCountdown();
+  } else {
+    playWastedLikeSound();
+  }
+}
+
+function resetStayInterruptTimer() {
+  if (stayOverlayShown) return;
+  if (stayTimer) window.clearTimeout(stayTimer);
+  stayTimer = window.setTimeout(showStayOverlay, STAY_INTERRUPT_MS);
+}
+
+function handleStayActivity() {
+  if (stayOverlayShown) return;
+  resetStayInterruptTimer();
+}
+
+function startStayInterruptTimer() {
+  if (stayOverlayShown) return;
+
+  if (!stayActivityListening) {
+    stayActivityListening = true;
+    ["mousemove", "mousedown", "keydown", "wheel", "scroll", "touchstart", "touchmove", "click"].forEach((eventName) => {
+      window.addEventListener(eventName, handleStayActivity, { passive: true });
+    });
+  }
+
+  resetStayInterruptTimer();
+}
+
+if (continueButton) {
+  continueButton.addEventListener("click", () => {
+    playUiSelectSound();
+    hideStayOverlay();
+  });
+}
+
+if (quitButton) {
+  quitButton.addEventListener("click", () => {
+    playUiSelectSound();
+    window.setTimeout(() => {
+      window.location.href = "https://www.instagram.com/327scars?igsh=MW13dHhydmlmdnVoeQ%3D%3D&utm_source=qr";
+    }, 120);
+  });
 }
 
 function revealArchiveLink() {
@@ -293,6 +544,7 @@ function launchGoldenIntro() {
     goToTop();
     document.body.classList.add("show-intro");
     revealArchiveLink();
+    startStayInterruptTimer();
     window.setTimeout(goToTop, 1200);
     window.setTimeout(goToTop, 2400);
   }, 520);
