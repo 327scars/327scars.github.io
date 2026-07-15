@@ -21,7 +21,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="stylesheet" href="style.css?v=93" />
+  <link rel="stylesheet" href="style.css?v=95" />
 </head>
 <body class="product-file-body">
   <main class="product-file-page" id="productFilePage">
@@ -175,8 +175,10 @@
 
     let dragging = false;
     let startX = 0;
+    let startY = 0;
     let startAngle = 0;
     let angle = 0;
+    const isMobileProduct = window.matchMedia('(max-width: 700px)').matches;
 
     function setAngle(nextAngle) {
       angle = normalize(nextAngle);
@@ -212,8 +214,13 @@
 
     function setMode(nextMode) {
       mode = nextMode;
-      if (mode === "front") setAngle(0);
-      if (mode === "back") setAngle(180);
+      if (mode === "front") {
+        setAngle(0);
+      } else if (mode === "back") {
+        setAngle(180);
+      } else if (mode === "rotate") {
+        setAngle(0);
+      }
       renderCopy();
     }
 
@@ -232,6 +239,7 @@
       if (mode !== "rotate") return;
       dragging = true;
       startX = event.clientX;
+      startY = event.clientY;
       startAngle = angle;
       viewer.setPointerCapture(event.pointerId);
       viewer.classList.add("is-dragging");
@@ -255,7 +263,7 @@
     viewer.addEventListener("dragstart", (event) => event.preventDefault());
 
     function tick() {
-      if (mode === "rotate" && !dragging) {
+      if (!isMobileProduct && mode === "rotate" && !dragging) {
         setAngle(angle + 0.028);
       }
       requestAnimationFrame(tick);

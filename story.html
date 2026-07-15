@@ -27,7 +27,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preload" as="image" href="assets/mentor-c3h2e7n-v5.png" />
-  <link rel="stylesheet" href="style.css?v=93" />
+  <link rel="stylesheet" href="style.css?v=95" />
 </head>
 <body class="story-body">
   <main class="story-scene" id="storyScene">
@@ -597,6 +597,60 @@
         openStarter(card);
       });
     });
+
+
+    function setTouchHoverCard(nextCard) {
+      starterRow.classList.toggle('has-touch-hover', !!nextCard);
+      starterCards.forEach((card) => {
+        card.classList.toggle('is-touch-hover', card === nextCard);
+      });
+    }
+
+    function findNearestStarterCard(clientX) {
+      let bestCard = null;
+      let bestDistance = Infinity;
+      starterCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const distance = Math.abs(clientX - centerX);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestCard = card;
+        }
+      });
+      return bestCard;
+    }
+
+    if (window.matchMedia('(max-width: 700px)').matches) {
+      let touchHoverClearTimer = null;
+
+      const applyTouchHover = (clientX) => {
+        if (touchHoverClearTimer) {
+          window.clearTimeout(touchHoverClearTimer);
+          touchHoverClearTimer = null;
+        }
+        setTouchHoverCard(findNearestStarterCard(clientX));
+      };
+
+      starterRow.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        applyTouchHover(touch.clientX);
+      }, { passive: true });
+
+      starterRow.addEventListener('touchmove', (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        applyTouchHover(touch.clientX);
+      }, { passive: true });
+
+      const clearTouchHover = () => {
+        touchHoverClearTimer = window.setTimeout(() => setTouchHoverCard(null), 160);
+      };
+
+      starterRow.addEventListener('touchend', clearTouchHover, { passive: true });
+      starterRow.addEventListener('touchcancel', clearTouchHover, { passive: true });
+    }
 
     dialogueBox.addEventListener("click", nextLine);
     dialogueBox.addEventListener("keydown", (event) => {
