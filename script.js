@@ -682,3 +682,21 @@ if (DIRECT_SHOP_ENTRY) {
     }
   });
 })();
+
+
+/* v99 - micro ergonomics: hide tutorial hints after first real interaction */
+(function () {
+  const cards = Array.from(document.querySelectorAll('.product-card'));
+  if (!cards.length) return;
+  const hintKey = 'scars327_flip_hint_seen';
+  function markSeen() {
+    document.body.classList.add('flip-hint-seen');
+    try { localStorage.setItem(hintKey, '1'); } catch (e) {}
+  }
+  try {
+    if (localStorage.getItem(hintKey) === '1') document.body.classList.add('flip-hint-seen');
+  } catch (e) {}
+  cards.forEach((card) => {
+    card.addEventListener('pointerdown', markSeen, { once: true, passive: true });
+  });
+})();

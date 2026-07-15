@@ -21,7 +21,14 @@
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="stylesheet" href="style.css?v=98" />
+
+  <link rel="preload" as="image" href="assets/gold-logo-327.png" />
+  <link rel="preload" as="image" href="assets/monogram-dark.png" />
+  <link rel="preload" as="image" href="assets/black-shirt-front-v55.png" />
+  <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
+  <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
+  <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
+  <link rel="stylesheet" href="style.css?v=99" />
 </head>
 <body class="product-file-body">
   <main class="product-file-page" id="productFilePage">
@@ -162,8 +169,10 @@
     const routeHintEl = document.getElementById("productRouteHint");
     const modeButtons = document.querySelectorAll(".viewer-mode-button");
     const langButtons = document.querySelectorAll(".lang-button");
+    const productHintSeenKey = "scars327_product_hint_seen";
 
     document.body.classList.add("product-file-" + item);
+    try { if (localStorage.getItem(productHintSeenKey) === "1") document.body.classList.add("product-hint-seen"); } catch (e) {}
     front.src = productAssets[item].front;
     back.src = productAssets[item].back;
 
@@ -237,6 +246,8 @@
     });
 
     viewer.addEventListener("pointerdown", (event) => {
+      document.body.classList.add("product-hint-seen");
+      try { localStorage.setItem(productHintSeenKey, "1"); } catch (e) {}
       if (mode !== "rotate") return;
       dragging = true;
       startX = event.clientX;

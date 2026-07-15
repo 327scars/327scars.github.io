@@ -9062,3 +9062,169 @@ body.archive-body {
     text-align: right !important;
   }
 }
+
+
+/* v99 — final micro-ergonomics audit */
+:root {
+  --ui-safe-x: clamp(12px, 3.2vw, 24px);
+  --ui-touch-min: 42px;
+  --ui-gap-tight: 8px;
+  --ui-gap: 14px;
+  --ui-gap-loose: 22px;
+}
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+.story-back,
+.lang-button,
+.viewer-mode-button,
+.product-policy-link,
+.checkout-button,
+.buy-card,
+.starter-card {
+  touch-action: manipulation;
+}
+.lang-button,
+.viewer-mode-button,
+.story-back,
+.product-policy-link {
+  min-height: var(--ui-touch-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* one clear action per screen, always with breathing room */
+.buy-intro__prompt--title,
+.dialogue-skip,
+.dialogue-hint,
+.buy-intro__skip,
+.buy-intro__dialogue .buy-intro__prompt {
+  user-select: none;
+}
+/* dialogue boxes: premium, consistent spacing */
+.story-body .buy-intro__dialogue,
+.story-body .dialogue-box {
+  border-radius: 16px !important;
+  padding: 14px 16px 32px !important;
+  box-sizing: border-box !important;
+}
+.story-body .buy-intro__line,
+.story-body .dialogue-text {
+  margin: 10px 0 12px !important;
+  padding-right: 4px !important;
+}
+.story-body .dialogue-skip,
+.story-body .buy-intro__meta .buy-intro__skip {
+  left: 16px !important;
+  bottom: 10px !important;
+}
+.story-body .dialogue-hint,
+.story-body .buy-intro__dialogue .buy-intro__prompt {
+  right: 14px !important;
+  bottom: 9px !important;
+}
+/* mobile hints fade once the user has understood */
+body.flip-hint-seen .tap-flip-hint,
+body.product-hint-seen .viewer-hint {
+  opacity: 0 !important;
+  transform: translateX(-50%) translateY(3px) !important;
+  transition: opacity .22s ease, transform .22s ease !important;
+}
+body.product-hint-seen .viewer-hint {
+  transform: translateY(2px) !important;
+}
+/* clearer focus/active feedback without breaking visual identity */
+.buy-card:active,
+.starter-card:active,
+.checkout-button:active,
+.viewer-mode-button:active,
+.lang-button:active {
+  transform: scale(.985) !important;
+}
+.viewer-mode-button:focus-visible,
+.lang-button:focus-visible,
+.story-back:focus-visible,
+.product-policy-link:focus-visible,
+.checkout-button:focus-visible,
+.starter-card:focus-visible {
+  outline: 1px solid rgba(251,175,23,.72) !important;
+  outline-offset: 3px !important;
+}
+/* product footer alignment: same line, same baseline */
+.product-mini-footer,
+.product-policy-link {
+  line-height: 1 !important;
+}
+.product-mini-footer {
+  gap: 0 !important;
+}
+.product-policy-link {
+  padding: 0 !important;
+}
+@media (max-width: 700px) {
+  html, body { overscroll-behavior-x: none; }
+  .story-back {
+    left: var(--ui-safe-x) !important;
+    top: 8px !important;
+  }
+  .language-switch,
+  .product-language-switch {
+    right: var(--ui-safe-x) !important;
+    top: 8px !important;
+  }
+  .buy-intro__prompt--title {
+    max-width: calc(100vw - 2 * var(--ui-safe-x)) !important;
+  }
+  .story-body .dialogue-box,
+  .story-body .buy-intro__dialogue {
+    width: calc(100vw - 2 * var(--ui-safe-x)) !important;
+    max-width: 430px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .story-body .story-scene.is-choice .dialogue-box {
+    min-height: 116px !important;
+  }
+  .story-body .story-scene.is-choice .dialogue-text {
+    max-width: 92% !important;
+    line-height: 1.42 !important;
+  }
+  .starter-card {
+    min-height: 44px !important;
+  }
+  .starter-card .capsule {
+    min-width: 54px;
+  }
+  .tap-flip-hint,
+  .viewer-hint {
+    pointer-events: none !important;
+  }
+  .checkout-button {
+    min-height: 46px !important;
+  }
+  .product-mini-footer,
+  .product-policy-link {
+    bottom: 10px !important;
+    position: fixed !important;
+  }
+  .product-mini-footer {
+    left: var(--ui-safe-x) !important;
+  }
+  .product-policy-link {
+    right: var(--ui-safe-x) !important;
+  }
+  /* avoid accidental useless horizontal/vertical jiggle on mobile */
+  .product-file-page,
+  .story-scene,
+  .page {
+    overflow-x: hidden !important;
+  }
+}
+@media (min-width: 701px) {
+  .product-mini-footer,
+  .product-policy-link {
+    bottom: 18px !important;
+  }
+  .product-mini-footer { left: 20px !important; }
+  .product-policy-link { right: 20px !important; }
+}
