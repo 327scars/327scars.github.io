@@ -635,3 +635,42 @@ if (DIRECT_SHOP_ENTRY) {
     startDvdAnimation();
   }
 }
+
+
+/* v81 - mobile shirt autoplay + manual tap toggle */
+(function () {
+  const mobileQuery = window.matchMedia('(max-width: 700px)');
+  const cards = Array.from(document.querySelectorAll('.product-card'));
+  if (!cards.length) return;
+
+  function clearManualState(card) {
+    card.classList.remove('is-manual', 'is-manual-front', 'is-manual-back');
+    delete card.dataset.manualFace;
+  }
+
+  function applyManualFace(card, face) {
+    card.classList.add('is-manual');
+    card.classList.toggle('is-manual-front', face === 'front');
+    card.classList.toggle('is-manual-back', face === 'back');
+    card.dataset.manualFace = face;
+  }
+
+  function bindCard(card) {
+    if (card.dataset.mobileFlipBound === 'true') return;
+    card.dataset.mobileFlipBound = 'true';
+    card.addEventListener('click', function (event) {
+      if (!mobileQuery.matches) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const nextFace = card.dataset.manualFace === 'back' ? 'front' : 'back';
+      applyManualFace(card, nextFace);
+    }, { passive: false });
+  }
+
+  cards.forEach(bindCard);
+  mobileQuery.addEventListener?.('change', (event) => {
+    if (!event.matches) {
+      cards.forEach(clearManualState);
+    }
+  });
+})();
