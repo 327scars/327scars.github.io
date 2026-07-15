@@ -21,7 +21,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="stylesheet" href="style.css?v=95" />
+  <link rel="stylesheet" href="style.css?v=96" />
 </head>
 <body class="product-file-body">
   <main class="product-file-page" id="productFilePage">
@@ -174,6 +174,7 @@
     }
 
     let dragging = false;
+    let rafRotateQueued = false;
     let startX = 0;
     let startY = 0;
     let startAngle = 0;
@@ -249,7 +250,16 @@
     viewer.addEventListener("pointermove", (event) => {
       if (!dragging || mode !== "rotate") return;
       const delta = event.clientX - startX;
-      setAngle(startAngle + delta * 0.52);
+      const nextAngle = startAngle + delta * 0.52;
+      if (!rafRotateQueued) {
+        rafRotateQueued = true;
+        requestAnimationFrame(() => {
+          setAngle(nextAngle);
+          rafRotateQueued = false;
+        });
+      } else {
+        setAngle(nextAngle);
+      }
       event.preventDefault();
     });
 

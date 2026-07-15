@@ -8557,3 +8557,262 @@ body.archive-body {
     font-size: 8px !important;
   }
 }
+
+
+/* v96 - mobile premium polish + product stability */
+.story-body .buy-intro__dialogue,
+.story-body .dialogue-box {
+  background: linear-gradient(180deg, rgba(235,235,235,0.96), rgba(208,208,208,0.97)) !important;
+  color: #121212 !important;
+  border: 1px solid rgba(16,16,16,0.72) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.65) !important;
+}
+.story-body .buy-intro__speaker,
+.story-body .dialogue-name {
+  color: #111 !important;
+  background: rgba(255,255,255,0.58) !important;
+  border: 1px solid rgba(17,17,17,0.18) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+.story-body .buy-intro__line,
+.story-body .dialogue-text {
+  color: #101010 !important;
+  text-shadow: none !important;
+  font-weight: 700 !important;
+}
+.story-body .buy-intro__dialogue,
+.story-body .dialogue-box {
+  position: relative !important;
+  padding-bottom: 30px !important;
+}
+.story-body .buy-intro__meta {
+  margin-top: 8px !important;
+}
+.story-body .buy-intro__skip,
+.story-body .dialogue-skip {
+  color: rgba(16,16,16,0.82) !important;
+  font-size: 9px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+.story-body .dialogue-skip {
+  position: absolute !important;
+  left: 16px !important;
+  bottom: 10px !important;
+}
+.story-body .dialogue-hint {
+  position: absolute !important;
+  right: 14px !important;
+  bottom: 8px !important;
+  color: #111 !important;
+  opacity: 0.88 !important;
+}
+.story-body .buy-intro__meta .buy-intro__skip {
+  position: absolute !important;
+  left: 16px !important;
+  bottom: 10px !important;
+}
+.story-body .buy-intro__dialogue .buy-intro__prompt {
+  position: absolute !important;
+  right: 14px !important;
+  bottom: 8px !important;
+  color: #111 !important;
+  opacity: 0.88 !important;
+}
+
+.shirt-face-front {
+  transform: translateZ(0.5px) !important;
+}
+.shirt-face-back {
+  transform: rotateY(180deg) translateZ(0.5px) !important;
+}
+.shirt-viewer {
+  perspective: 1450px !important;
+}
+.shirt-360 {
+  transform-style: preserve-3d !important;
+  will-change: transform !important;
+}
+.shirt-face {
+  will-change: transform, opacity !important;
+}
+
+@media (max-width: 700px) {
+  .story-body,
+  .story-body .story-scene,
+  .story-body .buy-intro,
+  .story-body .buy-intro__panel {
+    min-height: 100svh !important;
+  }
+  .story-body .buy-intro__welcome-screen {
+    min-height: calc(100svh - 18px) !important;
+    padding-bottom: 58px !important;
+    overflow: hidden !important;
+  }
+  .story-body .buy-intro__title-copy {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-height: calc(100svh - 22px) !important;
+    padding: 18px 12px 26px !important;
+    box-sizing: border-box !important;
+  }
+  .story-body .buy-intro__series {
+    display: none !important;
+  }
+  .story-body .buy-intro__emerald-title {
+    margin: 20px auto 0 !important;
+    max-width: 15ch !important;
+    text-align: center !important;
+    font-size: clamp(18px, 5.2vw, 24px) !important;
+    line-height: 1.05 !important;
+  }
+  .story-body .buy-intro__emerald-title .title-line {
+    display: block !important;
+  }
+  .story-body .buy-intro__emerald-title .title-line + .title-line {
+    margin-top: 7px !important;
+  }
+  .story-body .buy-intro__prompt--title {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(88vw, 280px) !important;
+    text-align: center !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.06em !important;
+    white-space: normal !important;
+  }
+  .story-body .buy-intro__copyright {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 34px !important;
+    transform: translateX(-50%) !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+  }
+
+  .story-body .buy-intro__dialogue,
+  .story-body .dialogue-box {
+    width: min(100%, 94vw) !important;
+    min-height: 120px !important;
+    padding: 14px 14px 30px !important;
+    border-radius: 16px !important;
+  }
+  .story-body .buy-intro__line,
+  .story-body .dialogue-text {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+  .story-body .dialogue-text {
+    padding-right: 6px !important;
+  }
+  .story-body .dialogue-name,
+  .story-body .buy-intro__speaker {
+    font-size: 10px !important;
+    padding: 5px 10px !important;
+    margin-bottom: 8px !important;
+  }
+  .story-body .dialogue-skip,
+  .story-body .buy-intro__skip {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+  }
+  .story-body .dialogue-hint,
+  .story-body .buy-intro__dialogue .buy-intro__prompt {
+    font-size: 11px !important;
+  }
+  .story-body .story-scene.is-choice .dialogue-box {
+    min-height: 108px !important;
+    padding: 12px 12px 28px !important;
+  }
+  .story-body .story-scene.is-choice .dialogue-text {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  .story-scene.is-choice .starter-row {
+    touch-action: pan-y !important;
+  }
+  .story-scene.is-choice .starter-card,
+  .story-scene.is-choice .starter-card .capsule,
+  .story-scene.is-choice .starter-card .starter-preview,
+  .story-scene.is-choice .starter-card .starter-name {
+    will-change: transform, opacity, filter !important;
+  }
+  .story-scene.is-choice .starter-row.has-touch-hover .starter-card:not(.is-touch-hover) {
+    opacity: .62 !important;
+    transform: scale(.91) translateY(10px) !important;
+  }
+  .story-scene.is-choice .starter-card.is-touch-hover,
+  .story-scene.is-choice .starter-card:active {
+    transform: scale(1.1) translateY(-12px) !important;
+  }
+  .story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
+  .story-scene.is-choice .starter-card:active .starter-preview {
+    transform: translateY(-8px) scale(1.18) !important;
+  }
+
+  .product-file-page {
+    padding-bottom: 96px !important;
+  }
+  .product-file-layout {
+    gap: 12px !important;
+  }
+  .viewer-wrap {
+    gap: 6px !important;
+  }
+  .shirt-viewer {
+    width: min(92vw, 360px) !important;
+    height: min(36vh, 270px) !important;
+    touch-action: none !important;
+  }
+  .product-info-panel {
+    padding: 12px 12px 14px !important;
+    border-radius: 16px !important;
+  }
+  .product-file-tag {
+    margin-bottom: 6px !important;
+  }
+  .product-info-panel h1 {
+    font-size: clamp(30px, 9.8vw, 42px) !important;
+    margin-bottom: 8px !important;
+  }
+  .product-description {
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 10px !important;
+  }
+  .product-specs {
+    margin-bottom: 10px !important;
+  }
+  .checkout-button {
+    position: sticky !important;
+    bottom: 10px !important;
+    z-index: 8 !important;
+    min-height: 44px !important;
+    margin-top: 10px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22) !important;
+  }
+  .product-policy-link,
+  .product-mini-footer {
+    position: fixed !important;
+    bottom: 8px !important;
+    z-index: 30 !important;
+  }
+  .product-mini-footer {
+    left: 10px !important;
+    font-size: 7px !important;
+  }
+  .product-policy-link {
+    right: 10px !important;
+    top: auto !important;
+    font-size: 8px !important;
+  }
+}
