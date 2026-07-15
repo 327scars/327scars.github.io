@@ -83,7 +83,7 @@ function ensureAudio() {
   if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
 }
 
-function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.018) {
+function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.038) {
   ensureAudio();
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
@@ -101,7 +101,7 @@ function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.01
 }
 
 
-function playTone(freq, start, duration, type = "square", gainValue = 0.025) {
+function playTone(freq, start, duration, type = "square", gainValue = 0.052) {
   ensureAudio();
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
@@ -123,8 +123,8 @@ function playTone(freq, start, duration, type = "square", gainValue = 0.025) {
 function playUiSelectSound() {
   ensureAudio();
   if (!audioCtx) return;
-  playTone(620, 0, 0.055, "square", 0.014);
-  playTone(410, 0.052, 0.07, "triangle", 0.011);
+  playTone(660, 0, 0.055, "triangle", 0.034);
+  playTone(430, 0.052, 0.085, "sine", 0.026);
 }
 
 function playWastedLikeSound() {
@@ -136,8 +136,8 @@ function playWastedLikeSound() {
 
   const master = audioCtx.createGain();
   master.gain.setValueAtTime(0.0001, now);
-  master.gain.exponentialRampToValueAtTime(0.052, now + 0.04);
-  master.gain.setValueAtTime(0.046, now + 0.95);
+  master.gain.exponentialRampToValueAtTime(0.096, now + 0.04);
+  master.gain.setValueAtTime(0.084, now + 0.95);
   master.gain.exponentialRampToValueAtTime(0.0001, now + 2.35);
   master.connect(audioCtx.destination);
 
@@ -147,7 +147,7 @@ function playWastedLikeSound() {
   sub.type = "sine";
   sub.frequency.setValueAtTime(48, now);
   sub.frequency.exponentialRampToValueAtTime(31, now + 0.95);
-  subGain.gain.setValueAtTime(0.34, now);
+  subGain.gain.setValueAtTime(0.46, now);
   subGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.05);
   sub.connect(subGain);
   subGain.connect(master);
@@ -201,7 +201,7 @@ function playWastedLikeSound() {
   bp.type = "bandpass";
   bp.frequency.setValueAtTime(260, now + 0.18);
   bp.Q.setValueAtTime(0.55, now + 0.18);
-  noiseGain.gain.setValueAtTime(0.020, now + 0.18);
+  noiseGain.gain.setValueAtTime(0.035, now + 0.18);
   noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.03);
   noise.connect(bp);
   bp.connect(noiseGain);
@@ -217,7 +217,7 @@ function playRetroLoseSound() {
   // Retro losing-jingle style, altered and synthesized.
   const notes = [987.77, 783.99, 659.25, 523.25, 391.99, 329.63, 261.63];
   notes.forEach((freq, index) => {
-    playTone(freq, index * 0.095, 0.115, "square", 0.020);
+    playTone(freq, index * 0.095, 0.125, "square", 0.033);
   });
 
   // small low fall at the end

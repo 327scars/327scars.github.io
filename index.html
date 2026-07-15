@@ -3,21 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SCARS327</title>
-  <meta name="description" content="SCARS327 — PACHAVE PAS. Boutique bientôt disponible." />
-  <meta property="og:title" content="SCARS327" />
-  <meta property="og:description" content="SCARS327 — PACHAVE PAS. Boutique bientôt disponible." />
+  <title>SCARS 327 — Uncased 327 T‑Shirt</title>
+  <meta name="description" content="SCARS 327 — PACHAVE PAS. Uncased 327 T‑Shirt, drop bientôt disponible." />
+
+  <link rel="canonical" href="https://scarsfitseverybody.com/" />
+  <meta property="og:site_name" content="SCARS 327" />
+  <meta property="og:title" content="SCARS 327 — Uncased 327 T‑Shirt" />
+  <meta property="og:description" content="SCARS 327 — PACHAVE PAS. Uncased 327 T‑Shirt, drop bientôt disponible." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://scarsfitseverybody.com/assets/site-logo.png" />
+  <meta property="og:url" content="https://scarsfitseverybody.com/" />
+  <meta property="og:image" content="https://scarsfitseverybody.com/assets/og-preview.png" />
+  <meta property="og:image:alt" content="SCARS 327 — Uncased 327 T-Shirt" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SCARS 327 — Uncased 327 T‑Shirt" />
+  <meta name="twitter:description" content="SCARS 327 — PACHAVE PAS. Uncased 327 T‑Shirt, drop bientôt disponible." />
+  <meta name="twitter:image" content="https://scarsfitseverybody.com/assets/og-preview.png" />
   <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SCARS327","url":"https://scarsfitseverybody.com/","logo":"https://scarsfitseverybody.com/assets/site-logo.png","sameAs":["https://www.instagram.com/327scars"]}</script>
-  <link rel="stylesheet" href="style.css?v=82" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SCARS 327","url":"https://scarsfitseverybody.com/","logo":"https://scarsfitseverybody.com/assets/og-preview.png","sameAs":["https://www.instagram.com/327scars"]}</script>
+  <link rel="preload" as="image" href="assets/site-logo.png" />
+  <link rel="preload" as="image" href="assets/hero-pachave.jpg" />
+  <link rel="stylesheet" href="style.css?v=87" />
 </head>
 <body>
   <div class="access-screen" id="accessScreen" aria-live="polite">
@@ -56,7 +68,7 @@
   </div>
 
   <main>
-    <p class="sr-only">SCARS327 — PACHAVE PAS. Boutique bientôt disponible.</p>
+    <p class="sr-only">SCARS 327 — PACHAVE PAS. Boutique bientôt disponible.</p>
     <section class="page page-home" aria-label="Accueil Scars 327">
       <section class="hero">
         <img src="assets/hero-pachave.jpg" alt="327 PACHAVE PAS!" class="hero-logo" />
@@ -71,6 +83,7 @@
       </section>
 
       <a class="archive-link" href="archive.html">327's archives</a>
+      <a class="policy-link" href="drop-policy.html">drop policy</a>
 
       <p class="bottom-right">BOUTIQUE BIENTÔT DISPO...</p>
     </section>
@@ -121,7 +134,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=59"></script>
+  <script src="script.js?v=87"></script>
 
   <script>
     (function(){
@@ -138,12 +151,12 @@
           osc.frequency.setValueAtTime(720, now);
           osc.frequency.exponentialRampToValueAtTime(980, now + 0.08);
           gain.gain.setValueAtTime(0.0001, now);
-          gain.gain.exponentialRampToValueAtTime(0.06, now + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.09, now + 0.01);
           gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
           osc.connect(gain);
           gain.connect(ctx.destination);
           osc.start(now);
-          osc.stop(now + 0.13);
+          osc.stop(now + 0.16);
           setTimeout(() => { try { ctx.close(); } catch(e) {} }, 180);
         } catch (e) {}
       };

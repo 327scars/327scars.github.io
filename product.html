@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SCARS327 — Uncased 327 T-shirt</title>
-  <meta name="description" content="SCARS327 — Uncased 327 t-shirt product file." />
+  <title>SCARS 327 — Uncased 327 T‑Shirt Product File</title>
+  <meta name="description" content="Fiche produit SCARS 327 — Uncased 327 T‑Shirt. Drop locked, access soon." />
+
+  <link rel="canonical" href="https://scarsfitseverybody.com/product.html" />
+  <meta property="og:site_name" content="SCARS 327" />
+  <meta property="og:title" content="SCARS 327 — Uncased 327 T‑Shirt Product File" />
+  <meta property="og:description" content="Fiche produit SCARS 327 — Uncased 327 T‑Shirt. Drop locked, access soon." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://scarsfitseverybody.com/product.html" />
+  <meta property="og:image" content="https://scarsfitseverybody.com/assets/og-preview.png" />
+  <meta property="og:image:alt" content="SCARS 327 — Uncased 327 T-Shirt" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SCARS 327 — Uncased 327 T‑Shirt Product File" />
+  <meta name="twitter:description" content="Fiche produit SCARS 327 — Uncased 327 T‑Shirt. Drop locked, access soon." />
+  <meta name="twitter:image" content="https://scarsfitseverybody.com/assets/og-preview.png" />
   <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="stylesheet" href="style.css?v=82" />
+  <link rel="stylesheet" href="style.css?v=87" />
 </head>
 <body class="product-file-body">
   <main class="product-file-page" id="productFilePage">
@@ -38,16 +52,23 @@
 
       <aside class="product-info-panel">
         <p class="product-file-tag">UNCASED 327 T-SHIRT</p>
-        <h1 id="productTitle">???</h1>
-        <p class="product-description" id="productDescription">???</p>
+        <h1 id="productTitle">UNCASED 327 T-SHIRT</h1>
+        <p class="product-description" id="productDescription">drop locked — access soon</p>
 
         <dl class="product-specs" id="productSpecs"></dl>
 
-        <a class="checkout-button" href="https://www.instagram.com/327scars?igsh=MW13dHhydmlmdnVoeQ%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" id="checkoutButton">
-          AJOUTER DANS LE PANIER / ADD TO CART — ???
+        <a class="checkout-button" href="#drop-locked" id="checkoutButton">
+          AJOUTER AU PANIER / ADD TO CART
         </a>
       </aside>
     </section>
+
+    <div class="drop-locked-modal" id="dropLockedModal" aria-hidden="true" role="status">
+      <div class="drop-locked-card">
+        <strong>ERROR 327</strong>
+        <span>DROP LOCKED — ACCESS SOON / ACCÈS BIENTÔT</span>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -56,27 +77,27 @@
         hint: "tournez-le / rotate it",
         back: "← retour aux starters",
         modes: { rotate: "360", front: "face avant", back: "face arrière" },
-        checkout: "ajouter dans le panier / add to cart — ???",
+        checkout: "ajouter au panier / add to cart",
         specs: [
-          ["status", "???"],
-          ["drop", "???"],
-          ["prix", "???"],
-          ["tailles", "???"],
-          ["composition", "???"],
-          ["livraison", "???"]
+          ["status", "drop locked"],
+          ["drop", "soon"],
+          ["prix", "à venir"],
+          ["tailles", "XS — XXL"],
+          ["composition", "coton heavyweight — détails bientôt"],
+          ["livraison", "France / international — bientôt"]
         ],
         products: {
           white: {
-            title: "starter blanc — ???",
-            description: "description : ???"
+            title: "starter blanc",
+            description: "description : pièce claire, nette, frontale. Le starter qui expose la trace sans la cacher."
           },
           black: {
-            title: "starter noir — ???",
-            description: "description : ???"
+            title: "starter noir",
+            description: "description : pièce profonde, silencieuse, dense. Le starter qui garde ce qui construit."
           },
           pink: {
-            title: "starter rose — ???",
-            description: "description : ???"
+            title: "starter rose",
+            description: "description : pièce plus risquée, plus vive. Le starter qui transforme la cicatrice en signature."
           }
         }
       },
@@ -84,27 +105,27 @@
         hint: "rotate it / tournez-le",
         back: "← back to starters",
         modes: { rotate: "360", front: "front", back: "back" },
-        checkout: "add to cart / ajouter dans le panier — ???",
+        checkout: "add to cart / ajouter au panier",
         specs: [
-          ["status", "???"],
-          ["drop", "???"],
-          ["price", "???"],
-          ["sizes", "???"],
-          ["composition", "???"],
-          ["shipping", "???"]
+          ["status", "drop locked"],
+          ["drop", "soon"],
+          ["price", "coming soon"],
+          ["sizes", "XS — XXL"],
+          ["composition", "heavyweight cotton — details soon"],
+          ["shipping", "France / international — soon"]
         ],
         products: {
           white: {
-            title: "white starter — ???",
-            description: "description: ???"
+            title: "white starter",
+            description: "description: clean, direct, and exposed. The starter that reveals the mark without hiding it."
           },
           black: {
-            title: "black starter — ???",
-            description: "description: ???"
+            title: "black starter",
+            description: "description: deep, quiet, and dense. The starter that carries what built you."
           },
           pink: {
-            title: "pink starter — ???",
-            description: "description: ???"
+            title: "pink starter",
+            description: "description: bold, vivid, and riskier. The starter that turns the scar into a signature."
           }
         }
       }
@@ -229,6 +250,42 @@
       }
       requestAnimationFrame(tick);
     }
+
+
+    function playDropLockedSound() {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        const ctx = new Ctx();
+        const now = ctx.currentTime;
+        [[540,0,0.055,0.075],[820,0.052,0.075,0.068],[300,0.13,0.16,0.055],[1020,0.20,0.055,0.042]].forEach(([freq,start,dur,vol]) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(freq, now + start);
+          gain.gain.setValueAtTime(0.0001, now + start);
+          gain.gain.exponentialRampToValueAtTime(vol, now + start + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + start);
+          osc.stop(now + start + dur + 0.02);
+        });
+        setTimeout(() => { try { ctx.close(); } catch(e) {} }, 420);
+      } catch (e) {}
+    }
+
+    const dropModal = document.getElementById("dropLockedModal");
+    checkoutButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      playDropLockedSound();
+      dropModal.classList.add("is-visible");
+      dropModal.setAttribute("aria-hidden", "false");
+      window.setTimeout(() => {
+        dropModal.classList.remove("is-visible");
+        dropModal.setAttribute("aria-hidden", "true");
+      }, 1800);
+    });
 
     renderCopy();
     setMode("rotate");

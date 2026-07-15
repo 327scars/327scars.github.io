@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://scarsfitseverybody.com/</loc>
-    <lastmod>2026-07-13</lastmod>
-    <priority>1.0</priority>
-  </url>
-<url><loc>https://scarsfitseverybody.com/story.html</loc></url><url><loc>https://scarsfitseverybody.com/product.html</loc></url></urlset>
+  <url><loc>https://scarsfitseverybody.com/</loc></url>
+  <url><loc>https://scarsfitseverybody.com/story.html</loc></url>
+  <url><loc>https://scarsfitseverybody.com/product.html</loc></url>
+  <url><loc>https://scarsfitseverybody.com/archive.html</loc></url>
+  <url><loc>https://scarsfitseverybody.com/drop-policy.html</loc></url>
+</urlset>

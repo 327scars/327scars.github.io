@@ -3,16 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Story of Uncased 327 T-shirt — SCARS327</title>
-  <meta name="description" content="SCARS327 — The story of uncased 327 t-shirt." />
+  <title>SCARS 327 — The Story of Uncased 327 T‑Shirt</title>
+  <meta name="description" content="Entre dans l’histoire du Uncased 327 T‑Shirt et choisis ton starter." />
+
+  <link rel="canonical" href="https://scarsfitseverybody.com/story.html" />
+  <meta property="og:site_name" content="SCARS 327" />
+  <meta property="og:title" content="SCARS 327 — The Story of Uncased 327 T‑Shirt" />
+  <meta property="og:description" content="Entre dans l’histoire du Uncased 327 T‑Shirt et choisis ton starter." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://scarsfitseverybody.com/story.html" />
+  <meta property="og:image" content="https://scarsfitseverybody.com/assets/og-preview.png" />
+  <meta property="og:image:alt" content="SCARS 327 — Uncased 327 T-Shirt" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SCARS 327 — The Story of Uncased 327 T‑Shirt" />
+  <meta name="twitter:description" content="Entre dans l’histoire du Uncased 327 T‑Shirt et choisis ton starter." />
+  <meta name="twitter:image" content="https://scarsfitseverybody.com/assets/og-preview.png" />
   <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="stylesheet" href="style.css?v=82" />
+  <link rel="preload" as="image" href="assets/mentor-c3h2e7n-v5.png" />
+  <link rel="stylesheet" href="style.css?v=87" />
 </head>
 <body class="story-body">
   <main class="story-scene" id="storyScene">
@@ -60,7 +75,7 @@
             <div class="buy-intro__entry-character buy-intro__entry-character--mentor"></div>
           </div>
           <div class="buy-intro__dialogue buy-intro__dialogue--boarding">
-            <div class="buy-intro__speaker" id="boardingSpeaker">MENTOR C3H2E7N</div>
+            <div class="buy-intro__speaker" id="boardingSpeaker">MENTOR MINABLE</div>
             <p class="buy-intro__line" id="boardingCopy">la livraison du prochain drop part avant l'aube... on monte avant qu'il reparte.</p>
             <div class="buy-intro__meta">
               <span class="buy-intro__skip" id="boardingSkip">clique pour afficher plus vite</span>
@@ -87,7 +102,7 @@
             </div>
           </div>
           <div class="buy-intro__dialogue">
-            <div class="buy-intro__speaker" id="introSpeaker">MENTOR C3H2E7N</div>
+            <div class="buy-intro__speaker" id="introSpeaker">MENTOR MINABLE</div>
             <p class="buy-intro__line" id="introLine">...</p>
             <div class="buy-intro__meta">
               <span class="buy-intro__skip" id="introSkip">clique pour afficher plus vite</span>
@@ -125,7 +140,7 @@
       </div>
 
       <div class="dialogue-box" id="dialogueBox" role="button" tabindex="0">
-        <span class="dialogue-name" id="professorName">Mentor c3h2e7n</span>
+        <span class="dialogue-name" id="professorName">Mentor Minable</span>
         <p class="dialogue-text" id="dialogueText"></p>
         <span class="dialogue-skip" id="dialogueSkip">cliquer pour afficher plus vite</span>
         <span class="dialogue-hint">▼</span>
@@ -169,7 +184,7 @@
 
     const copy = {
       fr: {
-        professor: "Mentor c3h2e7n",
+        professor: "Mentor Minable",
         speed: "cliquer pour afficher plus vite",
         backShop: "← retour à la boutique",
         starters: {
@@ -192,7 +207,7 @@
           boarding: "la livraison du prochain drop part avant l'aube... on monte avant qu'il reparte."
         },
         intro: {
-          speaker: "MENTOR C3H2E7N",
+          speaker: "MENTOR MINABLE",
           skip: "clique pour afficher plus vite",
           prompt: "▼",
           skipCinematic: "passer la cinématique",
@@ -205,7 +220,7 @@
         }
       },
       en: {
-        professor: "Mentor c3h2e7n",
+        professor: "Lousy Mentor",
         speed: "click to reveal faster",
         backShop: "← back to shop",
         starters: {
@@ -228,7 +243,7 @@
           boarding: "the next drop leaves before dawn... we climb in before it pulls away."
         },
         intro: {
-          speaker: "MENTOR C3H2E7N",
+          speaker: "LOUSY MENTOR",
           skip: "click to reveal faster",
           prompt: "▼",
           skipCinematic: "skip cinematic",
@@ -263,7 +278,7 @@
       if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
     }
 
-    function tone(freq, start, duration, type = "square", volume = 0.016) {
+    function tone(freq, start, duration, type = "square", volume = 0.034) {
       ensureAudio();
       if (!audioCtx) return;
       const osc = audioCtx.createOscillator();
@@ -271,7 +286,7 @@
       osc.type = type;
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
       gain.gain.setValueAtTime(0.0001, audioCtx.currentTime + start);
-      gain.gain.exponentialRampToValueAtTime(volume, audioCtx.currentTime + start + 0.008);
+      gain.gain.exponentialRampToValueAtTime(volume, audioCtx.currentTime + start + 0.014);
       gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + start + duration);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -280,8 +295,8 @@
     }
 
     function clickBlip() {
-      tone(760, 0, 0.055, "square", 0.015);
-      tone(520, 0.045, 0.06, "triangle", 0.010);
+      tone(760, 0, 0.055, "triangle", 0.034);
+      tone(520, 0.045, 0.06, "sine", 0.024);
     }
 
     function simsTalk() {
@@ -289,27 +304,27 @@
       if (!audioCtx) return;
       for (let i = 0; i < 4; i += 1) {
         const freq = 310 + Math.random() * 260;
-        tone(freq, i * 0.05, 0.055, i % 2 ? "triangle" : "square", 0.009);
+        tone(freq, i * 0.05, 0.055, i % 2 ? "triangle" : "square", 0.026);
       }
     }
 
     function starterOpenSound() {
-      tone(530, 0, 0.08, "square", 0.020);
-      tone(850, 0.08, 0.09, "square", 0.018);
-      tone(1280, 0.18, 0.15, "triangle", 0.020);
-      tone(220, 0.32, 0.26, "sine", 0.016);
+      tone(530, 0, 0.08, "square", 0.032);
+      tone(850, 0.08, 0.09, "square", 0.028);
+      tone(1280, 0.18, 0.15, "triangle", 0.032);
+      tone(220, 0.32, 0.26, "sine", 0.026);
     }
 
     function truckStartSound() {
-      tone(120, 0.00, 0.22, "sawtooth", 0.010);
-      tone(155, 0.20, 0.24, "square", 0.010);
-      tone(190, 0.38, 0.15, "triangle", 0.008);
+      tone(120, 0.00, 0.22, "sawtooth", 0.017);
+      tone(155, 0.20, 0.24, "square", 0.017);
+      tone(190, 0.38, 0.15, "triangle", 0.014);
     }
 
     function boardingSound() {
       tone(170, 0, 0.12, "sawtooth", 0.01);
-      tone(260, 0.12, 0.08, "square", 0.012);
-      tone(390, 0.24, 0.07, "triangle", 0.010);
+      tone(260, 0.12, 0.08, "square", 0.020);
+      tone(390, 0.24, 0.07, "triangle", 0.017);
     }
 
     function setWelcomeCopy() {
