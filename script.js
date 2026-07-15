@@ -83,7 +83,7 @@ function ensureAudio() {
   if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
 }
 
-function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.038) {
+function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.052) {
   ensureAudio();
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
@@ -101,7 +101,7 @@ function playBeep(freq = 540, duration = 0.05, type = "square", gainValue = 0.03
 }
 
 
-function playTone(freq, start, duration, type = "square", gainValue = 0.052) {
+function playTone(freq, start, duration, type = "square", gainValue = 0.066) {
   ensureAudio();
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
@@ -665,6 +665,14 @@ if (DIRECT_SHOP_ENTRY) {
       const nextFace = card.dataset.manualFace === 'back' ? 'front' : 'back';
       applyManualFace(card, nextFace);
     }, { passive: false });
+    card.addEventListener('keydown', function (event) {
+      if (!mobileQuery.matches) return;
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      const nextFace = card.dataset.manualFace === 'back' ? 'front' : 'back';
+      applyManualFace(card, nextFace);
+    });
+    card.dataset.mobileFlipKeyBound = 'true';
   }
 
   cards.forEach(bindCard);

@@ -14,11 +14,12 @@
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="stylesheet" href="style.css?v=87" />
+  <link rel="stylesheet" href="style.css?v=93" />
 </head>
 <body class="policy-body">
   <main class="policy-page">
-    <a class="story-back" href="index.html?shop=1">← retour à la boutique / back to shop</a>
+    <a class="story-back" id="policyBackLink" href="product.html?item=black&lang=fr">← retour au starter / back to starter</a>
+    <p class="policy-route-hint" id="policyRouteHint">retourne au starter sélectionné</p>
     <section class="policy-card">
       <p class="product-file-tag">SCARS 327</p>
       <h1>DROP POLICY</h1>
@@ -37,6 +38,17 @@
         </article>
       </div>
     </section>
+    <footer class="policy-footer">SCARS 327 ©2026 · DROP LOCKED</footer>
   </main>
+  <script>
+    const policyParams = new URLSearchParams(window.location.search);
+    const policyItem = policyParams.get("item") || "black";
+    const policyLang = policyParams.get("lang") || localStorage.getItem("scars327_lang") || "fr";
+    const policyBack = document.getElementById("policyBackLink");
+    if (policyBack) {
+      policyBack.href = `product.html?item=${policyItem}&lang=${policyLang}`;
+      policyBack.textContent = policyLang === "en" ? "← back to starter" : "← retour au starter";
+    }
+  </script>
 </body>
 </html>

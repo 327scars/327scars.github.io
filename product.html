@@ -21,11 +21,12 @@
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="stylesheet" href="style.css?v=87" />
+  <link rel="stylesheet" href="style.css?v=93" />
 </head>
 <body class="product-file-body">
   <main class="product-file-page" id="productFilePage">
     <a class="story-back" id="backToStarters" href="story.html?phase=choice">← retour aux starters</a>
+    <a class="product-policy-link" id="dropPolicyLink" href="drop-policy.html">drop policy</a>
 
     <div class="language-switch product-language-switch" aria-label="Choisir la langue">
       <button class="lang-button is-active" type="button" data-lang="fr">🇫🇷 FR</button>
@@ -51,6 +52,7 @@
       </div>
 
       <aside class="product-info-panel">
+        <p class="product-route-hint" id="productRouteHint">starter choisi · retourne aux starters pour changer</p>
         <p class="product-file-tag">UNCASED 327 T-SHIRT</p>
         <h1 id="productTitle">UNCASED 327 T-SHIRT</h1>
         <p class="product-description" id="productDescription">drop locked — access soon</p>
@@ -69,6 +71,8 @@
         <span>DROP LOCKED — ACCESS SOON / ACCÈS BIENTÔT</span>
       </div>
     </div>
+
+    <footer class="product-mini-footer">SCARS 327 ©2026 · PRODUCT FILE</footer>
   </main>
 
   <script>
@@ -78,6 +82,7 @@
         back: "← retour aux starters",
         modes: { rotate: "360", front: "face avant", back: "face arrière" },
         checkout: "ajouter au panier / add to cart",
+        route: "starter choisi · retourne aux starters pour changer",
         specs: [
           ["status", "drop locked"],
           ["drop", "soon"],
@@ -106,6 +111,7 @@
         back: "← back to starters",
         modes: { rotate: "360", front: "front", back: "back" },
         checkout: "add to cart / ajouter au panier",
+        route: "starter chosen · back to starters to change",
         specs: [
           ["status", "drop locked"],
           ["drop", "soon"],
@@ -151,7 +157,9 @@
     const specsEl = document.getElementById("productSpecs");
     const hintEl = document.getElementById("viewerHint");
     const backLink = document.getElementById("backToStarters");
+    const policyLink = document.getElementById("dropPolicyLink");
     const checkoutButton = document.getElementById("checkoutButton");
+    const routeHintEl = document.getElementById("productRouteHint");
     const modeButtons = document.querySelectorAll(".viewer-mode-button");
     const langButtons = document.querySelectorAll(".lang-button");
 
@@ -186,6 +194,8 @@
       backLink.textContent = langPack.back;
       backLink.href = `story.html?phase=choice&lang=${lang}&item=${item}`;
       checkoutButton.textContent = langPack.checkout;
+      if (routeHintEl) routeHintEl.textContent = langPack.route;
+      if (policyLink) policyLink.href = `drop-policy.html?item=${item}&lang=${lang}`;
 
       specsEl.innerHTML = langPack.specs.map(([key, value]) => `<div><dt>${key}</dt><dd>${value}</dd></div>`).join("");
 
@@ -258,7 +268,7 @@
         if (!Ctx) return;
         const ctx = new Ctx();
         const now = ctx.currentTime;
-        [[540,0,0.055,0.075],[820,0.052,0.075,0.068],[300,0.13,0.16,0.055],[1020,0.20,0.055,0.042]].forEach(([freq,start,dur,vol]) => {
+        [[540,0,0.055,0.11],[820,0.052,0.075,0.10],[300,0.13,0.16,0.075],[1020,0.20,0.055,0.065]].forEach(([freq,start,dur,vol]) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = "square";

@@ -27,10 +27,11 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preload" as="image" href="assets/mentor-c3h2e7n-v5.png" />
-  <link rel="stylesheet" href="style.css?v=87" />
+  <link rel="stylesheet" href="style.css?v=93" />
 </head>
 <body class="story-body">
   <main class="story-scene" id="storyScene">
+    <div class="story-route-guide" id="storyRouteGuide">clique pour continuer · choisis ton starter</div>
     <a class="story-back" id="storyBackShop" href="index.html?shop=1#black-shirt">← back to shop</a>
 
     <div class="language-switch" aria-label="Choisir la langue">
@@ -117,24 +118,25 @@
     <section class="story-game" aria-label="The story of uncased 327 t-shirt">
       <div class="professor-area">
         <div class="professor-sprite" aria-hidden="true"></div>
+        <div class="starter-choice-guide" id="starterChoiceGuide">choisis ton starter</div>
 
         <div class="starter-row" id="starterRow" aria-label="Choisir un starter">
           <a class="starter-card" data-item="white" href="product.html?item=white">
             <div class="capsule" aria-hidden="true"></div>
             <img class="starter-preview" src="assets/white-shirt-front-v55.png" alt="T-shirt blanc Scars327" />
-            <span class="starter-name" data-key="whiteStarter">starter blanc</span>
+            <span class="starter-name" data-key="whiteStarter">starter blanc</span><span class="starter-action-label">choisir</span>
           </a>
 
           <a class="starter-card starter-card-black" data-item="black" href="product.html?item=black">
             <div class="capsule" aria-hidden="true"></div>
             <img class="starter-preview" src="assets/black-shirt-front-v55.png" alt="T-shirt noir Scars327" />
-            <span class="starter-name" data-key="blackStarter">starter noir</span>
+            <span class="starter-name" data-key="blackStarter">starter noir</span><span class="starter-action-label">choisir</span>
           </a>
 
           <a class="starter-card" data-item="pink" href="product.html?item=pink">
             <div class="capsule" aria-hidden="true"></div>
             <img class="starter-preview" src="assets/pink-shirt-front-v55.png" alt="T-shirt rose Scars327" />
-            <span class="starter-name" data-key="pinkStarter">starter rose</span>
+            <span class="starter-name" data-key="pinkStarter">starter rose</span><span class="starter-action-label">choisir</span>
           </a>
         </div>
       </div>
@@ -158,6 +160,9 @@
     const backShopEl = document.getElementById("storyBackShop");
     const langButtons = document.querySelectorAll(".lang-button");
     const starterNames = document.querySelectorAll(".starter-name");
+    const starterChoiceGuide = document.getElementById("starterChoiceGuide");
+    const storyRouteGuide = document.getElementById("storyRouteGuide");
+    const starterActionLabels = document.querySelectorAll(".starter-action-label");
     const starterCards = document.querySelectorAll(".starter-card");
 
     const buyIntro = document.getElementById("buyIntro");
@@ -187,6 +192,9 @@
         professor: "Mentor Minable",
         speed: "cliquer pour afficher plus vite",
         backShop: "← retour à la boutique",
+        routeGuide: "clique pour continuer · choisis ton starter",
+        starterChoiceGuide: "choisis ton starter",
+        starterAction: "choisir",
         starters: {
           whiteStarter: "starter blanc",
           blackStarter: "starter noir",
@@ -223,6 +231,9 @@
         professor: "Lousy Mentor",
         speed: "click to reveal faster",
         backShop: "← back to shop",
+        routeGuide: "click to continue · choose your starter",
+        starterChoiceGuide: "choose your starter",
+        starterAction: "choose",
         starters: {
           whiteStarter: "white starter",
           blackStarter: "black starter",
@@ -278,7 +289,7 @@
       if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
     }
 
-    function tone(freq, start, duration, type = "square", volume = 0.034) {
+    function tone(freq, start, duration, type = "square", volume = 0.044) {
       ensureAudio();
       if (!audioCtx) return;
       const osc = audioCtx.createOscillator();
@@ -351,6 +362,9 @@
       dialogueSkip.textContent = copy[lang].speed;
       backShopEl.textContent = copy[lang].backShop;
       backShopEl.href = `index.html?shop=1#black-shirt`;
+      if (starterChoiceGuide) starterChoiceGuide.textContent = copy[lang].starterChoiceGuide;
+      if (storyRouteGuide) storyRouteGuide.textContent = copy[lang].routeGuide;
+      starterActionLabels.forEach((item) => { item.textContent = copy[lang].starterAction; });
       starterNames.forEach((item) => {
         item.textContent = copy[lang].starters[item.dataset.key];
       });

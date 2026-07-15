@@ -29,7 +29,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SCARS 327","url":"https://scarsfitseverybody.com/","logo":"https://scarsfitseverybody.com/assets/og-preview.png","sameAs":["https://www.instagram.com/327scars"]}</script>
   <link rel="preload" as="image" href="assets/site-logo.png" />
   <link rel="preload" as="image" href="assets/hero-pachave.jpg" />
-  <link rel="stylesheet" href="style.css?v=87" />
+  <link rel="stylesheet" href="style.css?v=93" />
 </head>
 <body>
   <div class="access-screen" id="accessScreen" aria-live="polite">
@@ -68,6 +68,7 @@
   </div>
 
   <main>
+    <div class="site-guide" aria-hidden="true">scroll pour explorer</div>
     <p class="sr-only">SCARS 327 — PACHAVE PAS. Boutique bientôt disponible.</p>
     <section class="page page-home" aria-label="Accueil Scars 327">
       <section class="hero">
@@ -83,36 +84,44 @@
       </section>
 
       <a class="archive-link" href="archive.html">327's archives</a>
-      <a class="policy-link" href="drop-policy.html">drop policy</a>
 
       <p class="bottom-right">BOUTIQUE BIENTÔT DISPO...</p>
     </section>
 
     <section class="page product-page product-page-white" aria-label="T-shirt blanc Scars 327" id="white-shirt">
-      <div class="product-card" aria-label="T-shirt blanc avant et dos">
+      <div class="product-card js-flip-card" role="button" tabindex="0" aria-label="T-shirt blanc avant et dos — touche pour retourner">
         <img src="assets/white-shirt-front-v55.png" alt="T-shirt blanc Scars 327 devant" class="product-shirt product-front product-white" />
         <img src="assets/white-shirt-back-v55.png" alt="T-shirt blanc Scars 327 dos" class="product-shirt product-back product-white-back" />
+        <span class="tap-flip-hint">toucher pour voir / tap to flip</span>
       </div>
       <a class="buy-card" href="story.html?item=white" aria-label="Ouvrir l'histoire du t-shirt blanc"><strong>BUY / ACHETER</strong></a>
     </section>
 
     <section class="page product-page product-page-black" aria-label="T-shirt noir Scars 327" id="black-shirt">
-      <div class="product-card" aria-label="T-shirt noir avant et dos">
+      <div class="product-card js-flip-card" role="button" tabindex="0" aria-label="T-shirt noir avant et dos — touche pour retourner">
         <img src="assets/black-shirt-front-v55.png" alt="T-shirt noir Scars 327 devant" class="product-shirt product-front product-black" />
         <img src="assets/black-shirt-back-v55.png" alt="T-shirt noir Scars 327 dos" class="product-shirt product-back product-black-back" />
+        <span class="tap-flip-hint">toucher pour voir / tap to flip</span>
       </div>
       <a class="buy-card buy-card-dark" href="story.html?item=black" aria-label="Ouvrir l'histoire du t-shirt noir"><strong>BUY / ACHETER</strong></a>
     </section>
 
     <section class="page product-page product-page-pink" aria-label="T-shirt rose Scars 327" id="pink-shirt">
       <div class="pink-glow" aria-hidden="true"></div>
-      <div class="product-card" aria-label="T-shirt rose avant et version noire">
+      <div class="product-card js-flip-card" role="button" tabindex="0" aria-label="T-shirt rose avant et dos — touche pour retourner">
         <img src="assets/pink-shirt-front-v55.png" alt="T-shirt rose Scars 327 devant" class="product-shirt product-front product-pink" />
         <img src="assets/pink-shirt-back-v55.png" alt="T-shirt rose Scars 327 dos version noire" class="product-shirt product-back product-pink-back" />
+        <span class="tap-flip-hint">toucher pour voir / tap to flip</span>
       </div>
       <a class="buy-card" href="story.html?item=pink" aria-label="Ouvrir l'histoire du t-shirt rose"><strong>BUY / ACHETER</strong></a>
     </section>
   </main>
+
+  <footer class="site-footer" aria-label="SCARS 327 footer">
+    <span>SCARS 327 ©2026</span>
+    <a href="https://www.instagram.com/327scars?igsh=MW13dHhydmlmdnVoeQ%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+    <span>DROP LOCKED</span>
+  </footer>
 
   <div class="stay-overlay" id="stayOverlay" aria-hidden="true">
     <div class="stay-card stay-card-wasted" id="wastedOverlay">
@@ -134,7 +143,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=87"></script>
+  <script src="script.js?v=93"></script>
 
   <script>
     (function(){
@@ -151,7 +160,7 @@
           osc.frequency.setValueAtTime(720, now);
           osc.frequency.exponentialRampToValueAtTime(980, now + 0.08);
           gain.gain.setValueAtTime(0.0001, now);
-          gain.gain.exponentialRampToValueAtTime(0.09, now + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.13, now + 0.01);
           gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
           osc.connect(gain);
           gain.connect(ctx.destination);
