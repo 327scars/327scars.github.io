@@ -8966,3 +8966,99 @@ body.archive-body {
     letter-spacing: 0.10em !important;
   }
 }
+
+
+/* v98 - final mobile micro polish requested */
+@media (max-width: 700px) {
+  /* Keep welcome exactly like v97, only place copyright under the continue line */
+  .story-body .buy-intro__prompt--title {
+    top: 198px !important;
+  }
+
+  .story-body .buy-intro__copyright {
+    top: 222px !important;
+    bottom: auto !important;
+    font-size: clamp(8px, 2.25vw, 9px) !important;
+    line-height: 1 !important;
+  }
+
+  /* Starter choice dialogue: same premium box, tighter text so the phrases sit on ~2 lines */
+  .story-body .story-scene.is-choice .dialogue-box {
+    width: min(100%, 94vw) !important;
+    min-height: 120px !important;
+    padding: 14px 14px 30px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, rgba(235,235,235,0.96), rgba(208,208,208,0.97)) !important;
+    color: #121212 !important;
+    border: 1px solid rgba(16,16,16,0.72) !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.65) !important;
+  }
+
+  .story-body .story-scene.is-choice .dialogue-text {
+    font-size: 12px !important;
+    line-height: 1.42 !important;
+    font-weight: 700 !important;
+    color: #101010 !important;
+    margin: 8px 0 12px !important;
+  }
+
+  .story-body .story-scene.is-choice .dialogue-name {
+    font-size: 10px !important;
+    padding: 5px 10px !important;
+    margin-bottom: 8px !important;
+    color: #111 !important;
+    background: rgba(255,255,255,0.58) !important;
+    border: 1px solid rgba(17,17,17,0.18) !important;
+    border-radius: 999px !important;
+  }
+
+  .story-body .story-scene.is-choice .dialogue-skip {
+    position: absolute !important;
+    left: 16px !important;
+    bottom: 10px !important;
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    color: rgba(16,16,16,0.82) !important;
+  }
+
+  .story-body .story-scene.is-choice .dialogue-hint {
+    position: absolute !important;
+    right: 14px !important;
+    bottom: 8px !important;
+    font-size: 11px !important;
+    color: #111 !important;
+  }
+
+  /* Align footer + drop policy on the exact same baseline */
+  .product-mini-footer,
+  .product-policy-link {
+    position: fixed !important;
+    bottom: 12px !important;
+    top: auto !important;
+    z-index: 1503 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    min-height: 0 !important;
+    height: auto !important;
+    line-height: 1 !important;
+    display: block !important;
+    transform: none !important;
+  }
+
+  .product-mini-footer {
+    left: 10px !important;
+    right: auto !important;
+    font-size: 7px !important;
+    letter-spacing: 0.08em !important;
+    white-space: nowrap !important;
+  }
+
+  .product-policy-link {
+    right: 10px !important;
+    left: auto !important;
+    font-size: 7px !important;
+    letter-spacing: 0.08em !important;
+    text-align: right !important;
+  }
+}
