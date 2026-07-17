@@ -751,3 +751,42 @@ if (DIRECT_SHOP_ENTRY) {
   });
 })();
 
+
+
+/* v103 - robust access start + restore flip hints */
+(function () {
+  const access = document.getElementById('accessScreen');
+  const touch = document.getElementById('touchBox');
+  if (document.body) {
+    document.body.classList.remove('flip-hint-seen', 'has-flipped-shirt');
+  }
+  try { localStorage.removeItem('scars327_flip_hint_seen'); } catch (e) {}
+
+  function safeStart(event) {
+    if (document.body.classList.contains('access-login') || document.body.classList.contains('access-done')) return;
+    const target = event && event.target;
+    if (target && target.closest && target.closest('.login-panel')) return;
+    if (typeof runAccessSequence === 'function') {
+      if (event) event.preventDefault();
+      runAccessSequence();
+    }
+  }
+
+  if (access) {
+    access.addEventListener('pointerup', safeStart, { passive: false });
+    access.addEventListener('touchend', safeStart, { passive: false });
+    access.addEventListener('click', safeStart, { passive: false });
+  }
+  if (touch) {
+    touch.addEventListener('pointerup', safeStart, { passive: false });
+  }
+
+  function markFlipHintSeen() {
+    document.body.classList.add('flip-hint-seen', 'has-flipped-shirt');
+  }
+  document.querySelectorAll('.product-card').forEach((card) => {
+    card.addEventListener('click', markFlipHintSeen, { once: true, passive: true });
+    card.addEventListener('touchstart', markFlipHintSeen, { once: true, passive: true });
+    card.addEventListener('pointerdown', markFlipHintSeen, { once: true, passive: true });
+  });
+})();
