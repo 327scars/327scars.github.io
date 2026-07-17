@@ -737,3 +737,39 @@ if (DIRECT_SHOP_ENTRY) {
     card.addEventListener('pointerdown', seen, { passive: true });
   });
 })();
+
+
+/* v124 — tap flip and scroll guide only. TOUCH HERE and welcome logic untouched. */
+(function () {
+  const body = document.body;
+  const guide = document.querySelector('.site-guide');
+
+  if (guide && !body.dataset.scrollGuideV124) {
+    body.dataset.scrollGuideV124 = 'true';
+    let done = false;
+    const startY = window.scrollY || document.documentElement.scrollTop || 0;
+    const hideGuide = () => {
+      if (done) return;
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      if (Math.abs(y - startY) < 8) return;
+      done = true;
+      body.classList.add('site-guide-dismissed');
+      guide.classList.add('is-hidden');
+      window.removeEventListener('scroll', hideGuide);
+      window.removeEventListener('touchmove', hideGuide);
+      window.removeEventListener('wheel', hideGuide);
+    };
+    window.addEventListener('scroll', hideGuide, { passive: true });
+    window.addEventListener('touchmove', hideGuide, { passive: true });
+    window.addEventListener('wheel', hideGuide, { passive: true });
+  }
+
+  document.querySelectorAll('.product-card').forEach((card) => {
+    if (card.dataset.tapFlipDirectiveBound === 'true') return;
+    card.dataset.tapFlipDirectiveBound = 'true';
+    const seen = () => body.classList.add('has-flipped-shirt', 'flip-hint-seen');
+    card.addEventListener('click', seen, { passive: true });
+    card.addEventListener('touchstart', seen, { passive: true });
+    card.addEventListener('pointerdown', seen, { passive: true });
+  });
+})();
