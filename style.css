@@ -9359,51 +9359,32 @@ body.site-guide-dismissed .site-guide,
 }
 
 
-/* v124 — revert welcome layout, only restore prompt + mobile tap directives
-   TOUCH HERE / 327 animation / existing welcome screen untouched */
+/* v125 — MOBILE ONLY: welcome touch prompt + tap-to-flip directive
+   No desktop change. TOUCH HERE untouched. */
 
-/* Keep welcome prompt visible without changing the original welcome layout */
-.story-body .buy-intro__prompt--title,
-.story-body #welcomePrompt {
-  display: block !important;
-  visibility: visible !important;
-  opacity: .94 !important;
-  pointer-events: none !important;
-  white-space: nowrap !important;
-  text-align: center !important;
-}
-
-/* Mobile: place "clique ou touche..." in the original empty middle zone, without resizing the title */
-@media (max-width: 700px) {
-  .story-body .buy-intro__prompt--title,
-  .story-body #welcomePrompt {
-    position: absolute !important;
-    left: 50% !important;
-    top: auto !important;
-    bottom: 74px !important;
-    transform: translateX(-50%) !important;
-    width: max-content !important;
-    max-width: calc(100vw - 34px) !important;
-    margin: 0 !important;
-    font-size: clamp(8px, 2.35vw, 10px) !important;
-    line-height: 1.18 !important;
-    letter-spacing: .045em !important;
-    color: rgba(255,255,255,.92) !important;
-    text-shadow: 0 2px 0 rgba(0,0,0,.7), 0 0 10px rgba(255,255,255,.12) !important;
-    z-index: 9 !important;
-  }
-
-  .story-body .buy-intro__copyright {
-    bottom: 32px !important;
-  }
-}
-
-/* Tap-to-flip directive: mobile only, disappears after first interaction */
+/* Desktop stays untouched */
 .tap-flip-hint {
   display: none !important;
 }
 
 @media (max-width: 700px) {
+  /* Welcome screen: only add/show "clique ou touche pour continuer" on mobile */
+  .story-body .buy-intro__prompt--title,
+  .story-body #welcomePrompt {
+    display: block !important;
+    visibility: visible !important;
+    opacity: .94 !important;
+    pointer-events: none !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    color: rgba(255,255,255,.92) !important;
+    text-shadow: 0 2px 0 rgba(0,0,0,.72), 0 0 10px rgba(255,255,255,.12) !important;
+    font-size: clamp(8px, 2.35vw, 10px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: .045em !important;
+  }
+
+  /* Tap to flip: visible only on mobile */
   .tap-flip-hint {
     display: block !important;
     opacity: .86 !important;
@@ -9415,19 +9396,11 @@ body.site-guide-dismissed .site-guide,
     transition: opacity .35s ease, transform .35s ease, visibility .35s ease !important;
   }
 
-  body.flip-hint-seen .tap-flip-hint,
-  body.has-flipped-shirt .tap-flip-hint {
+  /* Disappears after first real interaction */
+  body.has-flipped-shirt .tap-flip-hint,
+  body.flip-hint-seen .tap-flip-hint {
     opacity: 0 !important;
     visibility: hidden !important;
     transform: translateX(-50%) translateY(6px) !important;
   }
-}
-
-/* Scroll guide: disappears once the user actually scrolls */
-body.site-guide-dismissed .site-guide,
-.site-guide.is-hidden {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transform: translateX(-50%) translateY(10px) !important;
 }
