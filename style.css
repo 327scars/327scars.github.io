@@ -9490,3 +9490,161 @@ body.site-guide-dismissed .site-guide,
     font-size: 11px !important;
   }
 }
+
+
+/* v123 — photo correction: welcome mobile balanced
+   TOUCH HERE / animation 327 / story logic untouched */
+
+@media (max-width: 700px) {
+  .story-body .buy-intro__welcome-screen {
+    min-height: 100svh !important;
+    overflow: hidden !important;
+  }
+
+  /* Keep the truck scene at the top, but don't let text crash into it */
+  .story-body .buy-intro__title-stage {
+    position: relative !important;
+    height: 42svh !important;
+    min-height: 285px !important;
+    max-height: 360px !important;
+  }
+
+  /* Main copy becomes a clean mobile stack */
+  .story-body .buy-intro__title-copy {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: calc(env(safe-area-inset-bottom) + 112px) !important;
+    transform: translateX(-50%) !important;
+    width: min(88vw, 390px) !important;
+    max-width: 390px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
+    z-index: 22 !important;
+    pointer-events: none !important;
+  }
+
+  /* Fix: title was way too big and cropped on both sides */
+  .story-body .buy-intro__emerald-title,
+  .story-body #welcomeTitle {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 20px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    font-size: clamp(15px, 5.15vw, 23px) !important;
+    line-height: 1.16 !important;
+    letter-spacing: .018em !important;
+    text-wrap: balance !important;
+    z-index: 23 !important;
+  }
+
+  .story-body .buy-intro__emerald-title .title-line,
+  .story-body #welcomeTitle .title-line {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+  }
+
+  /* Prompt stays visible but not oversized */
+  .story-body .buy-intro__prompt--title,
+  .story-body #welcomePrompt {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: .96 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 18px !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    font-size: clamp(7px, 2.05vw, 9px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: .045em !important;
+    color: rgba(255,255,255,.92) !important;
+    text-shadow: 0 2px 0 rgba(0,0,0,.78), 0 0 10px rgba(255,255,255,.12) !important;
+    z-index: 24 !important;
+    pointer-events: none !important;
+  }
+
+  .story-body .buy-intro__copyright,
+  .story-body #welcomeSub {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    font-size: clamp(8px, 2.7vw, 12px) !important;
+    letter-spacing: .065em !important;
+    line-height: 1.1 !important;
+    z-index: 23 !important;
+  }
+
+  /* Button stays above Safari bar, not floating too high */
+  .story-body .buy-intro__skip-button,
+  .story-body #introSkipButton {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: calc(env(safe-area-inset-bottom) + 22px) !important;
+    transform: translateX(-50%) !important;
+    width: min(76vw, 360px) !important;
+    max-width: calc(100vw - 36px) !important;
+    min-height: 46px !important;
+    padding: 0 18px !important;
+    z-index: 40 !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .story-body .buy-intro__title-stage {
+    height: 40svh !important;
+    min-height: 270px !important;
+  }
+
+  .story-body .buy-intro__title-copy {
+    bottom: calc(env(safe-area-inset-bottom) + 104px) !important;
+    width: min(90vw, 350px) !important;
+  }
+
+  .story-body .buy-intro__emerald-title,
+  .story-body #welcomeTitle {
+    margin-bottom: 18px !important;
+    font-size: clamp(14px, 4.95vw, 20px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: .012em !important;
+  }
+
+  .story-body .buy-intro__prompt--title,
+  .story-body #welcomePrompt {
+    margin-bottom: 16px !important;
+    font-size: 7px !important;
+    letter-spacing: .035em !important;
+  }
+
+  .story-body .buy-intro__copyright,
+  .story-body #welcomeSub {
+    font-size: 8px !important;
+    letter-spacing: .055em !important;
+  }
+}
