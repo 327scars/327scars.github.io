@@ -702,123 +702,38 @@ if (DIRECT_SHOP_ENTRY) {
 })();
 
 
-
-
-/* v101 — polished guide/helpers behavior */
+/* v120 — scroll guide + tap helper only. TOUCH HERE untouched. */
 (function () {
   const body = document.body;
   const guide = document.querySelector('.site-guide');
 
   function hideGuide() {
-    sessionStorage.setItem('scars327_scrollGuideDismissed', '1');
     body.classList.add('site-guide-dismissed');
-    body.classList.remove('site-guide-countdown');
     if (guide) guide.classList.add('is-hidden');
   }
 
-  if (sessionStorage.getItem('scars327_scrollGuideDismissed') === '1') {
-    body.classList.add('site-guide-dismissed');
-    if (guide) guide.classList.add('is-hidden');
-  } else if (guide) {
+  if (guide) {
     let armed = false;
     const baseY = window.scrollY || document.documentElement.scrollTop || 0;
     const onRealScroll = () => {
       const currentY = window.scrollY || document.documentElement.scrollTop || 0;
       if (armed || Math.abs(currentY - baseY) < 8) return;
       armed = true;
-      body.classList.add('site-guide-countdown');
-      setTimeout(hideGuide, 5000);
+      hideGuide();
       window.removeEventListener('scroll', onRealScroll);
+      window.removeEventListener('wheel', onRealScroll);
+      window.removeEventListener('touchmove', onRealScroll);
     };
+
     window.addEventListener('scroll', onRealScroll, { passive: true });
+    window.addEventListener('wheel', onRealScroll, { passive: true });
+    window.addEventListener('touchmove', onRealScroll, { passive: true });
   }
 
-  const markFlipUsed = () => body.classList.add('has-flipped-shirt');
   document.querySelectorAll('.product-card').forEach((card) => {
-    card.addEventListener('click', markFlipUsed, { passive: true });
-    card.addEventListener('touchstart', markFlipUsed, { passive: true });
-  });
-
-  const markViewerUsed = () => body.classList.add('has-used-viewer');
-  const viewer = document.getElementById('shirtViewer');
-  if (viewer) {
-    ['pointerdown', 'touchstart', 'mousedown'].forEach((eventName) => {
-      viewer.addEventListener(eventName, markViewerUsed, { passive: true });
-    });
-  }
-  document.querySelectorAll('.viewer-mode-button').forEach((button) => {
-    button.addEventListener('click', markViewerUsed, { passive: true });
+    const seen = () => body.classList.add('has-flipped-shirt', 'flip-hint-seen');
+    card.addEventListener('click', seen, { passive: true });
+    card.addEventListener('touchstart', seen, { passive: true });
+    card.addEventListener('pointerdown', seen, { passive: true });
   });
 })();
-
-
-
-/* v103 - robust access start + restore flip hints */
-(function () {
-  const access = document.getElementById('accessScreen');
-  const touch = document.getElementById('touchBox');
-  if (document.body) {
-    document.body.classList.remove('flip-hint-seen', 'has-flipped-shirt');
-  }
-  try { localStorage.removeItem('scars327_flip_hint_seen'); } catch (e) {}
-
-  function safeStart(event) {
-    if (document.body.classList.contains('access-login') || document.body.classList.contains('access-done')) return;
-    const target = event && event.target;
-    if (target && target.closest && target.closest('.login-panel')) return;
-    if (typeof runAccessSequence === 'function') {
-      if (event) event.preventDefault();
-      runAccessSequence();
-    }
-  }
-
-  if (access) {
-    access.addEventListener('pointerup', safeStart, { passive: false });
-    access.addEventListener('touchend', safeStart, { passive: false });
-    access.addEventListener('click', safeStart, { passive: false });
-  }
-  if (touch) {
-    touch.addEventListener('pointerup', safeStart, { passive: false });
-  }
-
-  function markFlipHintSeen() {
-    document.body.classList.add('flip-hint-seen', 'has-flipped-shirt');
-  }
-  document.querySelectorAll('.product-card').forEach((card) => {
-    card.addEventListener('click', markFlipHintSeen, { once: true, passive: true });
-    card.addEventListener('touchstart', markFlipHintSeen, { once: true, passive: true });
-    card.addEventListener('pointerdown', markFlipHintSeen, { once: true, passive: true });
-  });
-})();
-
-
-/* v104 touch/tap final robustness */
-(function(){
-  const body = document.body;
-
-  // Ensure tap-to-flip disappears after the first successful product-card touch/click on mobile.
-  document.querySelectorAll(".product-card").forEach((card) => {
-    const done = () => body.classList.add("has-flipped-shirt");
-    card.addEventListener("click", done, { passive: true });
-    card.addEventListener("touchstart", done, { passive: true });
-  });
-
-  // Defensive: keep TOUCH HERE clickable even if an overlay accidentally sits above it.
-  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
-  if (touch) {
-    touch.style.pointerEvents = "auto";
-    touch.style.zIndex = "9997";
-  }
-})();
-
-
-/* v105 — touch here stable reset */
-(function(){
-  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
-  if (!touch) return;
-  ["is-pressed","is-touched","is-active"].forEach(c => touch.classList.remove(c));
-  touch.style.transform = "";
-  touch.style.filter = "";
-  touch.style.pointerEvents = "auto";
-})();
-

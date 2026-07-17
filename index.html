@@ -36,7 +36,7 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=105" />
+  <link rel="stylesheet" href="style.css?v=122" />
 </head>
 <body>
   <div class="access-screen" id="accessScreen" aria-live="polite">
@@ -150,7 +150,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=105"></script>
+  <script src="script.js?v=122"></script>
 
   <script>
     (function(){
@@ -188,36 +188,5 @@
       cards.forEach(attachBuyCardSound);
     })();
   </script>
-<script>
-/* v104 touch/tap final robustness */
-(function(){
-  const body = document.body;
-
-  // Ensure tap-to-flip disappears after the first successful product-card touch/click on mobile.
-  document.querySelectorAll(".product-card").forEach((card) => {
-    const done = () => body.classList.add("has-flipped-shirt");
-    card.addEventListener("click", done, { passive: true });
-    card.addEventListener("touchstart", done, { passive: true });
-  });
-
-  // Defensive: keep TOUCH HERE clickable even if an overlay accidentally sits above it.
-  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
-  if (touch) {
-    touch.style.pointerEvents = "auto";
-    touch.style.zIndex = "9997";
-  }
-})();
-</script>
-<script>
-/* v105 — touch here stable reset */
-(function(){
-  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
-  if (!touch) return;
-  ["is-pressed","is-touched","is-active"].forEach(c => touch.classList.remove(c));
-  touch.style.transform = "";
-  touch.style.filter = "";
-  touch.style.pointerEvents = "auto";
-})();
-</script>
 </body>
 </html>

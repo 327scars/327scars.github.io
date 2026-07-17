@@ -34,7 +34,7 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=105" />
+  <link rel="stylesheet" href="style.css?v=122" />
 </head>
 <body class="story-body">
   <main class="story-scene story-is-entering" id="storyScene">
@@ -741,6 +741,14 @@
   const scene = document.getElementById('storyScene');
   const entry = document.getElementById('storyEntryTransition');
   if(!scene || !entry) return;
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('phase') === 'choice') {
+    scene.classList.remove('story-is-entering');
+    entry.remove();
+    return;
+  }
+
   window.setTimeout(function(){
     scene.classList.remove('story-is-entering');
     entry.classList.add('is-done');
@@ -749,25 +757,5 @@
 })();
 </script>
 
-<script>
-/* v104 touch/tap final robustness */
-(function(){
-  const body = document.body;
-
-  // Ensure tap-to-flip disappears after the first successful product-card touch/click on mobile.
-  document.querySelectorAll(".product-card").forEach((card) => {
-    const done = () => body.classList.add("has-flipped-shirt");
-    card.addEventListener("click", done, { passive: true });
-    card.addEventListener("touchstart", done, { passive: true });
-  });
-
-  // Defensive: keep TOUCH HERE clickable even if an overlay accidentally sits above it.
-  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
-  if (touch) {
-    touch.style.pointerEvents = "auto";
-    touch.style.zIndex = "9997";
-  }
-})();
-</script>
 </body>
 </html>
