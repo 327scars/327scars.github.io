@@ -810,3 +810,15 @@ if (DIRECT_SHOP_ENTRY) {
     touch.style.zIndex = "9997";
   }
 })();
+
+
+/* v105 — touch here stable reset */
+(function(){
+  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
+  if (!touch) return;
+  ["is-pressed","is-touched","is-active"].forEach(c => touch.classList.remove(c));
+  touch.style.transform = "";
+  touch.style.filter = "";
+  touch.style.pointerEvents = "auto";
+})();
+

@@ -9725,3 +9725,104 @@ body.has-flipped-shirt .tap-flip-hint {
   opacity: 0 !important;
   visibility: hidden !important;
 }
+
+
+/* v105 — final corrections requested */
+
+/* 1) TOUCH HERE: reset it close to the original stable behavior */
+.touch-here,
+#touchHere,
+.touch-here:active,
+#touchHere:active,
+.touch-here:hover,
+#touchHere:hover,
+.touch-here:focus,
+#touchHere:focus {
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
+.touch-here span,
+#touchHere span {
+  pointer-events: none !important;
+}
+.touch-here.is-pressed,
+#touchHere.is-pressed,
+.touch-here.is-touched,
+#touchHere.is-touched {
+  transform: none !important;
+  filter: none !important;
+}
+
+/* 2) PC: remove the bigger drop-policy/drop-size feel */
+@media (min-width: 701px) {
+  .product-policy-link {
+    min-height: 0 !important;
+    padding: 0 !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+  }
+}
+
+/* 3) Welcome prompt: exact gap between title and copyright, no overlap */
+.story-body .buy-intro__title-copy {
+  position: relative !important;
+}
+
+.story-body .buy-intro__prompt--title {
+  position: absolute !important;
+  left: 50% !important;
+  width: max-content !important;
+  max-width: calc(100vw - 36px) !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9 !important;
+}
+
+/* PC: lower than before, between the 327 T-shirt title block and copyright */
+@media (min-width: 701px) {
+  .story-body .buy-intro__prompt--title {
+    top: 67% !important;
+    font-size: clamp(11px, 1vw, 14px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: .05em !important;
+  }
+  .story-body .buy-intro__copyright {
+    bottom: 8.5% !important;
+  }
+}
+
+/* Mobile: visible again and centered between 327 T-shirt line and copyright */
+@media (max-width: 700px) {
+  .story-body .buy-intro__prompt--title {
+    top: auto !important;
+    bottom: 74px !important;
+    font-size: clamp(8px, 2.35vw, 10px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: .045em !important;
+    opacity: .94 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+  .story-body .buy-intro__copyright {
+    bottom: 32px !important;
+  }
+
+  .product-policy-link {
+    min-height: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+}
+
+/* if previous scripts/classes tried to hide this prompt, force it visible */
+.story-body .buy-intro__prompt--title.is-hidden,
+.story-body .buy-intro__prompt--title[hidden] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: .94 !important;
+}
