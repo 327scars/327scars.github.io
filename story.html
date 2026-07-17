@@ -34,10 +34,14 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=101" />
+  <link rel="stylesheet" href="style.css?v=102" />
 </head>
 <body class="story-body">
-  <main class="story-scene" id="storyScene">
+  <main class="story-scene story-is-entering" id="storyScene">
+    <div class="story-entry-transition" id="storyEntryTransition" aria-hidden="true">
+      <div class="story-entry-tunnel"><span></span><span></span><span></span><span></span></div>
+      <div class="story-entry-mark">327</div>
+    </div>
     <div class="story-route-guide" id="storyRouteGuide">clique pour continuer · choisis ton starter</div>
     <a class="story-back" id="storyBackShop" href="index.html?shop=1#black-shirt">← back to shop</a>
 
@@ -731,5 +735,19 @@
   });
 })();
 </script>
+
+<script>
+(function(){
+  const scene = document.getElementById('storyScene');
+  const entry = document.getElementById('storyEntryTransition');
+  if(!scene || !entry) return;
+  window.setTimeout(function(){
+    scene.classList.remove('story-is-entering');
+    entry.classList.add('is-done');
+    window.setTimeout(function(){ entry.remove(); }, 560);
+  }, 1300);
+})();
+</script>
+
 </body>
 </html>
