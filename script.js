@@ -790,3 +790,23 @@ if (DIRECT_SHOP_ENTRY) {
     card.addEventListener('pointerdown', markFlipHintSeen, { once: true, passive: true });
   });
 })();
+
+
+/* v104 touch/tap final robustness */
+(function(){
+  const body = document.body;
+
+  // Ensure tap-to-flip disappears after the first successful product-card touch/click on mobile.
+  document.querySelectorAll(".product-card").forEach((card) => {
+    const done = () => body.classList.add("has-flipped-shirt");
+    card.addEventListener("click", done, { passive: true });
+    card.addEventListener("touchstart", done, { passive: true });
+  });
+
+  // Defensive: keep TOUCH HERE clickable even if an overlay accidentally sits above it.
+  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
+  if (touch) {
+    touch.style.pointerEvents = "auto";
+    touch.style.zIndex = "9997";
+  }
+})();

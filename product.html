@@ -28,7 +28,7 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=103" />
+  <link rel="stylesheet" href="style.css?v=104" />
 </head>
 <body class="product-file-body">
   <main class="product-file-page" id="productFilePage">
@@ -376,6 +376,26 @@
   document.querySelectorAll('.viewer-mode-button').forEach((button) => {
     button.addEventListener('click', markViewerUsed, { passive: true });
   });
+})();
+</script>
+<script>
+/* v104 touch/tap final robustness */
+(function(){
+  const body = document.body;
+
+  // Ensure tap-to-flip disappears after the first successful product-card touch/click on mobile.
+  document.querySelectorAll(".product-card").forEach((card) => {
+    const done = () => body.classList.add("has-flipped-shirt");
+    card.addEventListener("click", done, { passive: true });
+    card.addEventListener("touchstart", done, { passive: true });
+  });
+
+  // Defensive: keep TOUCH HERE clickable even if an overlay accidentally sits above it.
+  const touch = document.getElementById("touchHere") || document.querySelector(".touch-here");
+  if (touch) {
+    touch.style.pointerEvents = "auto";
+    touch.style.zIndex = "9997";
+  }
 })();
 </script>
 </body>
