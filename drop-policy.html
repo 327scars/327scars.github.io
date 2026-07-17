@@ -21,7 +21,7 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=99" />
+  <link rel="stylesheet" href="style.css?v=101" />
 </head>
 <body class="policy-body">
   <main class="policy-page">
@@ -57,5 +57,53 @@
       policyBack.textContent = policyLang === "en" ? "← back to starter" : "← retour au starter";
     }
   </script>
+<script>
+/* v101 — polished guide/helpers behavior */
+(function () {
+  const body = document.body;
+  const guide = document.querySelector('.site-guide');
+
+  function hideGuide() {
+    sessionStorage.setItem('scars327_scrollGuideDismissed', '1');
+    body.classList.add('site-guide-dismissed');
+    body.classList.remove('site-guide-countdown');
+    if (guide) guide.classList.add('is-hidden');
+  }
+
+  if (sessionStorage.getItem('scars327_scrollGuideDismissed') === '1') {
+    body.classList.add('site-guide-dismissed');
+    if (guide) guide.classList.add('is-hidden');
+  } else if (guide) {
+    let armed = false;
+    const baseY = window.scrollY || document.documentElement.scrollTop || 0;
+    const onRealScroll = () => {
+      const currentY = window.scrollY || document.documentElement.scrollTop || 0;
+      if (armed || Math.abs(currentY - baseY) < 8) return;
+      armed = true;
+      body.classList.add('site-guide-countdown');
+      setTimeout(hideGuide, 5000);
+      window.removeEventListener('scroll', onRealScroll);
+    };
+    window.addEventListener('scroll', onRealScroll, { passive: true });
+  }
+
+  const markFlipUsed = () => body.classList.add('has-flipped-shirt');
+  document.querySelectorAll('.product-card').forEach((card) => {
+    card.addEventListener('click', markFlipUsed, { passive: true });
+    card.addEventListener('touchstart', markFlipUsed, { passive: true });
+  });
+
+  const markViewerUsed = () => body.classList.add('has-used-viewer');
+  const viewer = document.getElementById('shirtViewer');
+  if (viewer) {
+    ['pointerdown', 'touchstart', 'mousedown'].forEach((eventName) => {
+      viewer.addEventListener(eventName, markViewerUsed, { passive: true });
+    });
+  }
+  document.querySelectorAll('.viewer-mode-button').forEach((button) => {
+    button.addEventListener('click', markViewerUsed, { passive: true });
+  });
+})();
+</script>
 </body>
 </html>
