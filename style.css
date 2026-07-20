@@ -106,7 +106,7 @@ main {
 
 .page {
   position: relative;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   min-height: 100svh;
   background: #000;
@@ -760,6 +760,7 @@ body.access-loading .server-loading {
 
 .archive-body {
   min-height: 100vh;
+  min-height: 100svh;
   background: #000;
   overflow: hidden;
 }
@@ -901,7 +902,7 @@ body.stay-overlay-on .stay-overlay {
 }
 
 .stay-card-wasted {
-  width: 100vw;
+  width: 100%;
   max-width: none;
 }
 
@@ -1926,6 +1927,7 @@ body.stay-overlay-on .stay-overlay {
 .product-file-body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100svh;
   background: #000;
   color: #fff;
   overflow-x: hidden;
@@ -5233,7 +5235,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .story-body .buy-intro__panel--v64 { width: 100vw !important; min-height: 100svh !important; }
+  .story-body .buy-intro__panel--v64 { width: 100% !important; min-height: 100svh !important; }
   .story-body .buy-intro__title-stage,
   .story-body .buy-intro__entry-scene,
   .story-body .buy-intro__inside-scene { min-height: 430px !important; }
@@ -7075,8 +7077,8 @@ body {
   .story-body .buy-intro,
   .story-body .buy-intro__panel--v64,
   .story-body .buy-intro__welcome-screen {
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
     overflow-x: hidden !important;
   }
 
@@ -7090,63 +7092,10 @@ body {
     overflow: hidden !important;
   }
 
-  /* title exactly two lines, centered, with breathing space */
-  .story-body .buy-intro__emerald-title {
-    position: absolute !important;
-    top: 22px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-    text-align: center !important;
-    font-size: clamp(12px, 3.35vw, 14px) !important;
-    line-height: 1 !important;
-    letter-spacing: 0 !important;
-    white-space: normal !important;
-    overflow: visible !important;
-  }
-  .story-body .buy-intro__emerald-title .title-line {
-    display: block !important;
-    white-space: nowrap !important;
-    width: 100% !important;
-    text-align: center !important;
-  }
-  .story-body .buy-intro__emerald-title .title-line + .title-line {
-    margin-top: 0.72em !important;
-  }
-
-  /* full phrase visible, centered */
-  .story-body .buy-intro__prompt--title {
-    position: absolute !important;
-    top: 198px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    overflow: visible !important;
-    font-size: clamp(7px, 2.05vw, 8.5px) !important;
-    line-height: 1 !important;
-    letter-spacing: 0.015em !important;
-    animation: buyIntroContinueBlinkV82 5.4s ease-in-out infinite !important;
-  }
-
-  /* copyright lower */
-  .story-body .buy-intro__copyright {
-    position: absolute !important;
-    left: 50% !important;
-    bottom: 26px !important;
-    transform: translateX(-50%) !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    font-size: clamp(8px, 2.35vw, 9.5px) !important;
-  }
+  /* NOTE: emerald-title / prompt--title / copyright positioning for this
+     breakpoint now lives in the single "v97 — restore mobile welcome screen"
+     block further down (same media query). This avoids two rule sets
+     fighting over the same three elements. */
 
   /* no auto 3.27 flip anymore on phone: tap only */
   .product-card .product-shirt,
@@ -8846,8 +8795,8 @@ body.archive-body {
     top: 22px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     text-align: center !important;
     font-size: clamp(12px, 3.35vw, 14px) !important;
@@ -8873,8 +8822,8 @@ body.archive-body {
     top: 198px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     text-align: center !important;
     white-space: nowrap !important;
@@ -8890,8 +8839,8 @@ body.archive-body {
     left: 50% !important;
     bottom: 46px !important;
     transform: translateX(-50%) !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     text-align: center !important;
     white-space: nowrap !important;
@@ -9402,5 +9351,124 @@ body.site-guide-dismissed .site-guide,
     opacity: 0 !important;
     visibility: hidden !important;
     transform: translateX(-50%) translateY(6px) !important;
+  }
+}
+
+/* ============================================================
+   v126 — SAFE-AREA PATCH (iPhone / Safari home-indicator bar)
+   Purely additive: does not remove or rewrite any rule above.
+   env(safe-area-inset-bottom) is 0 on every non-notch device
+   and in browsers without support, so spacing on desktop and
+   older phones is unchanged. On iPhones with a home-indicator,
+   this pushes fixed bottom UI up above it so nothing sits
+   underneath or gets clipped by Safari's UI.
+   ============================================================ */
+@supports (bottom: env(safe-area-inset-bottom)) {
+  .story-body .buy-intro__skip-button {
+    bottom: calc(14px + env(safe-area-inset-bottom)) !important;
+  }
+  .product-policy-link {
+    bottom: calc(max(14px, 2vh) + env(safe-area-inset-bottom)) !important;
+  }
+  .site-guide {
+    bottom: calc(18px + env(safe-area-inset-bottom)) !important;
+  }
+
+  @media (max-width: 700px) {
+    .story-body .buy-intro__skip-button {
+      bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    }
+    .product-mini-footer,
+    .product-policy-link {
+      bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    }
+    .checkout-button {
+      bottom: calc(48px + env(safe-area-inset-bottom)) !important;
+    }
+  }
+}
+
+
+/* v129 — MOBILE SCROLL REPAIR
+   Fixes mobile scroll without touching TOUCH HERE, BUY, story, or desktop.
+   Main idea:
+   - lock the home page only while the intro/access overlay is active
+   - unlock normal vertical scrolling once the shop is visible
+   - allow vertical pan over product cards/shirts, so swiping on a shirt still scrolls
+*/
+
+@media (max-width: 700px) {
+  html {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100% !important;
+    -webkit-text-size-adjust: 100% !important;
+    overscroll-behavior-y: auto !important;
+  }
+
+  /* Home page only: before the shop appears, block background scrolling behind TOUCH HERE/login */
+  body:not(.story-body):not(.product-file-body):not(.policy-body):not(.archive-body):not(.show-intro):not(.shop-direct) {
+    overflow: hidden !important;
+    height: 100svh !important;
+    min-height: 100svh !important;
+    touch-action: none !important;
+  }
+
+  /* Once shop is visible, restore real mobile scrolling */
+  body.show-intro,
+  body.shop-direct {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100svh !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: auto !important;
+    touch-action: pan-y pinch-zoom !important;
+  }
+
+  body.show-intro main,
+  body.shop-direct main {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    min-height: 100svh !important;
+  }
+
+  body.show-intro .page,
+  body.shop-direct .page {
+    min-height: 100svh !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+  }
+
+  body.show-intro .product-page,
+  body.shop-direct .product-page {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    touch-action: pan-y pinch-zoom !important;
+  }
+
+  body.show-intro .product-card,
+  body.show-intro .product-shirt,
+  body.shop-direct .product-card,
+  body.shop-direct .product-shirt {
+    touch-action: pan-y pinch-zoom !important;
+  }
+
+  /* Keep interactive elements tappable */
+  body.show-intro .buy-card,
+  body.shop-direct .buy-card,
+  body.show-intro a,
+  body.shop-direct a,
+  body.show-intro button,
+  body.shop-direct button {
+    touch-action: manipulation !important;
+  }
+
+  /* Do not let the scroll guide block gestures */
+  .site-guide {
+    pointer-events: none !important;
   }
 }

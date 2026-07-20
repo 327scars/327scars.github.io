@@ -3,8 +3,33 @@ if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
 
-function goToTop() {
+/* v127 — fix: goToTop() used to fire on delayed timers (1.2s / 2.4s after
+   the shop reveal) even if the person had already started scrolling,
+   yanking them back to the top mid-scroll. Now any goToTop() call is a
+   no-op once the user has scrolled for real (programmatic scrollTo calls
+   from goToTop() itself are not mistaken for user scrolling). */
+let userHasScrolled = false;
+let programmaticScrollPending = false;
+
+function shopIsScrollableNow() {
+  return document.body.classList.contains("show-intro") || document.body.classList.contains("shop-direct");
+}
+
+function markUserScroll() {
+  if (programmaticScrollPending) return;
+  if (!shopIsScrollableNow()) return;
+  userHasScrolled = true;
+}
+
+window.addEventListener("scroll", markUserScroll, { passive: true });
+window.addEventListener("touchmove", markUserScroll, { passive: true });
+window.addEventListener("wheel", markUserScroll, { passive: true });
+
+function goToTop(force = false) {
+  if (!force && userHasScrolled && shopIsScrollableNow()) return;
+  programmaticScrollPending = true;
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  window.setTimeout(() => { programmaticScrollPending = false; }, 90);
 }
 const CLIENT_ID = "client";
 const PASSWORD = "scarsfitseverybody327";
@@ -403,7 +428,7 @@ async function clickShopButton() {
 
 function openDirectShop() {
   const targetHash = window.location.hash;
-  if (!targetHash) goToTop();
+  if (!targetHash) goToTop(true);
   if (accessScreen) accessScreen.remove();
   document.body.classList.add("show-intro", "shop-direct", "archive-revealed");
   document.body.classList.remove("access-login", "cursor-ready", "access-loading", "access-done");
@@ -537,11 +562,11 @@ function launchGoldenIntro() {
   if (sequenceFinished) return;
   sequenceFinished = true;
   document.body.classList.add("access-done");
-  goToTop();
+  goToTop(true);
 
   window.setTimeout(() => {
     if (accessScreen) accessScreen.remove();
-    goToTop();
+    goToTop(true);
     document.body.classList.add("show-intro");
     revealArchiveLink();
     startStayInterruptTimer();
@@ -684,25 +709,12 @@ if (DIRECT_SHOP_ENTRY) {
 })();
 
 
-/* v99 - micro ergonomics: hide tutorial hints after first real interaction */
-(function () {
-  const cards = Array.from(document.querySelectorAll('.product-card'));
-  if (!cards.length) return;
-  const hintKey = 'scars327_flip_hint_seen';
-  function markSeen() {
-    document.body.classList.add('flip-hint-seen');
-    try { localStorage.setItem(hintKey, '1'); } catch (e) {}
-  }
-  try {
-    if (localStorage.getItem(hintKey) === '1') document.body.classList.add('flip-hint-seen');
-  } catch (e) {}
-  cards.forEach((card) => {
-    card.addEventListener('pointerdown', markSeen, { once: true, passive: true });
-  });
-})();
-
-
-/* v120 — scroll guide + tap helper only. TOUCH HERE untouched. */
+/* v126 — scroll guide (unchanged) + single tap-flip-hint controller.
+   Replaces three earlier overlapping patches (v99 / v120 / v125) that were
+   fighting over the same classes/localStorage key. Net behaviour kept
+   identical to the live v125 site: on mobile the "tap to flip" hint shows
+   fresh on every visit and disappears for good the first time a card is
+   touched; on desktop it is never shown (handled purely in CSS already). */
 (function () {
   const body = document.body;
   const guide = document.querySelector('.site-guide');
@@ -730,36 +742,16 @@ if (DIRECT_SHOP_ENTRY) {
     window.addEventListener('touchmove', onRealScroll, { passive: true });
   }
 
-  document.querySelectorAll('.product-card').forEach((card) => {
-    const seen = () => body.classList.add('has-flipped-shirt', 'flip-hint-seen');
-    card.addEventListener('click', seen, { passive: true });
-    card.addEventListener('touchstart', seen, { passive: true });
-    card.addEventListener('pointerdown', seen, { passive: true });
-  });
-})();
-
-
-/* v125 — mobile tap-to-flip directive only. TOUCH HERE untouched. */
-(function () {
-  const mobile = window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
-  if (!mobile) return;
-
-  const body = document.body;
-
-  /* Avoid old localStorage making the mobile directive disappear before interaction */
-  body.classList.remove('flip-hint-seen', 'has-flipped-shirt');
+  // Stale key from an older patch — no longer used, safe to clear once.
   try { localStorage.removeItem('scars327_flip_hint_seen'); } catch (e) {}
 
+  const markCardSeen = () => {
+    body.classList.add('has-flipped-shirt', 'flip-hint-seen');
+  };
+
   document.querySelectorAll('.product-card').forEach((card) => {
-    if (card.dataset.mobileTapFlipDirectiveV125 === 'true') return;
-    card.dataset.mobileTapFlipDirectiveV125 = 'true';
-
-    const hideDirective = () => {
-      body.classList.add('has-flipped-shirt', 'flip-hint-seen');
-    };
-
-    card.addEventListener('click', hideDirective, { once: true, passive: true });
-    card.addEventListener('touchstart', hideDirective, { once: true, passive: true });
-    card.addEventListener('pointerdown', hideDirective, { once: true, passive: true });
+    card.addEventListener('click', markCardSeen, { once: true, passive: true });
+    card.addEventListener('touchstart', markCardSeen, { once: true, passive: true });
+    card.addEventListener('pointerdown', markCardSeen, { once: true, passive: true });
   });
 })();
