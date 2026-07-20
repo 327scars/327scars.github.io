@@ -1,7 +1,9 @@
 {
-  "name": "SCARS 327",
+  "name": "SCARS327",
   "short_name": "SCARS327",
+  "description": "Site officiel de SCARS327 — streetwear premium, drops limités et univers rétro gaming.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
@@ -14,6 +16,11 @@
     {
       "src": "/favicon-512.png",
       "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ]

@@ -1,0 +1,20 @@
+SCARS327 SEO update v130
+
+Modifié :
+- Title Google : SCARS327 — Boutique officielle | SCARS FITS EVERYBODY
+- Meta description plus propre
+- Open Graph / Twitter preview
+- JSON-LD Organization + WebSite
+- Favicon declarations renforcées pour Google
+- manifest.webmanifest corrigé
+- robots.txt + sitemap.xml propres
+
+Important :
+Pour apparaître en premier sur Google quand on tape “scars327”, il faut aussi :
+1) publier cette version sur scarsfitseverybody.com
+2) vérifier le domaine dans Google Search Console
+3) envoyer sitemap.xml dans Search Console
+4) demander l’indexation de la page d’accueil
+5) attendre que Google recrawl le site
+
+Le favicon/logo dans Google peut prendre quelques jours/semaines à changer.

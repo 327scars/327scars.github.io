@@ -9472,3 +9472,20 @@ body.site-guide-dismissed .site-guide,
     pointer-events: none !important;
   }
 }
+
+
+/* v131 — story transition wording */
+.story-entry-mark {
+  max-width: calc(100vw - 28px) !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  font-size: clamp(28px, 7vw, 92px) !important;
+  letter-spacing: .035em !important;
+}
+@media (max-width: 700px) {
+  .story-entry-mark {
+    font-size: clamp(18px, 5.6vw, 38px) !important;
+    letter-spacing: .025em !important;
+    line-height: 1.12 !important;
+  }
+}
