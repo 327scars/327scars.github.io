@@ -1,0 +1,24 @@
+SCARS327 v135 — Google cache fix
+
+Cette version garde :
+- title homepage : SCARS327
+- description homepage : Site officiel de SCARS327. PACHAVE PAS ! ig: @SCARS327
+- données structurées
+- fichier Google Search Console
+- image SEO recadrée
+
+Changement important :
+- l'image SEO a maintenant une nouvelle URL :
+  /assets/scars327-google-preview-v135.png
+
+But :
+- éviter que Google garde l'ancienne image en cache sous /assets/og-preview.png
+
+Après upload :
+1. Ouvrir https://scarsfitseverybody.com/ dans un navigateur privé.
+2. Clic droit > Afficher le code source.
+3. Vérifier que <title>SCARS327</title> apparaît.
+4. Dans Search Console > Inspection de l'URL > Tester l'URL en direct.
+5. Puis cliquer sur Demander une indexation.
+
+Google peut garder l'ancien résultat quelques jours/semaines avant de mettre à jour l'affichage public.
