@@ -11923,3 +11923,94 @@ body.site-guide-dismissed .site-guide,
     margin-top: 0 !important;
   }
 }
+
+/* v172 — mobile story polish: clearer Poké Balls above starters + welcome prompt higher */
+.story-scene.is-choice .starter-ball-row {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 18px !important;
+  margin: 2px auto 14px !important;
+  width: 100% !important;
+  transform: none !important;
+}
+.story-scene.is-choice .starter-ball {
+  position: relative !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  border: 2px solid #111 !important;
+  background: linear-gradient(to bottom, #efefef 0 46%, #111 46% 54%, #ffffff 54% 100%) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.24), inset 0 2px 0 rgba(255,255,255,.88) !important;
+}
+.story-scene.is-choice .starter-ball::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -2px !important;
+  right: -2px !important;
+  top: calc(50% - 2px) !important;
+  height: 4px !important;
+  background: #111 !important;
+}
+.story-scene.is-choice .starter-ball::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 12px !important;
+  height: 12px !important;
+  transform: translate(-50%, -50%) !important;
+  border-radius: 50% !important;
+  background: #f7f7f7 !important;
+  border: 2px solid #111 !important;
+  box-shadow: inset 0 0 0 2px rgba(214,214,214,.92) !important;
+}
+.story-scene.is-choice .starter-ball--white {
+  background: linear-gradient(to bottom, #f6f6f6 0 46%, #111 46% 54%, #ffffff 54% 100%) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.24), 0 0 14px rgba(255,255,255,.20), inset 0 2px 0 rgba(255,255,255,.92) !important;
+}
+.story-scene.is-choice .starter-ball--black {
+  background: linear-gradient(to bottom, #2b2b2b 0 46%, #111 46% 54%, #f7f7f7 54% 100%) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.28), 0 0 14px rgba(87,255,122,.18), inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+.story-scene.is-choice .starter-ball--pink {
+  background: linear-gradient(to bottom, #ef9bb5 0 46%, #111 46% 54%, #ffffff 54% 100%) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.24), 0 0 14px rgba(239,155,181,.28), inset 0 2px 0 rgba(255,255,255,.88) !important;
+}
+
+@media (max-width: 700px) {
+  .story-body .buy-intro__title-copy {
+    min-height: 150px !important;
+    margin-top: -20px !important;
+    padding: 2px 12px 8px !important;
+  }
+  .story-body .buy-intro__emerald-title {
+    margin-bottom: 4px !important;
+  }
+  .story-body .buy-intro__prompt--title,
+  .story-body #welcomePrompt {
+    position: relative !important;
+    top: -10px !important;
+    margin: 4px auto 0 !important;
+    font-size: 9px !important;
+    letter-spacing: .055em !important;
+  }
+  .story-body .buy-intro__copyright {
+    position: relative !important;
+    top: -8px !important;
+    margin-top: 0 !important;
+  }
+
+  .story-scene.is-choice .starter-ball-row {
+    gap: 14px !important;
+    margin: 0 auto 12px !important;
+  }
+  .story-scene.is-choice .starter-ball {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .story-scene.is-choice .starter-ball::after {
+    width: 11px !important;
+    height: 11px !important;
+  }
+}
