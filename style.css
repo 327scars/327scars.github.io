@@ -11730,29 +11730,37 @@ body.site-guide-dismissed .site-guide,
 
 
 
-/* v176 — mobile story welcome: lower continue prompt + restore copyright at bottom */
+/* v177 — mobile story welcome positions based on user screenshot (from v175 base, not v176) */
 @media (max-width: 700px) {
-  .story-body #welcomeScreen .buy-intro__title-copy {
-    padding-bottom: 56px !important;
+  .story-body #welcomeScreen {
+    position: relative !important;
   }
 
   .story-body #welcomeScreen .buy-intro__prompt--title {
-    top: 60.5% !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 70.5% !important;
     bottom: auto !important;
+    right: auto !important;
     transform: translate(-50%, -50%) !important;
+    width: min(88vw, 360px) !important;
+    max-width: calc(100vw - 48px) !important;
+    margin: 0 !important;
+    text-align: center !important;
+    z-index: 10 !important;
   }
 
   .story-body #welcomeScreen .buy-intro__copyright {
     position: absolute !important;
     left: 50% !important;
+    top: 80.5% !important;
+    bottom: auto !important;
     right: auto !important;
-    bottom: 14px !important;
-    top: auto !important;
-    transform: translateX(-50%) !important;
-    margin: 0 !important;
+    transform: translate(-50%, -50%) !important;
     width: max-content !important;
-    max-width: calc(100vw - 28px) !important;
+    max-width: calc(100vw - 56px) !important;
+    margin: 0 !important;
     text-align: center !important;
-    z-index: 6 !important;
+    z-index: 10 !important;
   }
 }
