@@ -11806,3 +11806,69 @@ body.site-guide-dismissed .site-guide,
     max-width: calc(100vw - 56px) !important;
   }
 }
+
+
+/* v179 — mobile welcome screen: FORCE visible prompt + copyright in the exact lower zones */
+@media (max-width: 700px) {
+  .story-body #welcomeScreen {
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .story-body #welcomeScreen #welcomePrompt {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    left: 50% !important;
+    top: 65svh !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(88vw, 380px) !important;
+    max-width: calc(100vw - 42px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 99999 !important;
+    color: rgba(255,255,255,.96) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    text-transform: uppercase !important;
+    font-family: "Press Start 2P", "Courier New", monospace !important;
+    font-size: clamp(7px, 2.05vw, 9px) !important;
+    line-height: 1.25 !important;
+    letter-spacing: .04em !important;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.82),
+      0 0 12px rgba(255,255,255,.18) !important;
+    pointer-events: none !important;
+    animation: buyIntroContinueBlink 2.1s ease-in-out infinite !important;
+  }
+
+  .story-body #welcomeScreen #welcomeSub {
+    display: block !important;
+    visibility: visible !important;
+    opacity: .86 !important;
+    position: fixed !important;
+    left: 50% !important;
+    top: 76svh !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: max-content !important;
+    max-width: calc(100vw - 54px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 99998 !important;
+    color: rgba(255,255,255,.58) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    text-transform: uppercase !important;
+    font-family: "Press Start 2P", "Courier New", monospace !important;
+    font-size: clamp(6px, 1.75vw, 7.5px) !important;
+    line-height: 1.25 !important;
+    letter-spacing: .04em !important;
+    text-shadow: 0 2px 0 rgba(0,0,0,.82) !important;
+    pointer-events: none !important;
+  }
+}
