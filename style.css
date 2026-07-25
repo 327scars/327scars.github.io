@@ -11611,119 +11611,6 @@ body.site-guide-dismissed .site-guide,
   }
 }
 
-/* Starter choice: cleaner again. Remove the black square / capsule visual noise. */
-.story-scene.is-choice .starter-row {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: clamp(8px, 2.4vw, 24px) !important;
-  align-items: end !important;
-}
-
-.story-scene.is-choice .starter-card {
-  background: transparent !important;
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
-  padding: 0 6px !important;
-  gap: 8px !important;
-  min-height: 0 !important;
-  transform: none !important;
-  filter: none !important;
-  opacity: 1 !important;
-}
-
-.story-scene.is-choice .starter-card::before,
-.story-scene.is-choice .starter-card::after,
-.story-scene.is-choice .starter-card-black::before,
-.story-scene.is-choice .starter-card-black::after,
-.story-scene.is-choice .capsule,
-.story-scene.is-choice .capsule::before,
-.story-scene.is-choice .capsule::after {
-  display: none !important;
-  opacity: 0 !important;
-  content: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-}
-
-.story-scene.is-choice .starter-preview,
-.story-scene.is-choice .starter-card:hover .starter-preview,
-.story-scene.is-choice .starter-card:focus-visible .starter-preview,
-.story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
-.story-scene.is-choice .starter-card:active .starter-preview {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: translateY(0) scale(1) !important;
-  filter: drop-shadow(0 14px 26px rgba(0,0,0,.34)) !important;
-  max-width: min(27vw, 210px) !important;
-  max-height: 190px !important;
-}
-
-.story-scene.is-choice .starter-card:hover,
-.story-scene.is-choice .starter-card:focus-visible,
-.story-scene.is-choice .starter-card.is-touch-hover,
-.story-scene.is-choice .starter-card:active {
-  transform: translateY(-4px) scale(1.025) !important;
-  box-shadow: none !important;
-  filter: none !important;
-}
-
-.story-scene.is-choice .starter-card:hover .starter-preview,
-.story-scene.is-choice .starter-card:focus-visible .starter-preview,
-.story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
-.story-scene.is-choice .starter-card:active .starter-preview {
-  transform: translateY(-4px) scale(1.045) !important;
-  filter: drop-shadow(0 18px 30px rgba(0,0,0,.42)) drop-shadow(0 0 16px rgba(255,255,255,.10)) !important;
-}
-
-.story-scene.is-choice .starter-name {
-  color: rgba(255,255,255,.82) !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,.44) !important;
-}
-
-.story-scene.is-choice .starter-action-label {
-  display: none !important;
-}
-
-.story-scene.is-choice .starter-row.has-touch-hover .starter-card:not(.is-touch-hover) {
-  opacity: .82 !important;
-  transform: none !important;
-  filter: none !important;
-}
-
-@media (max-width: 700px) {
-  .story-body .story-scene.is-choice .professor-area {
-    min-height: 300px !important;
-  }
-
-  .story-scene.is-choice .starter-row {
-    width: min(96vw, 430px) !important;
-    gap: 6px !important;
-    margin: 0 auto !important;
-  }
-
-  .story-scene.is-choice .starter-card {
-    padding: 0 2px !important;
-    gap: 6px !important;
-  }
-
-  .story-scene.is-choice .starter-preview,
-  .story-scene.is-choice .starter-card:hover .starter-preview,
-  .story-scene.is-choice .starter-card:focus-visible .starter-preview,
-  .story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
-  .story-scene.is-choice .starter-card:active .starter-preview {
-    max-width: 30vw !important;
-    max-height: 136px !important;
-  }
-
-  .story-scene.is-choice .starter-name {
-    font-size: clamp(6px, 1.75vw, 7px) !important;
-    letter-spacing: .07em !important;
-  }
-}
-
-
 /* v169 — mobile: drop policy recadrée légèrement à gauche + tap-to-flip bien visible */
 @media (max-width: 700px) {
   body.policy-body .policy-page {
@@ -11842,175 +11729,30 @@ body.site-guide-dismissed .site-guide,
 }
 
 
-/* v171 — mobile starters: bring back Poké Ball style markers + make scroll guide clearly visible on mobile */
-.starter-ball-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: clamp(16px, 3vw, 28px);
-  margin: 8px auto 12px;
-  width: min(100%, 540px);
-}
-.starter-ball {
-  position: relative;
-  display: block;
-  width: clamp(28px, 3.2vw, 36px);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  border: 2px solid rgba(0,0,0,.88);
-  background: linear-gradient(to bottom, #d7d7d7 0 50%, #ffffff 50% 100%);
-  box-shadow: 0 5px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.9);
-}
-.starter-ball::before {
-  content: "";
-  position: absolute;
-  left: -2px;
-  right: -2px;
-  top: calc(50% - 2px);
-  height: 4px;
-  background: rgba(0,0,0,.92);
-}
-.starter-ball::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border: 2px solid rgba(0,0,0,.92);
-  box-shadow: inset 0 0 0 2px rgba(235,235,235,.9);
-}
-.starter-ball--white {
-  background: linear-gradient(to bottom, #ececec 0 50%, #ffffff 50% 100%);
-}
-.starter-ball--black {
-  background: linear-gradient(to bottom, #262626 0 50%, #f0f0f0 50% 100%);
-}
-.starter-ball--pink {
-  background: linear-gradient(to bottom, #ee9eb2 0 50%, #ffffff 50% 100%);
-}
 
+/* v176 — mobile story welcome: lower continue prompt + restore copyright at bottom */
 @media (max-width: 700px) {
-  body:not(.site-guide-dismissed) .site-guide {
-    opacity: .95 !important;
-    visibility: visible !important;
-    transform: translateX(-50%) translateY(0) !important;
-    display: block !important;
-    bottom: max(14px, env(safe-area-inset-bottom)) !important;
-    padding: 10px 15px !important;
-    border-color: rgba(87,255,122,.44) !important;
-    background: rgba(0,0,0,.76) !important;
-    color: rgba(255,255,255,.96) !important;
-    font-size: 9px !important;
-    letter-spacing: .11em !important;
-    box-shadow: 0 8px 24px rgba(0,0,0,.32) !important;
+  .story-body #welcomeScreen .buy-intro__title-copy {
+    padding-bottom: 56px !important;
   }
 
-  .story-scene.is-choice .starter-ball-row {
-    gap: 18px !important;
-    margin: 6px auto 10px !important;
-    width: 100% !important;
-  }
-  .story-scene.is-choice .starter-ball {
-    width: 30px !important;
-    border-width: 2px !important;
-    box-shadow: 0 4px 14px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.92) !important;
-  }
-  .story-scene.is-choice .starter-row {
-    margin-top: 0 !important;
-  }
-}
-
-/* v172 — mobile story polish: clearer Poké Balls above starters + welcome prompt higher */
-.story-scene.is-choice .starter-ball-row {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 18px !important;
-  margin: 2px auto 14px !important;
-  width: 100% !important;
-  transform: none !important;
-}
-.story-scene.is-choice .starter-ball {
-  position: relative !important;
-  width: 34px !important;
-  height: 34px !important;
-  border-radius: 50% !important;
-  border: 2px solid #111 !important;
-  background: linear-gradient(to bottom, #efefef 0 46%, #111 46% 54%, #ffffff 54% 100%) !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.24), inset 0 2px 0 rgba(255,255,255,.88) !important;
-}
-.story-scene.is-choice .starter-ball::before {
-  content: "" !important;
-  position: absolute !important;
-  left: -2px !important;
-  right: -2px !important;
-  top: calc(50% - 2px) !important;
-  height: 4px !important;
-  background: #111 !important;
-}
-.story-scene.is-choice .starter-ball::after {
-  content: "" !important;
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  width: 12px !important;
-  height: 12px !important;
-  transform: translate(-50%, -50%) !important;
-  border-radius: 50% !important;
-  background: #f7f7f7 !important;
-  border: 2px solid #111 !important;
-  box-shadow: inset 0 0 0 2px rgba(214,214,214,.92) !important;
-}
-.story-scene.is-choice .starter-ball--white {
-  background: linear-gradient(to bottom, #f6f6f6 0 46%, #111 46% 54%, #ffffff 54% 100%) !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.24), 0 0 14px rgba(255,255,255,.20), inset 0 2px 0 rgba(255,255,255,.92) !important;
-}
-.story-scene.is-choice .starter-ball--black {
-  background: linear-gradient(to bottom, #2b2b2b 0 46%, #111 46% 54%, #f7f7f7 54% 100%) !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.28), 0 0 14px rgba(87,255,122,.18), inset 0 1px 0 rgba(255,255,255,.22) !important;
-}
-.story-scene.is-choice .starter-ball--pink {
-  background: linear-gradient(to bottom, #ef9bb5 0 46%, #111 46% 54%, #ffffff 54% 100%) !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.24), 0 0 14px rgba(239,155,181,.28), inset 0 2px 0 rgba(255,255,255,.88) !important;
-}
-
-@media (max-width: 700px) {
-  .story-body .buy-intro__title-copy {
-    min-height: 150px !important;
-    margin-top: -20px !important;
-    padding: 2px 12px 8px !important;
-  }
-  .story-body .buy-intro__emerald-title {
-    margin-bottom: 4px !important;
-  }
-  .story-body .buy-intro__prompt--title,
-  .story-body #welcomePrompt {
-    position: relative !important;
-    top: -10px !important;
-    margin: 4px auto 0 !important;
-    font-size: 9px !important;
-    letter-spacing: .055em !important;
-  }
-  .story-body .buy-intro__copyright {
-    position: relative !important;
-    top: -8px !important;
-    margin-top: 0 !important;
+  .story-body #welcomeScreen .buy-intro__prompt--title {
+    top: 60.5% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
   }
 
-  .story-scene.is-choice .starter-ball-row {
-    gap: 14px !important;
-    margin: 0 auto 12px !important;
-  }
-  .story-scene.is-choice .starter-ball {
-    width: 30px !important;
-    height: 30px !important;
-  }
-  .story-scene.is-choice .starter-ball::after {
-    width: 11px !important;
-    height: 11px !important;
+  .story-body #welcomeScreen .buy-intro__copyright {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 14px !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    width: max-content !important;
+    max-width: calc(100vw - 28px) !important;
+    text-align: center !important;
+    z-index: 6 !important;
   }
 }
