@@ -11722,3 +11722,46 @@ body.site-guide-dismissed .site-guide,
     letter-spacing: .07em !important;
   }
 }
+
+
+/* v169 — mobile: drop policy recadrée légèrement à gauche + tap-to-flip bien visible */
+@media (max-width: 700px) {
+  body.policy-body .policy-page {
+    transform: translateX(-7px) !important;
+    width: calc(100vw + 7px) !important;
+    max-width: calc(100vw + 7px) !important;
+  }
+
+  body.policy-body .policy-page .policy-card {
+    width: calc(100vw - 18px) !important;
+    max-width: calc(100vw - 18px) !important;
+  }
+
+  .page.product-page .product-card .tap-flip-hint,
+  body.has-flipped-shirt .page.product-page .product-card .tap-flip-hint,
+  body.flip-hint-seen .page.product-page .product-card .tap-flip-hint {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: .98 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: -32px !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important;
+    max-width: 94vw !important;
+    padding: 7px 10px !important;
+    border: 1px solid rgba(87,255,122,.42) !important;
+    border-radius: 999px !important;
+    background: rgba(0,0,0,.78) !important;
+    color: rgba(255,255,255,.94) !important;
+    font: 850 clamp(6.5px, 1.9vw, 8px)/1 "Courier New", monospace !important;
+    letter-spacing: .065em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    box-shadow: 0 0 16px rgba(87,255,122,.12) !important;
+  }
+}
