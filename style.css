@@ -11765,3 +11765,78 @@ body.site-guide-dismissed .site-guide,
     box-shadow: 0 0 16px rgba(87,255,122,.12) !important;
   }
 }
+
+
+/* v170 — FORCE mobile tap-to-flip visible, even if old hint is clipped/hidden */
+@media (max-width: 700px) {
+  .page.product-page {
+    position: relative !important;
+    overflow: visible !important;
+    padding-bottom: 126px !important;
+  }
+
+  .page.product-page::after {
+    content: "TAP TO FLIP / TOUCHE POUR RETOURNER" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 92px !important;
+    transform: translateX(-50%) !important;
+    z-index: 999 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    padding: 9px 12px !important;
+    border: 1px solid rgba(87,255,122,.64) !important;
+    border-radius: 999px !important;
+    background: rgba(0,0,0,.90) !important;
+    color: #fff !important;
+    font: 950 clamp(7px, 2.15vw, 9px)/1 "Courier New", monospace !important;
+    letter-spacing: .07em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    text-shadow: 0 0 8px rgba(87,255,122,.35) !important;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.65),
+      0 0 18px rgba(87,255,122,.20),
+      0 12px 28px rgba(0,0,0,.42) !important;
+    pointer-events: none !important;
+  }
+
+  .page.product-page .product-card {
+    overflow: visible !important;
+  }
+
+  .page.product-page .product-card .tap-flip-hint,
+  body.has-flipped-shirt .page.product-page .product-card .tap-flip-hint,
+  body.flip-hint-seen .page.product-page .product-card .tap-flip-hint {
+    display: inline-flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: -44px !important;
+    transform: translateX(-50%) !important;
+    z-index: 1000 !important;
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    padding: 9px 12px !important;
+    border: 1px solid rgba(87,255,122,.64) !important;
+    border-radius: 999px !important;
+    background: rgba(0,0,0,.90) !important;
+    color: #fff !important;
+    font: 950 clamp(7px, 2.15vw, 9px)/1 "Courier New", monospace !important;
+    letter-spacing: .07em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    text-shadow: 0 0 8px rgba(87,255,122,.35) !important;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.65),
+      0 0 18px rgba(87,255,122,.20),
+      0 12px 28px rgba(0,0,0,.42) !important;
+  }
+}
