@@ -11840,3 +11840,86 @@ body.site-guide-dismissed .site-guide,
       0 12px 28px rgba(0,0,0,.42) !important;
   }
 }
+
+
+/* v171 — mobile starters: bring back Poké Ball style markers + make scroll guide clearly visible on mobile */
+.starter-ball-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(16px, 3vw, 28px);
+  margin: 8px auto 12px;
+  width: min(100%, 540px);
+}
+.starter-ball {
+  position: relative;
+  display: block;
+  width: clamp(28px, 3.2vw, 36px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,.88);
+  background: linear-gradient(to bottom, #d7d7d7 0 50%, #ffffff 50% 100%);
+  box-shadow: 0 5px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.starter-ball::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: calc(50% - 2px);
+  height: 4px;
+  background: rgba(0,0,0,.92);
+}
+.starter-ball::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 2px solid rgba(0,0,0,.92);
+  box-shadow: inset 0 0 0 2px rgba(235,235,235,.9);
+}
+.starter-ball--white {
+  background: linear-gradient(to bottom, #ececec 0 50%, #ffffff 50% 100%);
+}
+.starter-ball--black {
+  background: linear-gradient(to bottom, #262626 0 50%, #f0f0f0 50% 100%);
+}
+.starter-ball--pink {
+  background: linear-gradient(to bottom, #ee9eb2 0 50%, #ffffff 50% 100%);
+}
+
+@media (max-width: 700px) {
+  body:not(.site-guide-dismissed) .site-guide {
+    opacity: .95 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) !important;
+    display: block !important;
+    bottom: max(14px, env(safe-area-inset-bottom)) !important;
+    padding: 10px 15px !important;
+    border-color: rgba(87,255,122,.44) !important;
+    background: rgba(0,0,0,.76) !important;
+    color: rgba(255,255,255,.96) !important;
+    font-size: 9px !important;
+    letter-spacing: .11em !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.32) !important;
+  }
+
+  .story-scene.is-choice .starter-ball-row {
+    gap: 18px !important;
+    margin: 6px auto 10px !important;
+    width: 100% !important;
+  }
+  .story-scene.is-choice .starter-ball {
+    width: 30px !important;
+    border-width: 2px !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.92) !important;
+  }
+  .story-scene.is-choice .starter-row {
+    margin-top: 0 !important;
+  }
+}
