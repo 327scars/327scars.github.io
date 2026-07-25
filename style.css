@@ -11872,3 +11872,78 @@ body.site-guide-dismissed .site-guide,
     pointer-events: none !important;
   }
 }
+
+
+/* v180 — FIX: the old welcome prompt/copyright was trapped by title-copy mobile stacking.
+   This direct overlay is inside #welcomeScreen, above every decorative layer. */
+.welcome-forced-copy-v180 {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .story-body #welcomeScreen {
+    position: relative !important;
+  }
+
+  /* Hide old elements on mobile to avoid duplicates if a browser finally renders them. */
+  .story-body #welcomeScreen #welcomePrompt,
+  .story-body #welcomeScreen #welcomeSub {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .story-body #welcomeScreen .welcome-forced-copy-v180 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2147483000 !important;
+    pointer-events: none !important;
+    overflow: visible !important;
+  }
+
+  .story-body #welcomeScreen .welcome-forced-prompt-v180 {
+    position: absolute !important;
+    left: 50% !important;
+    top: 69% !important;
+    transform: translate(-50%, -50%) !important;
+    display: block !important;
+    width: min(90vw, 390px) !important;
+    max-width: calc(100vw - 34px) !important;
+    color: #ffffff !important;
+    font-family: "Press Start 2P", "Courier New", monospace !important;
+    font-size: clamp(8px, 2.35vw, 10px) !important;
+    line-height: 1.35 !important;
+    letter-spacing: .035em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: normal !important;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.95),
+      0 0 12px rgba(255,255,255,.22) !important;
+    animation: buyIntroContinueBlink 2.05s ease-in-out infinite !important;
+  }
+
+  .story-body #welcomeScreen .welcome-forced-copyright-v180 {
+    position: absolute !important;
+    left: 50% !important;
+    top: 80.5% !important;
+    transform: translate(-50%, -50%) !important;
+    display: block !important;
+    width: max-content !important;
+    max-width: calc(100vw - 44px) !important;
+    color: rgba(255,255,255,.70) !important;
+    font-family: "Press Start 2P", "Courier New", monospace !important;
+    font-size: clamp(6px, 1.75vw, 8px) !important;
+    line-height: 1.25 !important;
+    letter-spacing: .035em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.95),
+      0 0 10px rgba(255,255,255,.12) !important;
+  }
+}
