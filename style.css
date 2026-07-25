@@ -11536,3 +11536,189 @@ body.site-guide-dismissed .site-guide,
     justify-content: flex-start !important;
   }
 }
+
+
+/* v168 — mobile restore from v162: tap-to-flip, all info buttons, clean starters */
+
+/* Mobile: keep TAP TO FLIP / TOUCHE POUR RETOURNER visible on every t-shirt */
+@media (max-width: 700px) {
+  .page.product-page {
+    padding-bottom: 96px !important;
+  }
+
+  .product-card .tap-flip-hint,
+  body.has-flipped-shirt .tap-flip-hint,
+  body.flip-hint-seen .tap-flip-hint {
+    display: block !important;
+    opacity: .94 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: -31px !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important;
+    max-width: 92vw !important;
+    padding: 7px 10px !important;
+    border: 1px solid rgba(87,255,122,.36) !important;
+    border-radius: 999px !important;
+    background: rgba(0,0,0,.74) !important;
+    color: rgba(255,255,255,.92) !important;
+    font: 800 clamp(6.5px, 1.85vw, 8px)/1 "Courier New", monospace !important;
+    letter-spacing: .07em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    box-shadow: 0 0 14px rgba(87,255,122,.10) !important;
+  }
+}
+
+/* FAQ / Livraison / Politique: all bottom cases visible, smaller on mobile */
+.info-actions-v168 {
+  width: min(1120px, calc(100vw - 42px)) !important;
+  max-width: calc(100vw - 42px) !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  overflow: visible !important;
+  padding: 0 6px 2px !important;
+}
+
+.info-actions-v168 a {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+@media (max-width: 700px) {
+  .info-actions-v168 {
+    width: calc(100vw - 14px) !important;
+    max-width: calc(100vw - 14px) !important;
+    gap: 4px !important;
+    padding: 0 2px 2px !important;
+    overflow: visible !important;
+  }
+
+  .info-actions-v168 a {
+    padding: 9px 6px !important;
+    font-size: clamp(6px, 1.62vw, 7px) !important;
+    letter-spacing: .055em !important;
+    line-height: 1 !important;
+    border-radius: 999px !important;
+  }
+}
+
+/* Starter choice: cleaner again. Remove the black square / capsule visual noise. */
+.story-scene.is-choice .starter-row {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: clamp(8px, 2.4vw, 24px) !important;
+  align-items: end !important;
+}
+
+.story-scene.is-choice .starter-card {
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  padding: 0 6px !important;
+  gap: 8px !important;
+  min-height: 0 !important;
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.story-scene.is-choice .starter-card::before,
+.story-scene.is-choice .starter-card::after,
+.story-scene.is-choice .starter-card-black::before,
+.story-scene.is-choice .starter-card-black::after,
+.story-scene.is-choice .capsule,
+.story-scene.is-choice .capsule::before,
+.story-scene.is-choice .capsule::after {
+  display: none !important;
+  opacity: 0 !important;
+  content: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+.story-scene.is-choice .starter-preview,
+.story-scene.is-choice .starter-card:hover .starter-preview,
+.story-scene.is-choice .starter-card:focus-visible .starter-preview,
+.story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
+.story-scene.is-choice .starter-card:active .starter-preview {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+  filter: drop-shadow(0 14px 26px rgba(0,0,0,.34)) !important;
+  max-width: min(27vw, 210px) !important;
+  max-height: 190px !important;
+}
+
+.story-scene.is-choice .starter-card:hover,
+.story-scene.is-choice .starter-card:focus-visible,
+.story-scene.is-choice .starter-card.is-touch-hover,
+.story-scene.is-choice .starter-card:active {
+  transform: translateY(-4px) scale(1.025) !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.story-scene.is-choice .starter-card:hover .starter-preview,
+.story-scene.is-choice .starter-card:focus-visible .starter-preview,
+.story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
+.story-scene.is-choice .starter-card:active .starter-preview {
+  transform: translateY(-4px) scale(1.045) !important;
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,.42)) drop-shadow(0 0 16px rgba(255,255,255,.10)) !important;
+}
+
+.story-scene.is-choice .starter-name {
+  color: rgba(255,255,255,.82) !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,.44) !important;
+}
+
+.story-scene.is-choice .starter-action-label {
+  display: none !important;
+}
+
+.story-scene.is-choice .starter-row.has-touch-hover .starter-card:not(.is-touch-hover) {
+  opacity: .82 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+@media (max-width: 700px) {
+  .story-body .story-scene.is-choice .professor-area {
+    min-height: 300px !important;
+  }
+
+  .story-scene.is-choice .starter-row {
+    width: min(96vw, 430px) !important;
+    gap: 6px !important;
+    margin: 0 auto !important;
+  }
+
+  .story-scene.is-choice .starter-card {
+    padding: 0 2px !important;
+    gap: 6px !important;
+  }
+
+  .story-scene.is-choice .starter-preview,
+  .story-scene.is-choice .starter-card:hover .starter-preview,
+  .story-scene.is-choice .starter-card:focus-visible .starter-preview,
+  .story-scene.is-choice .starter-card.is-touch-hover .starter-preview,
+  .story-scene.is-choice .starter-card:active .starter-preview {
+    max-width: 30vw !important;
+    max-height: 136px !important;
+  }
+
+  .story-scene.is-choice .starter-name {
+    font-size: clamp(6px, 1.75vw, 7px) !important;
+    letter-spacing: .07em !important;
+  }
+}
