@@ -755,3 +755,33 @@ if (DIRECT_SHOP_ENTRY) {
     card.addEventListener('pointerdown', markCardSeen, { once: true, passive: true });
   });
 })();
+
+
+/* v136 — mobile performance controller
+   Pauses expensive shirt/starter animations when cards are offscreen or the tab is hidden. */
+(function () {
+  const mobileQuery = window.matchMedia && window.matchMedia('(max-width: 700px)');
+  if (!mobileQuery || !mobileQuery.matches) return;
+
+  const body = document.body;
+  document.addEventListener('visibilitychange', function () {
+    body.classList.toggle('tab-hidden', document.hidden);
+  }, { passive: true });
+
+  if (!('IntersectionObserver' in window)) return;
+
+  const targets = document.querySelectorAll('.product-card, .starter-card');
+  if (!targets.length) return;
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      entry.target.classList.toggle('is-offscreen', !entry.isIntersecting);
+    });
+  }, {
+    root: null,
+    threshold: 0.03,
+    rootMargin: '180px 0px'
+  });
+
+  targets.forEach(function (target) { observer.observe(target); });
+})();
