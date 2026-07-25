@@ -11764,3 +11764,45 @@ body.site-guide-dismissed .site-guide,
     z-index: 10 !important;
   }
 }
+
+/* v178 — welcome screen prompt + copyright stacked clearly */
+.story-body #welcomeScreen .buy-intro__prompt--title {
+  position: absolute !important;
+  left: 50% !important;
+  top: 70% !important;
+  bottom: auto !important;
+  right: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(90vw, 520px) !important;
+  max-width: calc(100vw - 40px) !important;
+  margin: 0 !important;
+  text-align: center !important;
+  z-index: 20 !important;
+}
+
+.story-body #welcomeScreen .buy-intro__copyright {
+  position: absolute !important;
+  left: 50% !important;
+  top: calc(70% + 42px) !important;
+  bottom: auto !important;
+  right: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: max-content !important;
+  max-width: calc(100vw - 40px) !important;
+  margin: 0 !important;
+  text-align: center !important;
+  z-index: 20 !important;
+}
+
+@media (max-width: 700px) {
+  .story-body #welcomeScreen .buy-intro__prompt--title {
+    top: 71.5% !important;
+    width: min(88vw, 360px) !important;
+    max-width: calc(100vw - 48px) !important;
+  }
+
+  .story-body #welcomeScreen .buy-intro__copyright {
+    top: calc(71.5% + 34px) !important;
+    max-width: calc(100vw - 56px) !important;
+  }
+}
