@@ -11947,3 +11947,38 @@ body.site-guide-dismissed .site-guide,
       0 0 10px rgba(255,255,255,.12) !important;
   }
 }
+
+
+/* v182 - remove visible black-box / color difference behind shirts */
+.story-scene.is-choice,
+.story-scene.is-choice .starter-row,
+.story-scene.is-choice .starter-card,
+.story-scene.is-choice .starter-card .starter-preview,
+.product-card,
+.product-card .product-front,
+.product-card .product-back,
+.product-card .product-shirt,
+.shirt-viewer,
+.shirt-viewer img {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.story-scene.is-choice {
+  background: #000 !important;
+}
+
+.story-scene.is-choice .starter-preview,
+.product-card .product-shirt,
+.shirt-viewer img {
+  image-rendering: auto !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.story-scene.is-choice .starter-card-black .starter-preview,
+.story-scene.is-choice .starter-card-black.is-selected .starter-preview,
+.story-scene.is-choice .starter-card-black:active .starter-preview,
+.story-scene.is-choice .starter-card-black.is-touch-hover .starter-preview {
+  filter: none !important;
+}
