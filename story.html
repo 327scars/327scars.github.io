@@ -381,7 +381,10 @@
       professorName.textContent = copy[lang].professor;
       dialogueSkip.textContent = copy[lang].speed;
       backShopEl.textContent = copy[lang].backShop;
-      backShopEl.href = `index.html?shop=1#black-shirt`;
+      const backItem = ["white", "black", "pink"].includes(params.get("item"))
+        ? params.get("item")
+        : "black";
+      backShopEl.href = `index.html?shop=1#${backItem}-shirt`;
       if (starterChoiceGuide) starterChoiceGuide.textContent = copy[lang].starterChoiceGuide;
       if (storyRouteGuide) storyRouteGuide.textContent = copy[lang].routeGuide;
       starterActionLabels.forEach((item) => { item.textContent = copy[lang].starterAction; });

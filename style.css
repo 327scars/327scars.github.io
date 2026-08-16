@@ -193,6 +193,8 @@ main {
   position: absolute;
   right: 4.5vw;
   bottom: 5.5vh;
+  padding-top: 18px;
+  padding-left: 10px;
   color: rgba(87, 255, 122, 0.62);
   text-decoration: none;
   font-family: "Courier New", monospace;
@@ -2622,7 +2624,7 @@ body {
 
 .viewer-mode-button {
   min-width: 92px !important;
-  min-height: 34px !important;
+  min-height: 44px !important;
   border: 1px solid rgba(255,255,255,0.32) !important;
   background: rgba(0,0,0,0.80) !important;
   color: rgba(255,255,255,0.78) !important;
@@ -8417,7 +8419,7 @@ body.archive-body {
   }
   .viewer-mode-button {
     min-width: 76px !important;
-    min-height: 32px !important;
+    min-height: 44px !important;
     font-size: 8px !important;
   }
   .shirt-viewer {
@@ -9016,7 +9018,7 @@ body.archive-body {
 /* v99 — final micro-ergonomics audit */
 :root {
   --ui-safe-x: clamp(12px, 3.2vw, 24px);
-  --ui-touch-min: 42px;
+  --ui-touch-min: 44px;
   --ui-gap-tight: 8px;
   --ui-gap: 14px;
   --ui-gap-loose: 22px;
@@ -9533,15 +9535,15 @@ body.site-guide-dismissed .site-guide,
     image-rendering: auto;
     backface-visibility: hidden;
   }
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: .001ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto !important;
-    }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -10174,7 +10176,7 @@ body.site-guide-dismissed .site-guide,
   gap: clamp(18px, 2.8vw, 42px) !important;
 }
 .site-footer-v142 a {
-  padding: 10px 2px;
+  padding: 17px 2px;
 }
 
 .simple-info-footer-v142 {
