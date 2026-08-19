@@ -8011,7 +8011,7 @@ body.archive-body {
 .product-file-page {
   display: grid !important;
   place-items: center !important;
-  padding: clamp(58px, 6vw, 86px) 4vw clamp(86px, 8vw, 118px) !important;
+  padding: clamp(120px, 13vw, 148px) 4vw clamp(86px, 8vw, 118px) !important;
 }
 
 .product-file-layout {
@@ -12186,5 +12186,40 @@ body.has-site-header .simple-lang-switch {
   body.has-site-header .product-language-switch,
   body.has-site-header .simple-lang-switch {
     top: calc(52px + 10px) !important;
+  }
+}
+
+/* 2026-08-19 — sur mobile, le sélecteur FR/EN (position:fixed, coin haut
+   droit) chevauchait le coin de la carte starter la plus à droite (rose)
+   à l'écran de choix, la ligne de starters étant en flux normal et
+   remontant assez haut sur petits écrans. La langue est déjà choisie plus
+   tôt (welcome screen) et mémorisée, donc masquer le switch juste sur cet
+   écran, juste sur mobile, n'enlève pas de fonctionnalité réelle. */
+@media (max-width: 700px) {
+  .story-scene.is-choice .language-switch {
+    display: none !important;
+  }
+}
+
+/* 2026-08-19 — product.html trop long sur mobile : retrait du sélecteur
+   FR/EN sur cette page (la langue reste choisie plus tôt et mémorisée),
+   et compactage du bloc specs (status/drop/prix/tailles en grille 2
+   colonnes, composition/livraison restent pleine largeur car leurs
+   valeurs sont plus longues). Aucune information retirée, juste
+   réorganisée pour prendre moins de hauteur. */
+body.product-file-body .product-language-switch {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .product-specs {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: 14px !important;
+    row-gap: 4px !important;
+  }
+  .product-specs div:nth-child(5),
+  .product-specs div:nth-child(6) {
+    grid-column: 1 / -1 !important;
   }
 }
