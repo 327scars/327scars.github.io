@@ -37,7 +37,46 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://scarsfitseverybody.com/#organization","name":"SCARS327","alternateName":["SCARS 327","SCARS FITS EVERYBODY"],"url":"https://scarsfitseverybody.com/","logo":{"@type":"ImageObject","url":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png","contentUrl":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"},"image":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png","sameAs":["https://www.instagram.com/327scars","https://x.com/scaaaaaaaars327"]},{"@type":"WebSite","@id":"https://scarsfitseverybody.com/#website","url":"https://scarsfitseverybody.com/","name":"SCARS327","alternateName":"SCARS 327","description":"Site officiel de SCARS327. PACHAVE PAS ! ig: @SCARS327","publisher":{"@id":"https://scarsfitseverybody.com/#organization"},"inLanguage":"fr-FR"},{"@type":"WebPage","@id":"https://scarsfitseverybody.com/drop-policy.html#webpage","url":"https://scarsfitseverybody.com/drop-policy.html","name":"SCARS327 — Drop Policy","description":"Politique de drop SCARS327 : informations sur les sorties, commandes et disponibilité.","isPartOf":{"@id":"https://scarsfitseverybody.com/#website"},"about":{"@id":"https://scarsfitseverybody.com/#organization"},"publisher":{"@id":"https://scarsfitseverybody.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"},"inLanguage":"fr-FR"},{"@type":"BreadcrumbList","@id":"https://scarsfitseverybody.com/drop-policy.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"SCARS327","item":"https://scarsfitseverybody.com/"},{"@type":"ListItem","position":2,"name":"Drop Policy","item":"https://scarsfitseverybody.com/drop-policy.html"}]}]}</script>
   <script src="tracking.js?v=182" defer></script>
 </head>
-<body class="policy-body simple-info-body lang-fr">
+<body class="policy-body simple-info-body lang-fr has-site-header">
+  <header class="site-header" aria-label="SCARS327">
+    <a href="index.html?shop=1" class="site-header__logo" aria-label="SCARS327">
+      <img src="assets/logo-scars327-neon-detoure.png" alt="SCARS327" decoding="async" loading="eager" width="220" height="60" />
+    </a>
+    <div class="site-header__actions">
+      <button type="button" class="site-header__action" id="headerCartButton" aria-label="Panier / Cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.4a2 2 0 0 0 2-1.6L21 8H6" />
+          <circle cx="10" cy="20" r="1.4" />
+          <circle cx="17" cy="20" r="1.4" />
+        </svg>
+      </button>
+      <button type="button" class="site-header__action" id="headerAccountButton" aria-label="Compte / Account">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.4" />
+          <path d="M5 20c0-3.6 3.1-6.4 7-6.4s7 2.8 7 6.4" />
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="site-header__toast" id="headerToast" role="status" aria-live="polite"></div>
+  <script>
+  (function () {
+    const toast = document.getElementById('headerToast');
+    let hideTimer = null;
+    function showToast(msg) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('is-visible');
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => toast.classList.remove('is-visible'), 2200);
+    }
+    const cartBtn = document.getElementById('headerCartButton');
+    const accountBtn = document.getElementById('headerAccountButton');
+    if (cartBtn) cartBtn.addEventListener('click', () => showToast('PANIER VIDE — DROP LOCKED / EMPTY CART'));
+    if (accountBtn) accountBtn.addEventListener('click', () => showToast('COMPTE — ACCÈS BIENTÔT / ACCOUNT SOON'));
+  })();
+  </script>
+
   <main class="policy-page">
     <a class="story-back" href="index.html?shop=1"><span data-copy-fr>← retour boutique</span><span data-copy-en>← back to shop</span></a>
 

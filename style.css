@@ -3709,7 +3709,7 @@ body {
 }
 @keyframes choiceDoorLeft327 { from { transform: translateX(0); } to { transform: translateX(-102%); } }
 @keyframes choiceDoorRight327 { from { transform: translateX(0); } to { transform: translateX(102%); } }
-@keyframes choiceStarterPop327 { from { opacity:0; transform: translateY(28px) scale(0.88);} 55% { opacity:1; transform: translateY(-8px) scale(1.04);} to { opacity:1; transform: translateY(0) scale(1);} }
+@keyframes choiceStarterPop327 { from { opacity:0; transform: translateY(28px) scale(0.88);} 55% { opacity:1; transform: translateY(-3px) scale(1.02);} to { opacity:1; transform: translateY(0) scale(1);} }
 
 @media (max-width: 720px) {
   .buy-intro__panel { width:95vw !important; min-height:min(90svh, 760px) !important; padding: 12px !important; }
@@ -4964,7 +4964,14 @@ body {
 .story-body .buy-intro__truck-stack--right { right:98px !important; width:126px !important; height:104px !important; }
 .story-body .buy-intro__truck-crate { left:50% !important; transform:translateX(-50%) !important; width:148px !important; height:94px !important; }
 .story-body .buy-intro__title-copy {
-  left:50% !important; bottom:18px !important; transform:translateX(-50%) !important;
+  /* left:50%/transform:translateX(-50%) datait de l'époque où cet élément
+     était en position:absolute (voir la définition d'origine plus haut).
+     Il est passé en position:relative sans que ce couple soit retiré, ce
+     qui cassait le centrage horizontal (2026-08-16). justify-self:center
+     est le mécanisme correct pour un enfant de largeur fixe dans la grid
+     de #welcomeScreen. bottom:18px conservé, sans lien avec l'horizontal. */
+  justify-self: center !important;
+  bottom:18px !important;
   width:min(96%, 1240px) !important;
 }
 .story-body .buy-intro__series { display:none !important; }
@@ -5298,19 +5305,19 @@ body {
 
 /* v68 fixes: same dialogue box throughout, opaque intro stage, road/parking, discreet skip */
 .story-body .buy-intro {
-  background: #05070b !important;
+  background: var(--noir-327) !important;
 }
 .story-body .buy-intro__panel--v64 {
   position: relative !important;
   overflow: hidden !important;
-  background: #05070b !important;
+  background: var(--noir-327) !important;
 }
 .story-body .buy-intro__welcome-screen,
 .story-body .buy-intro__boarding-screen,
 .story-body .buy-intro__drive-screen {
   position: relative !important;
   width: 100% !important;
-  background: #05070b !important;
+  background: var(--noir-327) !important;
   overflow: hidden !important;
 }
 .story-body .buy-intro__title-stage,
@@ -5486,7 +5493,7 @@ body {
 .story-body .buy-intro__entry-scene,
 .story-body .buy-intro__inside-scene {
   overflow: hidden !important;
-  background-color: #05070b !important;
+  background-color: var(--noir-327) !important;
 }
 
 /* same dialogue box style all along, no outside fine outline */
@@ -5587,7 +5594,7 @@ body {
 }
 
 /* boarding screen now matches same location and truck look */
-.story-body .buy-intro__boarding-screen { background: #05070b !important; }
+.story-body .buy-intro__boarding-screen { background: var(--noir-327) !important; }
 .story-body .buy-intro__entry-scene {
   min-height: 420px !important;
   background:
@@ -5683,7 +5690,7 @@ body {
 .story-body::after,
 .buy-intro__pixel-sky,
 .buy-intro__series { display: none !important; }
-.story-scene { background: #000 !important; }
+.story-scene { background: var(--noir-327) !important; }
 
 /* remove box/rounded outer contour around cinematic */
 .story-body .buy-intro,
@@ -5755,7 +5762,7 @@ body {
 .story-body .buy-intro__welcome-screen,
 .story-body .buy-intro__boarding-screen,
 .story-body .buy-intro__drive-screen {
-  background: #05070b !important;
+  background: var(--noir-327) !important;
 }
 .story-body .buy-intro__title-stage {
   position: relative !important;
@@ -6000,7 +6007,7 @@ body {
 }
 .story-body .language-switch {
   top: 4px !important;
-  right: 8px !important;
+  right: 20px !important;
   z-index: 1400 !important;
 }
 .story-body .buy-intro__skip-button {
@@ -9022,6 +9029,11 @@ body.archive-body {
   --ui-gap-tight: 8px;
   --ui-gap: 14px;
   --ui-gap-loose: 22px;
+  /* noir unique de référence : élimine l'écart entre le fond de page
+     (.story-scene, #000) et le panneau .buy-intro (welcome/boarding/drive
+     screens), qui utilisait #05070b, un noir légèrement bleuté différent.
+     Diagnostiqué le 2026-08-15, corrigé le 2026-08-16. */
+  --noir-327: #000;
 }
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
@@ -9387,6 +9399,17 @@ body.site-guide-dismissed .site-guide,
     .checkout-button {
       bottom: calc(48px + env(safe-area-inset-bottom)) !important;
     }
+  }
+}
+
+/* 2026-08-19 — reverted the 2026-08-16 top-right grouping of "passer" under
+   FR/EN: back to its own corner, bottom-right, position/top/bottom/left
+   untouched (falls back to the pre-2026-08-16 rules above). Only nudged
+   right (14px -> 22px) for a bit more breathing room from the edge, per
+   Aydan's feedback. Desktop only, mobile untouched. */
+@media (min-width: 701px) {
+  .story-body .buy-intro__skip-button {
+    right: 22px !important;
   }
 }
 
@@ -11770,7 +11793,7 @@ body.site-guide-dismissed .site-guide,
 /* v178 — welcome screen prompt + copyright stacked clearly */
 .story-body #welcomeScreen .buy-intro__prompt--title {
   position: absolute !important;
-  left: 50% !important;
+  left: 46% !important;
   top: 70% !important;
   bottom: auto !important;
   right: auto !important;
@@ -11983,4 +12006,185 @@ body.site-guide-dismissed .site-guide,
 .story-scene.is-choice .starter-card-black:active .starter-preview,
 .story-scene.is-choice .starter-card-black.is-touch-hover .starter-preview {
   filter: none !important;
+}
+
+/* ============================================================
+   2026-08-19 — Header sticky (logo, panier, compte)
+   Présent sur : index.html (une fois dans la boutique, pas pendant
+   TOUCH HERE / le login), product.html, drop-policy.html, faq.html,
+   shipping-returns.html. Absent de story.html et archive.html (écrans
+   plein écran choréographiés, un header fixe les gênerait).
+   En overlay (pas de reflow) pour ne toucher à aucune logique de scroll
+   existante, notamment sur index.html.
+   ============================================================ */
+:root {
+  --site-header-height: 60px;
+}
+
+.site-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--site-header-height);
+  z-index: 500;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(14px, 3vw, 28px);
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.has-site-header.show-intro .site-header,
+body.product-file-body.has-site-header .site-header,
+body.policy-body.has-site-header .site-header {
+  display: flex;
+}
+
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 5px 0;
+}
+
+.site-header__logo img {
+  height: 100%;
+  max-height: 44px;
+  width: auto;
+  display: block;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 18px);
+}
+
+.site-header__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.site-header__action svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.site-header__action:hover,
+.site-header__action:focus-visible {
+  color: var(--scars-neon, #57ff7a);
+  border-color: var(--scars-neon, #57ff7a);
+  background: rgba(87, 255, 122, 0.08);
+}
+
+.site-header__action-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: var(--scars-gold, #fbaf17);
+  color: #000;
+  font: 700 10px/16px "Courier New", monospace;
+  text-align: center;
+}
+
+.site-header__action {
+  position: relative;
+}
+
+/* Petit toast rétro, cohérent avec l'esthétique "ERROR 327 / DROP LOCKED"
+   déjà utilisée sur product.html, pour panier/compte tant qu'il n'y a pas
+   de vrai système derrière. */
+.site-header__toast {
+  position: fixed;
+  top: calc(var(--site-header-height) + 10px);
+  right: clamp(14px, 3vw, 28px);
+  z-index: 501;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(9, 12, 18, 0.94);
+  color: #f0f2f6;
+  font: 700 11px/1.4 "Courier New", monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  max-width: min(78vw, 280px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  pointer-events: none;
+}
+
+.site-header__toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    height: 52px;
+    padding: 0 12px;
+  }
+  .site-header__logo img {
+    max-height: 34px;
+  }
+  .site-header__action {
+    width: 40px;
+    height: 40px;
+  }
+  .site-header__action svg {
+    width: 18px;
+    height: 18px;
+  }
+  .site-header__toast {
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
+
+/* Repositionne les éléments déjà présents en haut des pages product/policy
+   pour qu'ils flottent sous le nouveau header plutôt que de le chevaucher.
+   Ne touche pas story.html/archive.html (pas de header là-bas). */
+body.has-site-header.product-file-body .story-back,
+body.has-site-header.policy-body .story-back {
+  top: calc(var(--site-header-height) + 14px) !important;
+}
+body.has-site-header .product-language-switch,
+body.has-site-header .simple-lang-switch {
+  top: calc(var(--site-header-height) + 14px) !important;
+}
+@media (max-width: 700px) {
+  body.has-site-header.product-file-body .story-back,
+  body.has-site-header.policy-body .story-back {
+    top: calc(52px + 10px) !important;
+  }
+  body.has-site-header .product-language-switch,
+  body.has-site-header .simple-lang-switch {
+    top: calc(52px + 10px) !important;
+  }
 }
