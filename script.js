@@ -257,8 +257,11 @@ function setDvdColor() {
 
 function applyDvdMotionProfile() {
   const isMobile = window.innerWidth <= 760;
-  const baseDx = isMobile ? randomBetween(0.22, 0.62) : randomBetween(0.9, 1.75);
-  const baseDy = isMobile ? randomBetween(1.1, 2.35) : randomBetween(0.78, 1.45);
+  /* Ralenti sur demande (« il va trop trop vite »), et corrige au passage
+     une incohérence : dy mobile était plus rapide que dy desktop alors que
+     le mobile doit être le plus doux des deux (petit écran, moins de recul). */
+  const baseDx = isMobile ? randomBetween(0.14, 0.34) : randomBetween(0.5, 0.95);
+  const baseDy = isMobile ? randomBetween(0.35, 0.7) : randomBetween(0.42, 0.8);
   const dirX = Math.random() < 0.5 ? -1 : 1;
   const dirY = Math.random() < 0.5 ? -1 : 1;
   dvdDx = dirX * baseDx;
@@ -341,6 +344,32 @@ function animateDvd(time) {
 function startDvdAnimation() {
   resetDvdPosition();
   dvdAnimationFrame = window.requestAnimationFrame(animateDvd);
+}
+
+/* 2026-08-19 — accroc VHS aléatoire sur TOUCH HERE, première passe.
+   Toutes les 4 à 9 secondes, un court glitch de 0,42s sur le span
+   interne (.touch-box__inner, voir style.css), jamais sur .touch-box
+   lui-même : ce dernier est repositionné en continu par le rebond DVD
+   ci-dessus via son propre style.transform, et une animation CSS sur
+   cette même propriété écraserait la position JS à chaque glitch. En
+   glitchant le span interne, l'effet suit le bouton où qu'il soit
+   rendu par le rebond, au lieu de rester figé en haut à gauche.
+   S'arrête tout seul dès que l'accès démarre, ne laisse pas de
+   minuteur actif derrière. */
+let vhsGlitchTimer = null;
+function scheduleVhsGlitch() {
+  if (accessStarted || !touchBox) return;
+  const glitchTarget = touchBox.querySelector(".touch-box__inner");
+  if (!glitchTarget) return;
+  const delay = randomBetween(4000, 9000);
+  vhsGlitchTimer = window.setTimeout(() => {
+    if (accessStarted || !touchBox) return;
+    glitchTarget.classList.add("is-vhs-glitching");
+    window.setTimeout(() => {
+      glitchTarget.classList.remove("is-vhs-glitching");
+    }, 460);
+    scheduleVhsGlitch();
+  }, delay);
 }
 
 function getPointForElement(element, xRatio = 0.5, yRatio = 0.5) {
@@ -658,10 +687,12 @@ if (DIRECT_SHOP_ENTRY) {
   window.addEventListener("load", () => {
     goToTop();
     startDvdAnimation();
+    scheduleVhsGlitch();
   });
   if (document.readyState !== "loading") {
     goToTop();
     startDvdAnimation();
+    scheduleVhsGlitch();
   }
 }
 

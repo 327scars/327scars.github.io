@@ -12387,3 +12387,134 @@ body.product-file-body .product-language-switch {
     transform: translateX(0);
   }
 }
+
+/* ============================================================
+   2026-08-19 — TOUCH HERE, un peu VHS
+   Base : scanlines permanentes très discrètes, texture "vieille
+   cassette". Par-dessus : un court accroc de tracking (déchirure,
+   split couleur rouge/cyan façon VHS) déclenché aléatoirement par
+   script.js, jamais en continu. Première passe, à affiner ensuite.
+   ============================================================ */
+.touch-box {
+  position: absolute; /* déjà vrai plus haut, redéclaré pour ancrer les pseudo-éléments */
+  overflow: hidden;
+  /* désaturation légère + contraste : couleur un peu "lessivée" comme
+     une vieille bande, sans perdre --dvd-color au point de plus le
+     reconnaître. filter n'entre pas en conflit avec le transform du
+     rebond JS (propriété différente), sans risque ici. */
+  filter: saturate(0.82) contrast(1.08) brightness(0.97);
+}
+
+.touch-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.14) 0px,
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.85;
+}
+
+/* Vignettage : coins assombris façon écran cathodique / lecture VHS. */
+.touch-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Le glitch vit sur ce span interne, jamais sur .touch-box lui-même :
+   .touch-box est repositionné en continu par script.js via son propre
+   style.transform (rebond façon DVD). Une animation CSS qui toucherait
+   "transform" sur .touch-box entrerait en conflit avec cette position
+   JS et ferait retomber le bouton en haut à gauche (0,0) à chaque
+   glitch, quel que soit l'endroit réel où il se trouvait à l'écran.
+   En gardant le glitch sur le span, la position du bouton n'est
+   jamais touchée : il glitche là où il est, partout où le rebond
+   l'a amené. */
+.touch-box__inner {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  /* frange couleur permanente et discrète, façon bande légèrement
+     désalignée sur les canaux rouge/cyan, en plus de l'accroc ponctuel */
+  text-shadow: -0.5px 0 rgba(255, 40, 70, 0.28), 0.5px 0 rgba(0, 210, 255, 0.28);
+  animation: touchBoxTrackingWobble 6.2s ease-in-out infinite;
+}
+
+/* Grain animé, façon bruit de bande. Motif de points bruités très
+   fins, position décalée rapidement en pas discrets pour un effet de
+   scintillement statique plutôt qu'un glissement fluide. */
+.touch-box__inner::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.9) 0.5px, transparent 0.6px),
+    radial-gradient(rgba(255,255,255,.7) 0.5px, transparent 0.6px);
+  background-size: 5px 5px, 7px 7px;
+  background-position: 0 0, 2px 3px;
+  opacity: 0.06;
+  mix-blend-mode: screen;
+  animation: touchBoxGrainShift 0.5s steps(4, end) infinite;
+}
+
+/* Tremblement de tracking : très lent, très discret, en continu.
+   Ne touche que le span interne, jamais .touch-box (cf. note ci-dessus). */
+@keyframes touchBoxTrackingWobble {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-0.6px); }
+  55% { transform: translateY(0.5px); }
+  80% { transform: translateY(-0.3px); }
+}
+
+/* Scintillement du grain : positions figées, changement net (steps),
+   pas de glissement fluide, pour un vrai effet de bruit de bande. */
+@keyframes touchBoxGrainShift {
+  0%   { background-position: 0 0, 2px 3px; }
+  25%  { background-position: 1px 2px, 0 1px; }
+  50%  { background-position: 3px 0, 3px 4px; }
+  75%  { background-position: 2px 4px, 1px 0; }
+  100% { background-position: 0 0, 2px 3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .touch-box__inner {
+    animation: none;
+  }
+  .touch-box__inner::before {
+    animation: none;
+  }
+}
+
+@keyframes touchBoxVhsGlitch {
+  0%   { clip-path: inset(0); transform: translateX(0); filter: none; }
+  8%   { clip-path: inset(8% 0 74% 0); transform: translateX(-5px); filter: saturate(1.5) contrast(1.2); }
+  8.5% { text-shadow: -2px 0 rgba(255, 40, 70, 0.65), 2px 0 rgba(0, 210, 255, 0.65); }
+  18%  { clip-path: inset(60% 0 4% 0); transform: translateX(4px) scaleY(1.04); }
+  27%  { clip-path: inset(0 0 82% 0); transform: translateX(-3px); text-shadow: 2px 0 rgba(255, 40, 70, 0.55), -2px 0 rgba(0, 210, 255, 0.55); }
+  36%  { clip-path: inset(35% 0 20% 0); transform: translateX(2px); }
+  45%  { clip-path: inset(0); transform: translateX(0); filter: none; text-shadow: none; }
+  100% { clip-path: inset(0); transform: translateX(0); }
+}
+
+.touch-box__inner.is-vhs-glitching {
+  animation: touchBoxVhsGlitch 0.42s steps(1, end);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .touch-box__inner.is-vhs-glitching {
+    animation: none;
+  }
+}
+
