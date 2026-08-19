@@ -507,8 +507,10 @@ function showStayOverlay() {
   if (mode === "shop") {
     playRetroLoseSound();
     runShopCountdown();
+    if (window.SCARS327Marks) window.SCARS327Marks.unlock("shop-over");
   } else {
     playWastedLikeSound();
+    if (window.SCARS327Marks) window.SCARS327Marks.unlock("wasted");
   }
 }
 
@@ -584,6 +586,8 @@ async function runAccessSequence() {
   if (accessStarted) return;
   accessStarted = true;
   const startedAt = performance.now();
+
+  if (window.SCARS327Marks) window.SCARS327Marks.unlock("touch-here");
 
   ensureAudio();
   playBeep(520, 0.045, "square", 0.016);

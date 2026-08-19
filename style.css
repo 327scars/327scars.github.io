@@ -8011,7 +8011,7 @@ body.archive-body {
 .product-file-page {
   display: grid !important;
   place-items: center !important;
-  padding: clamp(120px, 13vw, 148px) 4vw clamp(86px, 8vw, 118px) !important;
+  padding: clamp(120px, 13vw, 148px) 4vw clamp(6px, 1.5vw, 16px) !important;
 }
 
 .product-file-layout {
@@ -8418,11 +8418,11 @@ body.archive-body {
     text-align: center !important;
   }
   .viewer-mode-switch {
-    order: 1 !important;
+    order: 2 !important;
     display: flex !important;
     justify-content: center !important;
     gap: 6px !important;
-    margin-bottom: 2px !important;
+    margin-top: 2px !important;
   }
   .viewer-mode-button {
     min-width: 76px !important;
@@ -8430,7 +8430,7 @@ body.archive-body {
     font-size: 8px !important;
   }
   .shirt-viewer {
-    order: 2 !important;
+    order: 1 !important;
     width: min(92vw, 360px) !important;
     height: min(38vh, 280px) !important;
     margin: 0 auto !important;
@@ -8731,7 +8731,7 @@ body.archive-body {
     touch-action: none !important;
   }
   .product-info-panel {
-    padding: 12px 12px 14px !important;
+    padding: 12px 12px 4px !important;
     border-radius: 16px !important;
   }
   .product-file-tag {
@@ -8739,22 +8739,22 @@ body.archive-body {
   }
   .product-info-panel h1 {
     font-size: clamp(30px, 9.8vw, 42px) !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 5px !important;
   }
   .product-description {
     font-size: 10px !important;
     line-height: 1.45 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 6px !important;
   }
   .product-specs {
-    margin-bottom: 10px !important;
+    margin-bottom: 1px !important;
   }
   .checkout-button {
     position: sticky !important;
     bottom: 10px !important;
     z-index: 8 !important;
     min-height: 44px !important;
-    margin-top: 10px !important;
+    margin-top: 46px !important;
     border-radius: 14px !important;
     box-shadow: 0 10px 24px rgba(0,0,0,0.22) !important;
   }
@@ -9394,7 +9394,7 @@ body.site-guide-dismissed .site-guide,
     }
     .product-mini-footer,
     .product-policy-link {
-      bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+      bottom: calc(28px + env(safe-area-inset-bottom)) !important;
     }
     .checkout-button {
       bottom: calc(48px + env(safe-area-inset-bottom)) !important;
@@ -11793,7 +11793,7 @@ body.site-guide-dismissed .site-guide,
 /* v178 — welcome screen prompt + copyright stacked clearly */
 .story-body #welcomeScreen .buy-intro__prompt--title {
   position: absolute !important;
-  left: 46% !important;
+  left: 43% !important;
   top: 70% !important;
   bottom: auto !important;
   right: auto !important;
@@ -11807,7 +11807,7 @@ body.site-guide-dismissed .site-guide,
 
 .story-body #welcomeScreen .buy-intro__copyright {
   position: absolute !important;
-  left: 50% !important;
+  left: 47% !important;
   top: calc(70% + 42px) !important;
   bottom: auto !important;
   right: auto !important;
@@ -12221,5 +12221,169 @@ body.product-file-body .product-language-switch {
   .product-specs div:nth-child(5),
   .product-specs div:nth-child(6) {
     grid-column: 1 / -1 !important;
+  }
+}
+
+/* ============================================================
+   2026-08-19 — Notification "cicatrice gravée" (système de marques)
+   Façon notif trophée PS (glisse depuis la droite, 4 paliers) :
+     bronze  -> bronze réel
+     argent  -> blanc-gris froid (--scars-mark-argent)
+     or      -> #fbaf17, déjà la couleur "327" du site
+     platine -> #57ff7a, déjà la couleur des Archives / terminal,
+                révélé en glitch, affiché plus longtemps (marks.js)
+   Marqué par marks.js, fonctionne sur toutes les pages sans dépendre
+   du header.
+   ============================================================ */
+:root {
+  --scars-mark-bronze: #c17f45;
+  --scars-mark-argent: #d5dae2;
+  --scars-mark-or: var(--scars-gold, #fbaf17);
+  --scars-mark-platine: var(--scars-neon, #57ff7a);
+}
+
+.scars-mark-toast {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 15000;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(86vw, 360px);
+  padding: 10px 16px 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: rgba(6, 9, 14, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.5), 0 14px 34px rgba(0,0,0,.4);
+  font-family: "Courier New", monospace;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(calc(100% + 28px));
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+
+.scars-mark-toast.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scars-mark-toast--bronze { --scars-mark-accent: var(--scars-mark-bronze); }
+.scars-mark-toast--argent { --scars-mark-accent: var(--scars-mark-argent); }
+.scars-mark-toast--or { --scars-mark-accent: var(--scars-mark-or); }
+.scars-mark-toast--platine { --scars-mark-accent: var(--scars-mark-platine); }
+
+/* Badge plein façon médaille PS : la couleur du palier vit dans l'icône
+   elle-même (comme un vrai trophée bronze/argent/or/platine), pas dans
+   une bande à côté de la carte. */
+.scars-mark-toast__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--scars-mark-accent, var(--scars-mark-or)) 65%, white), var(--scars-mark-accent, var(--scars-mark-or)) 70%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.35),
+    0 0 16px color-mix(in srgb, var(--scars-mark-accent, var(--scars-mark-or)) 60%, transparent);
+}
+
+.scars-mark-toast__trophy-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #0a0a0a;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scars-mark-toast__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.scars-mark-toast__eyebrow {
+  color: var(--scars-mark-accent, var(--scars-mark-or));
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scars-mark-toast__name {
+  color: #f4f4f4;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.scars-mark-toast__desc {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+@media (max-width: 700px) {
+  .scars-mark-toast {
+    top: 10px;
+    right: 10px;
+    width: min(90vw, 320px);
+    padding: 8px 14px 8px 8px;
+    gap: 10px;
+  }
+  .scars-mark-toast__icon {
+    width: 36px;
+    height: 36px;
+  }
+  .scars-mark-toast__trophy-icon {
+    width: 17px;
+    height: 17px;
+  }
+  .scars-mark-toast__name {
+    font-size: 12px;
+  }
+}
+
+/* Palier du haut (327's Archives) : révélation en glitch au lieu du
+   simple slide, cohérent avec l'esthétique terminal déjà associée
+   aux Archives. Respecte prefers-reduced-motion (voir plus bas). */
+@keyframes scarsMarkGlitchIn {
+  0%   { opacity: 0; transform: translateX(calc(100% + 28px)) skewX(0deg); clip-path: inset(0); }
+  4%   { opacity: 1;   transform: translate(calc(100% + 6px), -3px) skewX(-11deg); clip-path: inset(0 0 72% 0); }
+  7%   { opacity: 0.15; transform: translate(18px, 4px) skewX(9deg);   clip-path: inset(52% 0 8% 0); text-shadow: -3px 0 var(--scars-mark-platine), 3px 0 #ff2d2d; }
+  10%  { opacity: 1;   transform: translate(-12px, -2px) skewX(-5deg); clip-path: inset(0 0 42% 0); }
+  13%  { opacity: 0.25; transform: translate(7px, 3px) skewX(6deg);    clip-path: inset(66% 0 0 0); text-shadow: 3px 0 var(--scars-mark-platine), -3px 0 #ff2d2d; }
+  17%  { opacity: 1;   transform: translate(-5px, 0) skewX(-3deg);     clip-path: inset(0 0 16% 0); }
+  21%  { opacity: 1;   transform: translate(4px, -1px) skewX(2deg);    clip-path: inset(22% 0 0 0); text-shadow: -2px 0 var(--scars-mark-platine), 2px 0 #ff2d2d; }
+  /* deuxième à-coup, plus bref, avant stabilisation */
+  27%  { opacity: 0.1; transform: translate(-16px, 2px) skewX(8deg);   clip-path: inset(0 0 58% 0); }
+  30%  { opacity: 1;   transform: translate(9px, 0) skewX(-4deg);      clip-path: inset(32% 0 0 0); text-shadow: 2px 0 var(--scars-mark-platine), -2px 0 #ff2d2d; }
+  34%  { transform: translate(-4px, 0) skewX(1deg); clip-path: inset(0); text-shadow: none; }
+  40%  { transform: translateX(3px); }
+  46%  { transform: translateX(-2px); }
+  52%  { transform: translateX(1px); }
+  100% { opacity: 1; transform: translateX(0); clip-path: inset(0); text-shadow: none; }
+}
+
+.scars-mark-toast--glitch {
+  transition: none;
+}
+
+.scars-mark-toast--glitch.is-visible {
+  animation: scarsMarkGlitchIn 0.85s steps(1, end) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scars-mark-toast--glitch.is-visible {
+    animation: none;
+    opacity: 1;
+    transform: translateX(0);
   }
 }
