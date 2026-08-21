@@ -35,7 +35,7 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=184" />
+  <link rel="stylesheet" href="style.css?v=191" />
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://scarsfitseverybody.com/#organization","name":"SCARS327","alternateName":["SCARS 327","SCARS FITS EVERYBODY"],"url":"https://scarsfitseverybody.com/","logo":{"@type":"ImageObject","url":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png","contentUrl":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"},"image":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png","sameAs":["https://www.instagram.com/327scars","https://x.com/scaaaaaaaars327"]},{"@type":"WebSite","@id":"https://scarsfitseverybody.com/#website","url":"https://scarsfitseverybody.com/","name":"SCARS327","alternateName":"SCARS 327","description":"Site officiel de SCARS327. PACHAVE PAS ! ig: @SCARS327","publisher":{"@id":"https://scarsfitseverybody.com/#organization"},"inLanguage":"fr-FR"},{"@type":"WebPage","@id":"https://scarsfitseverybody.com/product.html#webpage","url":"https://scarsfitseverybody.com/product.html","name":"SCARS327 — Uncased 327 T-Shirt","description":"Fiche produit officielle du Uncased 327 T-Shirt SCARS327 : détails, couleur, taille et design.","isPartOf":{"@id":"https://scarsfitseverybody.com/#website"},"about":{"@id":"https://scarsfitseverybody.com/#organization"},"publisher":{"@id":"https://scarsfitseverybody.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"},"inLanguage":"fr-FR"},{"@type":"BreadcrumbList","@id":"https://scarsfitseverybody.com/product.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"SCARS327","item":"https://scarsfitseverybody.com/"},{"@type":"ListItem","position":2,"name":"Produit","item":"https://scarsfitseverybody.com/product.html"}]},{"@type":"Product","@id":"https://scarsfitseverybody.com/product.html#uncased-327-tshirt","name":"Uncased 327 T-Shirt","brand":{"@id":"https://scarsfitseverybody.com/#organization"},"description":"T-shirt SCARS327 issu de l’univers Uncased 327.","image":["https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"],"category":"Apparel"}]}</script>
   <script src="tracking.js?v=183" defer></script>
   <script src="marks.js?v=183" defer></script>
@@ -90,41 +90,62 @@
     </div>
 
     <section class="product-file-layout">
-      <div class="viewer-wrap" aria-label="Vue 360 du produit">
-        <div class="viewer-hint" id="viewerHint">tournez-le</div>
+      <div class="viewer-column">
+        <div class="viewer-wrap" aria-label="Vue 360 du produit">
+          <div class="viewer-hint" id="viewerHint">tournez-le</div>
 
-        <div class="viewer-mode-switch" id="viewerModes">
-          <button type="button" class="viewer-mode-button is-active" data-mode="rotate">360</button>
-          <button type="button" class="viewer-mode-button" data-mode="front">face avant</button>
-          <button type="button" class="viewer-mode-button" data-mode="back">face arrière</button>
-        </div>
+          <div class="viewer-mode-switch" id="viewerModes">
+            <button type="button" class="viewer-mode-button is-active" data-mode="rotate">360</button>
+            <button type="button" class="viewer-mode-button" data-mode="front">face avant</button>
+            <button type="button" class="viewer-mode-button" data-mode="back">face arrière</button>
+          </div>
 
-        <div class="shirt-viewer" id="shirtViewer">
-          <div class="shirt-360" id="shirt360">
-            <img class="shirt-face shirt-face-front" id="viewerFront" alt="T-shirt devant" draggable="false"  decoding="async"  loading="lazy" />
-            <img class="shirt-face shirt-face-back" id="viewerBack" alt="T-shirt dos" draggable="false"  decoding="async"  loading="lazy" />
+          <div class="shirt-viewer" id="shirtViewer">
+            <div class="shirt-360" id="shirt360">
+              <img class="shirt-face shirt-face-front" id="viewerFront" alt="T-shirt devant" draggable="false"  decoding="async"  loading="lazy" />
+              <img class="shirt-face shirt-face-back" id="viewerBack" alt="T-shirt dos" draggable="false"  decoding="async"  loading="lazy" />
+            </div>
+          </div>
+
+          <div class="product-price-patch" id="productPricePatch" aria-hidden="true">
+            <span class="product-price-patch__currency" id="productPriceCurrency">€</span>
+            <span class="product-price-patch__value" id="productPriceValue">??</span>
           </div>
         </div>
+
+        <button type="button" class="product-info-trigger" id="productInfoTrigger" aria-haspopup="dialog" aria-controls="productInfoModal">
+          <span class="product-info-trigger__mark" aria-hidden="true"></span>
+          <span class="product-info-trigger__tooltip" id="productInfoTriggerLabel">informations relatives au T-shirt</span>
+        </button>
       </div>
 
-      <aside class="product-info-panel">
-        <p class="product-route-hint" id="productRouteHint">starter choisi · retourne aux starters pour changer</p>
+      <div class="product-info-panel">
         <p class="product-file-tag">UNCASED 327 T-SHIRT</p>
         <h1 id="productTitle">UNCASED 327 T-SHIRT</h1>
         <p class="product-description" id="productDescription">drop locked — access soon</p>
 
-        <dl class="product-specs" id="productSpecs"></dl>
-
         <a class="checkout-button" href="#drop-locked" id="checkoutButton">
-          AJOUTER AU PANIER / ADD TO CART
+          AJOUTER AU PANIER
         </a>
-      </aside>
+      </div>
     </section>
 
     <div class="drop-locked-modal" id="dropLockedModal" aria-hidden="true" role="status">
       <div class="drop-locked-card">
         <strong>ERROR 327</strong>
         <span>DROP LOCKED — ACCESS SOON / ACCÈS BIENTÔT</span>
+      </div>
+    </div>
+
+    <div class="product-info-modal" id="productInfoModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="productInfoModalTitle">
+      <div class="product-info-modal__backdrop" id="productInfoModalBackdrop"></div>
+      <div class="product-info-modal__card">
+        <button type="button" class="product-info-modal__close" id="productInfoModalClose" aria-label="Fermer">×</button>
+        <h2 class="product-info-modal__title" id="productInfoModalTitle">
+          <span class="product-info-trigger__mark" aria-hidden="true"></span>
+          <span id="productInfoModalTitleText">informations relatives au T-shirt</span>
+        </h2>
+        <div class="product-info-modal__body" id="productInfoModalBody"></div>
       </div>
     </div>
 
@@ -136,16 +157,23 @@
       fr: {
         hint: "tournez-le / rotate it",
         back: "← retour aux starters",
+        dropPolicy: "politique du drop",
+        footer: "SCARS 327 ©2026 · FICHE PRODUIT",
         modes: { rotate: "360", front: "face avant", back: "face arrière" },
-        checkout: "ajouter au panier / add to cart",
+        checkout: "ajouter au panier",
         route: "starter choisi · retourne aux starters pour changer",
-        specs: [
-          ["status", "drop locked"],
-          ["drop", "soon"],
-          ["prix", "à venir"],
-          ["tailles", "XS — XXL"],
-          ["composition", "coton heavyweight — détails bientôt"]
-        ],
+        currency: "€",
+        infoPanel: {
+          label: "informations relatives au T-shirt",
+          title: "informations relatives au T-shirt",
+          sections: [
+            { title: "statut", body: "drop locked — les infos finales seront déverrouillées juste avant l’ouverture du drop." },
+            { title: "drop", body: "bientôt — annonce à venir sur Instagram (@327scars) avant l’ouverture." },
+            { title: "guide des tailles", body: "S, M, L, XL." },
+            { title: "composition", body: "100% coton. Coupe regular, ni oversize ni boxy." },
+            { title: "histoire", body: "Le Uncased 327 T-shirt est la première pièce de l’univers SCARS327. « Uncased » : sans étui, sans protection, la trace laissée à nu plutôt que cachée. Trois starters, trois façons de la porter : blanc pour l’exposer, noir pour la garder, rose pour la transformer en signature." }
+          ]
+        },
         products: {
           white: {
             title: "starter blanc",
@@ -164,16 +192,23 @@
       en: {
         hint: "rotate it / tournez-le",
         back: "← back to starters",
+        dropPolicy: "drop policy",
+        footer: "SCARS 327 ©2026 · PRODUCT FILE",
         modes: { rotate: "360", front: "front", back: "back" },
-        checkout: "add to cart / ajouter au panier",
+        checkout: "add to cart",
         route: "starter chosen · back to starters to change",
-        specs: [
-          ["status", "drop locked"],
-          ["drop", "soon"],
-          ["price", "coming soon"],
-          ["sizes", "XS — XXL"],
-          ["composition", "heavyweight cotton — details soon"]
-        ],
+        currency: "£",
+        infoPanel: {
+          label: "T-shirt information",
+          title: "T-shirt information",
+          sections: [
+            { title: "status", body: "drop locked — final details unlock right before the drop opens." },
+            { title: "drop", body: "coming soon — announced on Instagram (@327scars) before it opens." },
+            { title: "size guide", body: "S, M, L, XL." },
+            { title: "composition", body: "100% cotton. Regular fit, never oversized or boxy." },
+            { title: "story", body: "The Uncased 327 T-shirt is the first piece of the SCARS327 universe. “Uncased”: no case, no protection, the mark left exposed instead of hidden. Three starters, three ways to wear it: white to expose it, black to keep it, pink to turn the scar into a signature." }
+          ]
+        },
         products: {
           white: {
             title: "white starter",
@@ -208,12 +243,19 @@
     const back = document.getElementById("viewerBack");
     const titleEl = document.getElementById("productTitle");
     const descEl = document.getElementById("productDescription");
-    const specsEl = document.getElementById("productSpecs");
+    const priceCurrencyEl = document.getElementById("productPriceCurrency");
     const hintEl = document.getElementById("viewerHint");
     const backLink = document.getElementById("backToStarters");
     const policyLink = document.getElementById("dropPolicyLink");
     const checkoutButton = document.getElementById("checkoutButton");
-    const routeHintEl = document.getElementById("productRouteHint");
+    const footerEl = document.querySelector(".product-mini-footer");
+    const infoTrigger = document.getElementById("productInfoTrigger");
+    const infoTriggerLabel = document.getElementById("productInfoTriggerLabel");
+    const infoModal = document.getElementById("productInfoModal");
+    const infoModalBackdrop = document.getElementById("productInfoModalBackdrop");
+    const infoModalClose = document.getElementById("productInfoModalClose");
+    const infoModalTitleText = document.getElementById("productInfoModalTitleText");
+    const infoModalBody = document.getElementById("productInfoModalBody");
     const modeButtons = document.querySelectorAll(".viewer-mode-button");
     const langButtons = document.querySelectorAll(".lang-button");
     const productHintSeenKey = "scars327_product_hint_seen";
@@ -229,12 +271,27 @@
       return next;
     }
 
+    /* 2026-08-22 — ergonomie du 360 revue en profondeur, retour "horrible,
+       tourne trop vite dans tous les sens". Ancienne logique : delta de
+       souris/doigt appliqué presque tel quel à l'angle, arrêt net au
+       relâchement. Résultat twitchy, surtout sur un geste rapide.
+       Nouvelle logique : sensibilité nettement réduite, vitesse lissée
+       (moyenne mobile) pendant le drag, et inertie qui ralentit
+       progressivement au lieu de s'arrêter net au relâchement, comme un
+       vrai objet qu'on lance et qui perd de la vitesse par friction. */
     let dragging = false;
+    let coasting = false;
     let rafRotateQueued = false;
     let startX = 0;
     let startY = 0;
     let startAngle = 0;
     let angle = 0;
+    let velocity = 0;
+    let lastDragAngle = 0;
+    const DRAG_SENSITIVITY = 0.16;
+    const COAST_FRICTION = 0.93;
+    const COAST_MIN_VELOCITY = 0.015;
+    const AUTOPLAY_SPEED = 0.008;
     const isMobileProduct = window.matchMedia('(max-width: 700px)').matches;
 
     function setAngle(nextAngle) {
@@ -244,19 +301,30 @@
 
     function renderCopy() {
       localStorage.setItem("scars327_lang", lang);
+      document.documentElement.lang = lang;
       const langPack = copy[lang];
       const product = langPack.products[item];
 
       titleEl.textContent = product.title;
-      descEl.textContent = product.description;
+      if (descEl) descEl.textContent = product.description;
       hintEl.textContent = langPack.hint;
       backLink.textContent = langPack.back;
       backLink.href = `story.html?phase=choice&lang=${lang}&item=${item}`;
       checkoutButton.textContent = langPack.checkout;
-      if (routeHintEl) routeHintEl.textContent = langPack.route;
-      if (policyLink) policyLink.href = `drop-policy.html?item=${item}&lang=${lang}`;
+      if (policyLink) {
+        policyLink.textContent = langPack.dropPolicy;
+        policyLink.href = `drop-policy.html?item=${item}&lang=${lang}`;
+      }
+      if (footerEl) footerEl.textContent = langPack.footer;
+      if (priceCurrencyEl) priceCurrencyEl.textContent = langPack.currency;
 
-      specsEl.innerHTML = langPack.specs.map(([key, value]) => `<div><dt>${key}</dt><dd>${value}</dd></div>`).join("");
+      if (infoTriggerLabel) infoTriggerLabel.textContent = langPack.infoPanel.label;
+      if (infoModalTitleText) infoModalTitleText.textContent = langPack.infoPanel.title;
+      if (infoModalBody) {
+        infoModalBody.innerHTML = langPack.infoPanel.sections
+          .map((section) => `<div class="product-info-modal__section"><h3>${section.title}</h3><p>${section.body}</p></div>`)
+          .join("");
+      }
 
       modeButtons.forEach((button) => {
         button.classList.toggle("is-active", button.dataset.mode === mode);
@@ -297,9 +365,12 @@
       try { localStorage.setItem(productHintSeenKey, "1"); } catch (e) {}
       if (mode !== "rotate") return;
       dragging = true;
+      coasting = false;
+      velocity = 0;
       startX = event.clientX;
       startY = event.clientY;
       startAngle = angle;
+      lastDragAngle = angle;
       viewer.setPointerCapture(event.pointerId);
       viewer.classList.add("is-dragging");
       event.preventDefault();
@@ -308,10 +379,16 @@
     viewer.addEventListener("pointermove", (event) => {
       if (!dragging || mode !== "rotate") return;
       const delta = event.clientX - startX;
-      const nextAngle = startAngle + delta * 0.52;
+      const nextAngle = startAngle + delta * DRAG_SENSITIVITY;
       if (!rafRotateQueued) {
         rafRotateQueued = true;
         requestAnimationFrame(() => {
+          /* Vitesse lissée plutôt que le delta brut d'une seule frame :
+             évite qu'un mouvement irrégulier (souris saccadée, doigt qui
+             glisse) ne se traduise par une rotation qui saute. */
+          const frameVelocity = normalize(nextAngle - lastDragAngle + 180) - 180;
+          velocity = velocity * 0.75 + frameVelocity * 0.25;
+          lastDragAngle = nextAngle;
           setAngle(nextAngle);
           rafRotateQueued = false;
         });
@@ -322,7 +399,12 @@
     });
 
     function stopDragging() {
+      if (!dragging) return;
       dragging = false;
+      /* Après relâchement, l'objet continue sur sa lancée puis ralentit
+         progressivement (friction) au lieu de s'arrêter net : c'est ce
+         qui donne l'impression de contrôle plutôt que de vitesse subie. */
+      coasting = Math.abs(velocity) > COAST_MIN_VELOCITY;
       viewer.classList.remove("is-dragging");
     }
 
@@ -331,8 +413,18 @@
     viewer.addEventListener("dragstart", (event) => event.preventDefault());
 
     function tick() {
-      if (!isMobileProduct && mode === "rotate" && !dragging) {
-        setAngle(angle + 0.028);
+      if (dragging) {
+        // rien : la position est pilotée par pointermove pendant le drag
+      } else if (coasting) {
+        velocity *= COAST_FRICTION;
+        if (Math.abs(velocity) < COAST_MIN_VELOCITY) {
+          velocity = 0;
+          coasting = false;
+        } else {
+          setAngle(angle + velocity);
+        }
+      } else if (!isMobileProduct && mode === "rotate") {
+        setAngle(angle + AUTOPLAY_SPEED);
       }
       requestAnimationFrame(tick);
     }
@@ -371,6 +463,26 @@
         dropModal.classList.remove("is-visible");
         dropModal.setAttribute("aria-hidden", "true");
       }, 1800);
+    });
+
+    function openInfoModal() {
+      if (!infoModal) return;
+      infoModal.classList.add("is-visible");
+      infoModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeInfoModal() {
+      if (!infoModal) return;
+      infoModal.classList.remove("is-visible");
+      infoModal.setAttribute("aria-hidden", "true");
+      if (infoTrigger) infoTrigger.focus();
+    }
+
+    if (infoTrigger) infoTrigger.addEventListener("click", openInfoModal);
+    if (infoModalClose) infoModalClose.addEventListener("click", closeInfoModal);
+    if (infoModalBackdrop) infoModalBackdrop.addEventListener("click", closeInfoModal);
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && infoModal && infoModal.classList.contains("is-visible")) closeInfoModal();
     });
 
     renderCopy();

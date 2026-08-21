@@ -12048,12 +12048,12 @@ body.policy-body.has-site-header .site-header {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 5px 0;
+  padding: 1px 0;
 }
 
 .site-header__logo img {
   height: 100%;
-  max-height: 44px;
+  max-height: 58px;
   width: auto;
   display: block;
 }
@@ -12150,7 +12150,7 @@ body.policy-body.has-site-header .site-header {
     padding: 0 12px;
   }
   .site-header__logo img {
-    max-height: 34px;
+    max-height: 50px;
   }
   .site-header__action {
     width: 40px;
@@ -12201,15 +12201,12 @@ body.has-site-header .simple-lang-switch {
   }
 }
 
-/* 2026-08-19 — product.html trop long sur mobile : retrait du sélecteur
-   FR/EN sur cette page (la langue reste choisie plus tôt et mémorisée),
-   et compactage du bloc specs (status/drop/prix/tailles en grille 2
-   colonnes, composition/livraison restent pleine largeur car leurs
-   valeurs sont plus longues). Aucune information retirée, juste
-   réorganisée pour prendre moins de hauteur. */
-body.product-file-body .product-language-switch {
-  display: none !important;
-}
+/* 2026-08-22 — le sélecteur FR/EN de product.html avait été masqué le
+   19 août (règle non scopée mobile malgré le commentaire d'époque,
+   invisible aussi sur desktop). Remis, à la demande d'Aydan : le
+   décalage sous le header (repère --site-header-height plus haut) et
+   les recalages mobiles déjà présents plus haut dans le fichier
+   s'appliquent normalement, il n'y a rien de plus à faire ici. */
 
 @media (max-width: 700px) {
   .product-specs {
@@ -12515,6 +12512,410 @@ body.product-file-body .product-language-switch {
 @media (prefers-reduced-motion: reduce) {
   .touch-box__inner.is-vhs-glitching {
     animation: none;
+  }
+}
+
+/* ============================================================
+   2026-08-21 — Volume sur le viewer 360 du t-shirt
+   Le viewer tournait déjà en vraie 3D CSS (perspective + rotateY, voir
+   .shirt-viewer/.shirt-360 plus haut dans le fichier), mais avec deux
+   photos parfaitement plates : à l'approche de 90°, le t-shirt
+   s'aplatissait jusqu'à quasiment disparaître, sans aucune impression
+   de volume. Pas de nouvel asset 3D nécessaire : un ombrage dynamique
+   assombrit chaque face au fur et à mesure qu'elle s'éloigne de face
+   (comme une lumière qui glisse sur un tissu qui tourne), et l'ombre
+   portée du bloc entier se déplace avec la rotation, pour suggérer un
+   objet solide plutôt qu'une carte plate. --rotation est la même
+   variable CSS déjà pilotée en JS pour la rotation elle-même (voir
+   product.html, setAngle()), rien à changer côté JS pour ce point.
+   sin()/abs() : fonctions trigonométriques CSS, support navigateurs
+   modernes uniquement (2023+), cohérent avec le reste du site.
+   !important nécessaire pour gagner sur le filter non-important déjà
+   présent sur .shirt-face plus haut dans le fichier (contrast(1.04)
+   seul) — la version pink du dos garde son propre traitement (glow),
+   plus spécifique, donc pas affectée par cette règle générale.
+   CORRECTIF 2026-08-22 : l'ombre portée était posée sur .shirt-360,
+   l'élément qui porte transform-style:preserve-3d. Un filter sur ce
+   même élément force un nouveau contexte d'empilement et fait passer
+   preserve-3d à flat dans la plupart des moteurs : la face arrière
+   (rotateY(180deg) + backface-visibility:hidden) ne se distinguait
+   plus correctement de la face avant, elle semblait avoir disparu.
+   L'ombre est déplacée sur .shirt-viewer (le conteneur de la
+   perspective, qui n'a pas preserve-3d lui-même), le contexte 3D de
+   .shirt-360 reste donc intact. */
+.shirt-face {
+  filter: contrast(1.04) brightness(calc(1 - 0.32 * abs(sin(var(--rotation, 0deg))))) !important;
+}
+
+.shirt-viewer {
+  filter: drop-shadow(calc(sin(var(--rotation, 0deg)) * 14px) 20px 22px rgba(0, 0, 0, 0.4)) !important;
+}
+
+/* ============================================================
+   2026-08-22 — bouton d'infos produit (marque S) + panneau détaillé
+   La fiche produit ne garde que le prix visible directement. Statut,
+   drop, tailles et composition passent dans un panneau dédié, ouvert
+   via un petit rond qui reprend le S du logo SCARS327 (recadré depuis
+   assets/logo-scars327-neon-detoure.png puis recoloré en blanc pur,
+   voir assets/scars-s-mark-white.png — pas le rouge néon du logo,
+   demande explicite d'Aydan).
+   ============================================================ */
+/* 2026-08-22 — revu : fond noir plein (pas quasi transparent), et le
+   texte "informations relatives au T-shirt" n'est plus affiché en
+   permanence dans une pastille. Sur desktop il n'apparaît qu'au survol
+   (infobulle), sur mobile il reste affiché mais en petit à côté du S,
+   pas de hover fiable au tactile. */
+.product-info-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-info-trigger:hover,
+.product-info-trigger:focus-visible {
+  border-color: var(--scars-gold, #fbaf17);
+  box-shadow: 0 0 0 3px rgba(251, 175, 23, 0.14);
+}
+
+.product-info-trigger__mark {
+  width: 58%;
+  height: 58%;
+  background: url("assets/scars-s-mark-white.png") center / contain no-repeat;
+}
+
+.product-info-modal__title .product-info-trigger__mark {
+  width: 30px;
+  height: 30px;
+  border-color: rgba(251, 175, 23, 0.5);
+}
+
+.product-info-trigger__tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: 220px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(8, 10, 18, 0.95);
+  color: rgba(255, 255, 255, 0.86);
+  font: 700 9px/1.4 "Courier New", monospace;
+  letter-spacing: 0.03em;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
+}
+
+@media (min-width: 701px) {
+  .product-info-trigger:hover .product-info-trigger__tooltip,
+  .product-info-trigger:focus-visible .product-info-trigger__tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .product-info-trigger {
+    width: auto;
+    height: auto;
+    gap: 6px;
+    padding: 5px 10px 5px 5px;
+    border-radius: 999px;
+  }
+  .product-info-trigger__mark {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+  }
+  .product-info-trigger__tooltip {
+    position: static;
+    display: inline-block;
+    max-width: none;
+    padding: 0;
+    border: none;
+    background: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 9px;
+    letter-spacing: 0.02em;
+  }
+}
+
+.product-info-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.product-info-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.product-info-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.product-info-modal__card {
+  position: relative;
+  width: min(94vw, 620px);
+  max-height: min(84vh, 720px);
+  overflow-y: auto;
+  padding: 30px 26px 26px;
+  border: 2px solid var(--scars-gold, #fbaf17);
+  background: #050505;
+  box-shadow: 0 0 0 4px #000, 0 0 34px rgba(251, 175, 23, 0.18);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.product-info-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.product-info-modal__close:hover,
+.product-info-modal__close:focus-visible {
+  color: var(--scars-gold, #fbaf17);
+  border-color: var(--scars-gold, #fbaf17);
+}
+
+.product-info-modal__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 34px 20px 0;
+  color: var(--scars-gold, #fbaf17);
+  font: 700 13px/1.3 "Courier New", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-info-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-info-modal__section h3 {
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.94);
+  font: 700 10px/1.4 "Courier New", monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product-info-modal__section p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font: 400 12px/1.65 "Courier New", monospace;
+  letter-spacing: 0.01em;
+}
+
+.product-info-modal__section + .product-info-modal__section {
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 700px) {
+  .product-info-modal__card {
+    padding: 26px 18px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-info-modal {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   2026-08-22 — refonte de la mise en page de la fiche produit (v3)
+   Le S posé en position absolue sur .viewer-wrap tombait mal (entre
+   les boutons et le t-shirt sur mobile, difficile à recaler proprement
+   sur deux dispositions différentes). Remplacé par une approche plus
+   robuste : .viewer-column regroupe .viewer-wrap et le bouton S l'un
+   au-dessus de l'autre, dans le flux normal, avec un petit espace
+   entre les deux (gap ci-dessous) — "rapproché du t-shirt" vient de
+   là, pas d'un calage en pixels approximatif. Ce même bloc devient
+   soit la colonne de gauche (desktop), soit s'empile normalement au
+   milieu de la page (mobile), sans rien recalculer en absolu.
+   Mobile : une colonne centrée (t-shirt, boutons 360 au-dessus, S
+   juste en dessous, puis titre + description + bouton), pas de
+   panneau encadré.
+   Desktop (>700px) : 2 colonnes, t-shirt en grand à gauche (avec le S
+   sous lui), titre + description + bouton à droite. La grille 2
+   colonnes d'origine reste définie plus haut dans le fichier (beaucoup
+   de media queries la redéclarent) ; plutôt que de traquer chaque
+   déclaration une par une sur un fichier de cette taille, ce bloc la
+   neutralise proprement avec !important, en fin de fichier donc
+   prioritaire par l'ordre des règles à spécificité égale. */
+.product-file-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 26px !important;
+  width: min(640px, 92vw) !important;
+  margin: 0 auto !important;
+}
+
+.viewer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.product-info-panel {
+  width: 100% !important;
+  max-width: 480px !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.product-info-panel h1 {
+  margin-bottom: 0 !important;
+}
+
+.checkout-button {
+  width: auto !important;
+  min-width: 230px;
+}
+
+@media (min-width: 701px) {
+  .product-file-layout {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(30px, 5vw, 70px) !important;
+    width: min(1200px, 94vw) !important;
+  }
+  .viewer-column {
+    flex: 1 1 62% !important;
+    gap: 18px;
+  }
+  .shirt-viewer {
+    width: min(42vw, 680px) !important;
+    height: min(78vh, 720px) !important;
+  }
+  .product-info-panel {
+    flex: 0 1 34% !important;
+    max-width: 360px !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* Patch prix façon vieux autocollant de prix (étoile crantée). Inspiré
+   des deux visuels fournis (starburst blanc/bleu "99¢", étoile
+   rouge/jaune "$55.99"), transposé dans la palette SCARS327 (noir/or,
+   pas jaune/rouge générique). Traitement typographique poussé façon
+   pub papier 90s : devise et prix en gros, en capitales, côte à côte.
+   Forme : polygone à 14 pointes en clip-path, aucune image nécessaire.
+   Coin haut-gauche du visuel, comme un vrai autocollant de prix collé
+   sur l'emballage plutôt que centré sur le produit. */
+.product-price-patch {
+  position: absolute;
+  top: 4%;
+  left: 2%;
+  z-index: 4;
+  width: min(15vw, 116px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: radial-gradient(circle at 38% 32%, #3a2608 0%, #120b02 72%);
+  clip-path: polygon(50.0% 0.0%, 58.5% 13.0%, 71.7% 5.0%, 73.7% 20.3%, 89.1% 18.8%, 84.2% 33.5%, 98.7% 38.9%, 88.0% 50.0%, 98.7% 61.1%, 84.2% 66.5%, 89.1% 81.2%, 73.7% 79.7%, 71.7% 95.0%, 58.5% 87.0%, 50.0% 100.0%, 41.5% 87.0%, 28.3% 95.0%, 26.3% 79.7%, 10.9% 81.2%, 15.8% 66.5%, 1.3% 61.1%, 12.0% 50.0%, 1.3% 38.9%, 15.8% 33.5%, 10.9% 18.8%, 26.3% 20.3%, 28.3% 5.0%, 41.5% 13.0%);
+  transform: rotate(-8deg);
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+}
+
+.product-price-patch__value,
+.product-price-patch__currency {
+  color: var(--scars-gold, #fbaf17);
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.product-price-patch__value {
+  font-size: clamp(19px, 3vw, 27px);
+}
+
+.product-price-patch__currency {
+  font-size: clamp(16px, 2.5vw, 22px);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(251, 175, 23, 0.5);
+}
+
+@media (max-width: 700px) {
+  .product-price-patch {
+    width: min(21vw, 88px);
+    top: 2%;
+    left: 2%;
+  }
+  .product-price-patch__value {
+    font-size: clamp(14px, 4.4vw, 19px);
+  }
+  .product-price-patch__currency {
+    font-size: clamp(12px, 3.6vw, 16px);
+  }
+  .checkout-button {
+    min-width: 200px;
+  }
+  /* "Enlève la case" sur mobile : plus de fond/bordure autour de
+     l'icône + texte, juste le rond du S et le petit texte à nu. */
+  .product-info-trigger {
+    border: none;
+    background: none;
   }
 }
 

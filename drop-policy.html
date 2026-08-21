@@ -33,7 +33,7 @@
   <link rel="preload" as="image" href="assets/black-shirt-back-v55.png" />
   <link rel="preload" as="image" href="assets/white-shirt-front-v55.png" />
   <link rel="preload" as="image" href="assets/pink-shirt-front-v55.png" />
-  <link rel="stylesheet" href="style.css?v=184" />
+  <link rel="stylesheet" href="style.css?v=191" />
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://scarsfitseverybody.com/#organization","name":"SCARS327","alternateName":["SCARS 327","SCARS FITS EVERYBODY"],"url":"https://scarsfitseverybody.com/","logo":{"@type":"ImageObject","url":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png","contentUrl":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"},"image":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png","sameAs":["https://www.instagram.com/327scars","https://x.com/scaaaaaaaars327"]},{"@type":"WebSite","@id":"https://scarsfitseverybody.com/#website","url":"https://scarsfitseverybody.com/","name":"SCARS327","alternateName":"SCARS 327","description":"Site officiel de SCARS327. PACHAVE PAS ! ig: @SCARS327","publisher":{"@id":"https://scarsfitseverybody.com/#organization"},"inLanguage":"fr-FR"},{"@type":"WebPage","@id":"https://scarsfitseverybody.com/drop-policy.html#webpage","url":"https://scarsfitseverybody.com/drop-policy.html","name":"SCARS327 — Drop Policy","description":"Politique de drop SCARS327 : informations sur les sorties, commandes et disponibilité.","isPartOf":{"@id":"https://scarsfitseverybody.com/#website"},"about":{"@id":"https://scarsfitseverybody.com/#organization"},"publisher":{"@id":"https://scarsfitseverybody.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://scarsfitseverybody.com/assets/scars327-google-preview-v136.png"},"inLanguage":"fr-FR"},{"@type":"BreadcrumbList","@id":"https://scarsfitseverybody.com/drop-policy.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"SCARS327","item":"https://scarsfitseverybody.com/"},{"@type":"ListItem","position":2,"name":"Drop Policy","item":"https://scarsfitseverybody.com/drop-policy.html"}]}]}</script>
   <script src="tracking.js?v=183" defer></script>
   <script src="marks.js?v=183" defer></script>
@@ -79,7 +79,7 @@
   </script>
 
   <main class="policy-page">
-    <a class="story-back" href="index.html?shop=1"><span data-copy-fr>← retour boutique</span><span data-copy-en>← back to shop</span></a>
+    <a class="story-back" id="storyBack" href="index.html?shop=1"><span data-copy-fr>← retour boutique</span><span data-copy-en>← back to shop</span></a>
 
     <div class="language-switch simple-lang-switch" aria-label="Choisir la langue">
       <button class="lang-button is-active" type="button" data-simple-lang="fr">🇫🇷 FR</button>
@@ -120,6 +120,23 @@
 
   <script>
     (function () {
+      const params = new URLSearchParams(window.location.search);
+      const validItems = ['white', 'black', 'pink'];
+      const item = params.get('item');
+      const backLink = document.getElementById('storyBack');
+
+      /* Si on arrive ici depuis la fiche d'un starter (product.html transmet
+         toujours item+lang, voir product.html renderCopy()/policyLink), le
+         retour doit pointer vers ce starter précis plutôt que la boutique
+         en général. Sans item dans l'URL (arrivée directe, depuis le menu du
+         bas d'une autre page info, etc.), le lien garde son comportement
+         d'origine vers la boutique. */
+      if (backLink && item && validItems.indexOf(item) !== -1) {
+        const backLang = params.get('lang') === 'en' ? 'en' : 'fr';
+        backLink.href = `product.html?item=${item}&lang=${backLang}`;
+        backLink.innerHTML = '<span data-copy-fr>← revenir au starter choisi</span><span data-copy-en>← back to your chosen starter</span>';
+      }
+
       const buttons = document.querySelectorAll('[data-simple-lang]');
       const body = document.body;
       function setLang(lang) {
@@ -131,8 +148,18 @@
         try { localStorage.setItem('scars327-info-lang', next); } catch (e) {}
       }
       buttons.forEach((button) => button.addEventListener('click', () => setLang(button.dataset.simpleLang)));
+
+      /* La langue transmise dans l'URL (product.html/story.html) prime sur
+         celle mémorisée localement, pour rester cohérente avec la langue
+         déjà choisie plus tôt dans le parcours plutôt que de repartir sur
+         le dernier réglage propre à cette page. */
       let saved = 'fr';
-      try { saved = localStorage.getItem('scars327-info-lang') || 'fr'; } catch (e) {}
+      const urlLang = params.get('lang');
+      if (urlLang === 'en' || urlLang === 'fr') {
+        saved = urlLang;
+      } else {
+        try { saved = localStorage.getItem('scars327-info-lang') || 'fr'; } catch (e) {}
+      }
       setLang(saved);
     })();
   </script>
