@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* 2026-08-29 — écriture au stylo pour le prix du patch (voir plus bas,
+   .product-price-patch__value/__currency) : "comme si c'était quelqu'un
+   de vrai qui a écrit, au stylo", pas une typo imprimée. */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12565,6 +12569,20 @@ body.has-site-header .simple-lang-switch {
    permanence dans une pastille. Sur desktop il n'apparaît qu'au survol
    (infobulle), sur mobile il reste affiché mais en petit à côté du S,
    pas de hover fiable au tactile. */
+/* 2026-08-28 — deux déclencheurs séparés, même taille, côte à côte : le
+   S (infos générales) et un rond avec le t-shirt (tailles/mensurations).
+   Deux "cases" distinctes, jamais mélangées dans le même panneau. */
+.product-info-trigger-row {
+  display: flex;
+  gap: 10px;
+}
+
+@media (min-width: 701px) {
+  .product-info-trigger-row {
+    margin-top: -20px;
+  }
+}
+
 .product-info-trigger {
   position: relative;
   display: inline-flex;
@@ -12590,6 +12608,15 @@ body.has-site-header .simple-lang-switch {
   width: 58%;
   height: 58%;
   background: url("assets/scars-s-mark-white.png") center / contain no-repeat;
+}
+
+/* 2026-08-28 — icône reprise directement de la photo fournie par Aydan
+   (fond détouré au rembg, ombrage naturel du tissu conservé), pas le
+   contour plat du schéma technique. */
+.product-info-trigger__mark--size {
+  width: 68%;
+  height: 68%;
+  background-image: url("assets/scars-tshirt-icon-white.png");
 }
 
 .product-info-modal__title .product-info-trigger__mark {
@@ -12629,31 +12656,19 @@ body.has-site-header .simple-lang-switch {
 }
 
 @media (max-width: 700px) {
+  /* 2026-08-28 — plus de texte à côté du S sur mobile, juste l'icône
+     seule (demande explicite : "enlève informations relatives au
+     T-shirt et à côté de celui-ci"). */
   .product-info-trigger {
-    width: auto;
-    height: auto;
-    gap: 6px;
-    padding: 5px 10px 5px 5px;
-    border-radius: 999px;
+    width: 30px;
+    height: 30px;
   }
   .product-info-trigger__mark {
-    width: 16px;
-    height: 16px;
-    flex: 0 0 auto;
+    width: 58%;
+    height: 58%;
   }
   .product-info-trigger__tooltip {
-    position: static;
-    display: inline-block;
-    max-width: none;
-    padding: 0;
-    border: none;
-    background: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 9px;
-    letter-spacing: 0.02em;
+    display: none;
   }
 }
 
@@ -12694,6 +12709,16 @@ body.has-site-header .simple-lang-switch {
   background: #050505;
   box-shadow: 0 0 0 4px #000, 0 0 34px rgba(251, 175, 23, 0.18);
   color: rgba(255, 255, 255, 0.86);
+}
+
+/* 2026-08-29 — sur desktop, la carte a plus de place à prendre : moins
+   contrainte par la largeur mobile (620px max), ça aère surtout le
+   tableau de conversion (10 colonnes) qui scrollait plus que
+   nécessaire sur un grand écran. */
+@media (min-width: 701px) {
+  .product-info-modal__card {
+    width: min(80vw, 860px);
+  }
 }
 
 .product-info-modal__close {
@@ -12756,7 +12781,12 @@ body.has-site-header .simple-lang-switch {
 }
 
 @media (max-width: 700px) {
+  /* 2026-08-29 — sur mobile, 94vw + le padding de 24px du calque
+     extérieur (.product-info-modal) dépassaient la largeur réellement
+     disponible : la carte touchait quasiment les bords plutôt que de
+     rester nettement centrée avec de l'air autour. */
   .product-info-modal__card {
+    width: min(86vw, 620px);
     padding: 26px 18px 20px;
   }
 }
@@ -12852,61 +12882,69 @@ body.has-site-header .simple-lang-switch {
   }
 }
 
-/* Patch prix façon vieux autocollant de prix (étoile crantée). Inspiré
-   des deux visuels fournis (starburst blanc/bleu "99¢", étoile
-   rouge/jaune "$55.99"), transposé dans la palette SCARS327 (noir/or,
-   pas jaune/rouge générique). Traitement typographique poussé façon
-   pub papier 90s : devise et prix en gros, en capitales, côte à côte.
-   Forme : polygone à 14 pointes en clip-path, aucune image nécessaire.
-   Coin haut-gauche du visuel, comme un vrai autocollant de prix collé
-   sur l'emballage plutôt que centré sur le produit. */
+/* 2026-08-28 — patch prix façon étiquette de pistolet à prix vintage,
+   d'après le visuel fourni par Aydan : petite étiquette blanc cassé,
+   deux bandes rouges horizontales, encoches semi-circulaires sur les
+   bords gauche et droit (comme détachée d'un rouleau d'étiquettes).
+   Forme en SVG + masque (les encoches sont un vrai trou transparent,
+   pas une astuce de couleur de fond) plutôt qu'en clip-path : plus
+   simple à obtenir avec des bords arrondis précis. Positionné juste à
+   droite du t-shirt, sous la manche droite, identique mobile/desktop
+   (demande explicite). Prix superposé en HTML par-dessus le SVG. */
 .product-price-patch {
   position: absolute;
-  top: 4%;
-  left: 2%;
+  top: calc(24% + 210px);
+  right: calc(-1% - 60px);
   z-index: 4;
-  width: min(15vw, 116px);
-  aspect-ratio: 1;
+  width: min(19vw, 132px);
+  transform: rotate(-4deg);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5)) saturate(0.88) contrast(1.05);
+}
+
+.product-price-patch__shape {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.product-price-patch__price {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  background: radial-gradient(circle at 38% 32%, #3a2608 0%, #120b02 72%);
-  clip-path: polygon(50.0% 0.0%, 58.5% 13.0%, 71.7% 5.0%, 73.7% 20.3%, 89.1% 18.8%, 84.2% 33.5%, 98.7% 38.9%, 88.0% 50.0%, 98.7% 61.1%, 84.2% 66.5%, 89.1% 81.2%, 73.7% 79.7%, 71.7% 95.0%, 58.5% 87.0%, 50.0% 100.0%, 41.5% 87.0%, 28.3% 95.0%, 26.3% 79.7%, 10.9% 81.2%, 15.8% 66.5%, 1.3% 61.1%, 12.0% 50.0%, 1.3% 38.9%, 15.8% 33.5%, 10.9% 18.8%, 26.3% 20.3%, 28.3% 5.0%, 41.5% 13.0%);
-  transform: rotate(-8deg);
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+  gap: 3px;
 }
 
+/* Écrit au stylo plutôt qu'imprimé : police manuscrite (Caveat), pas
+   verticale ni alignée au pixel près comme une vraie note à la main,
+   légère rotation différente sur chaque mot pour casser la symétrie
+   trop propre d'une police tapée. */
 .product-price-patch__value,
 .product-price-patch__currency {
-  color: var(--scars-gold, #fbaf17);
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  color: #17223a;
+  font-family: "Caveat", "Segoe Script", cursive;
+  font-weight: 700;
   line-height: 0.85;
   letter-spacing: 0.01em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .product-price-patch__value {
-  font-size: clamp(19px, 3vw, 27px);
+  font-size: clamp(24px, 4.4vw, 34px);
+  transform: rotate(-4deg);
 }
 
 .product-price-patch__currency {
-  font-size: clamp(16px, 2.5vw, 22px);
-  color: #fff;
-  text-shadow: 0 0 10px rgba(251, 175, 23, 0.5);
+  font-size: clamp(19px, 3.4vw, 27px);
+  transform: rotate(3deg) translateY(-2px);
 }
 
 @media (max-width: 700px) {
   .product-price-patch {
-    width: min(21vw, 88px);
-    top: 2%;
-    left: 2%;
-  }
-  .product-price-patch__value {
-    font-size: clamp(14px, 4.4vw, 19px);
-  }
-  .product-price-patch__currency {
-    font-size: clamp(12px, 3.6vw, 16px);
+    width: min(26vw, 108px);
+    top: calc(22% + 100px);
+    right: -1%;
   }
   .checkout-button {
     min-width: 200px;
@@ -12916,6 +12954,271 @@ body.has-site-header .simple-lang-switch {
   .product-info-trigger {
     border: none;
     background: none;
+  }
+}
+
+/* ============================================================
+   2026-08-28 — fiche de mesures façon marque premium, dans le panneau S
+   Remplace le précédent schéma avant/arrière + liste par une structure
+   plus proche de la référence fournie par Aydan (onglets, schéma coté
+   avec appels de mesure, sélecteur de taille, bascule cm/inch). Les 4
+   mesures reprises restent celles du document maître SCARS327 (section
+   tolérances de production) : longueur du corps, poitrine, épaules,
+   manches. Toutes les valeurs affichent "?" quel que soit la taille ou
+   l'unité sélectionnée : les vraies mesures ne sont pas encore
+   confirmées, seule l'interaction (choisir une taille, une unité) est
+   déjà en place pour ne pas avoir à refaire cette partie plus tard.
+   Pas de section "mensurations du mannequin" comme sur la référence :
+   il n'existe pas encore de photo produit avec un mannequin réel. */
+.product-info-modal__diagram {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-info-modal__tabs {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.product-info-modal__tabs button {
+  padding: 0;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.4);
+  font: 700 9px/1.3 "Courier New", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-info-modal__tabs button.is-active {
+  color: var(--scars-gold, #fbaf17);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.product-info-modal__panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+/* 2026-08-29 — bug trouvé : cette règle écrasait l'attribut HTML
+   "hidden" du panneau masqué (display:flex gagnait sur le
+   display:none par défaut du navigateur pour [hidden]), donc les deux
+   onglets "mesures du produit" et "tableau de conversion" restaient
+   visibles en même temps, superposés. D'où l'impression d'infos qui
+   se marchent dessus alors que la bascule d'onglet fonctionnait déjà
+   correctement côté JS (classes is-active, etc.) — seul l'affichage
+   réel du panneau caché était en cause. */
+.product-info-modal__panel[hidden] {
+  display: none;
+}
+
+.product-info-modal__silhouette-wrap {
+  position: relative;
+  flex: 1 1 220px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Schéma repris directement de la photo fournie par Aydan (extrait,
+   fond blanc rendu transparent, recoloré en blanc), pas un dessin
+   refait à la main : voir assets/scars-size-diagram.png. Les cotes
+   d'origine de la photo (19", 7.5", 21.25", 24.75" — les mesures d'une
+   autre référence, pas les nôtres) ont été effacées à l'extraction,
+   seul le tracé du vêtement a été gardé. */
+.product-info-modal__silhouette-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 2026-08-28 — épuré : les noms de mesure (épaules/manche/poitrine/
+   longueur) ne sont plus affichés en toutes lettres sur le schéma, ils
+   se marchaient dessus et rendaient l'onglet "mesures du produit"
+   confus. Remplacés par de simples petits traits directement sur le
+   vêtement, discrets. Les noms + valeurs complets vivent désormais
+   uniquement dans l'onglet "tableau de conversion des tailles". */
+.product-info-modal__tick {
+  position: absolute;
+  background: rgba(251, 175, 23, 0.55);
+  border-radius: 1px;
+}
+
+.product-info-modal__tick--shoulders {
+  top: 5%;
+  left: 30%;
+  width: 40%;
+  height: 2px;
+}
+
+.product-info-modal__tick--sleeve {
+  top: 22%;
+  left: 6%;
+  width: 2px;
+  height: 15%;
+  transform: rotate(38deg);
+}
+
+.product-info-modal__tick--chest {
+  top: 42%;
+  left: 18%;
+  width: 64%;
+  height: 2px;
+}
+
+.product-info-modal__tick--length {
+  top: 42%;
+  right: 7%;
+  width: 2px;
+  height: 52%;
+}
+
+.product-info-modal__size-panel {
+  flex: 1 1 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-info-modal__size-label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font: 700 9px/1.3 "Courier New", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.product-info-modal__pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.product-info-modal__pill-row button {
+  min-width: 34px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: none;
+  color: rgba(255, 255, 255, 0.6);
+  font: 700 10px/1 "Courier New", monospace;
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+
+.product-info-modal__pill-row button.is-active {
+  border-color: var(--scars-gold, #fbaf17);
+  background: rgba(251, 175, 23, 0.12);
+  color: var(--scars-gold, #fbaf17);
+}
+
+/* Note secondaire, moins importante : pleine largeur sous le schéma ET
+   le panneau taille (plus dans .size-panel), un peu plus basse,
+   discrète (petite, opacité réduite) sans être cachée. */
+.product-info-modal__size-note {
+  flex-basis: 100%;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.32);
+  font: 400 9px/1.5 "Courier New", monospace;
+}
+
+/* 2026-08-28 — tableau repris à l'identique de la référence fournie
+   (9 colonnes de tailles XXS à XXXXL, 6 lignes de correspondances
+   internationales) : trop large pour la largeur de la modale sur
+   mobile comme sur desktop, défilement horizontal dédié plutôt que de
+   comprimer le texte jusqu'à l'illisible. */
+.product-info-modal__table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.product-info-modal__conversion-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+.product-info-modal__conversion-table th,
+.product-info-modal__conversion-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: center;
+  white-space: nowrap;
+  font: 700 10px/1.3 "Courier New", monospace;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.product-info-modal__conversion-table th {
+  color: var(--scars-gold, #fbaf17);
+  text-transform: uppercase;
+  font-size: 9px;
+}
+
+.product-info-modal__conversion-table tbody th {
+  text-align: left;
+}
+
+.product-info-modal__conversion-table thead th {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.product-info-modal__conversion-table tfoot td {
+  padding-top: 14px;
+  border-bottom: none;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.4);
+  font: 400 9px/1.5 "Courier New", monospace;
+  text-transform: none;
+}
+
+@media (max-width: 700px) {
+  .product-info-modal__silhouette-wrap {
+    max-width: 190px;
+  }
+}
+
+/* ============================================================
+   2026-08-29 — ajustements desktop : modales encore agrandies, patch
+   et icônes repositionnés, copyright + politique du drop alignés sur
+   la même ligne. .product-mini-footer était en flux normal sur
+   desktop (dizaines de déclarations historiques, toutes scopées
+   mobile uniquement) alors que .product-policy-link est en fixed
+   depuis le début (voir règle de base plus haut dans le fichier) :
+   les deux ne pouvaient donc jamais partager la même ligne. Fixé ici,
+   même "bottom" que .product-policy-link, ancré à gauche plutôt qu'à
+   droite pour que chacun ait son côté.
+   ============================================================ */
+@media (min-width: 701px) {
+  .product-info-modal__card {
+    width: min(88vw, 1040px) !important;
+  }
+
+  .product-price-patch {
+    top: calc(24% + 235px) !important;
+  }
+
+  .product-info-trigger--size,
+  #productInfoTrigger {
+    margin-top: -40px;
+  }
+
+  .product-mini-footer {
+    position: fixed !important;
+    left: max(18px, 2.4vw) !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: max(14px, 2vh) !important;
+    padding: 0 !important;
+    background: none !important;
+    z-index: 1200;
   }
 }
 
