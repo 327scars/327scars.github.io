@@ -12858,6 +12858,15 @@ body.has-site-header .simple-lang-switch {
   min-width: 230px;
 }
 
+/* 2026-08-29 — copie desktop des boutons 360/face avant/face arrière
+   (voir product.html, juste après #checkoutButton) : masquée par défaut,
+   affichée seulement à partir de 701px, en même temps que l'originale du
+   viewer-column est masquée à cette largeur. Sur mobile rien ne change,
+   seule l'originale reste visible. */
+.viewer-mode-switch--panel {
+  display: none !important;
+}
+
 @media (min-width: 701px) {
   .product-file-layout {
     flex-direction: row !important;
@@ -12879,6 +12888,13 @@ body.has-site-header .simple-lang-switch {
     max-width: 360px !important;
     text-align: left !important;
     align-items: flex-start !important;
+  }
+  #viewerModes {
+    display: none !important;
+  }
+  .viewer-mode-switch--panel {
+    display: flex !important;
+    margin-top: 4px !important;
   }
 }
 
@@ -12916,34 +12932,41 @@ body.has-site-header .simple-lang-switch {
   gap: 3px;
 }
 
-/* Écrit au stylo plutôt qu'imprimé : police manuscrite (Caveat), pas
-   verticale ni alignée au pixel près comme une vraie note à la main,
-   légère rotation différente sur chaque mot pour casser la symétrie
-   trop propre d'une police tapée. */
+/* Règle défensive : si [hidden] est un jour remis sur cet overlay, il ne
+   doit pas rester affiché malgré le display:flex ci-dessus (même bug que
+   sur les panneaux de la modale). */
+.product-price-patch__price[hidden] {
+  display: none;
+}
+
+/* 2026-08-29 — reprend la typo du "$5599" d'origine du patch starburst
+   (gras, noir, condensé façon affiche/promo) au lieu de la police
+   manuscrite utilisée sur l'ancien patch price-gun. Même angle sur les
+   deux éléments (pas de rotation indépendante) pour qu'ils restent
+   alignés entre eux. */
 .product-price-patch__value,
 .product-price-patch__currency {
-  color: #17223a;
-  font-family: "Caveat", "Segoe Script", cursive;
+  color: #111;
+  font-family: Impact, "Arial Narrow Bold", "Haettenschweiler", "Franklin Gothic Bold", sans-serif;
   font-weight: 700;
   line-height: 0.85;
   letter-spacing: 0.01em;
   text-transform: none;
+  transform: skewX(-6deg);
 }
 
 .product-price-patch__value {
-  font-size: clamp(24px, 4.4vw, 34px);
-  transform: rotate(-4deg);
+  font-size: clamp(26px, 4.8vw, 38px);
 }
 
 .product-price-patch__currency {
   font-size: clamp(19px, 3.4vw, 27px);
-  transform: rotate(3deg) translateY(-2px);
 }
 
 @media (max-width: 700px) {
   .product-price-patch {
     width: min(26vw, 108px);
-    top: calc(22% + 100px);
+    top: calc(22% + 90px);
     right: -1%;
   }
   .checkout-button {
