@@ -9401,7 +9401,10 @@ body.site-guide-dismissed .site-guide,
       bottom: calc(28px + env(safe-area-inset-bottom)) !important;
     }
     .checkout-button {
-      bottom: calc(48px + env(safe-area-inset-bottom)) !important;
+      /* 2026-08-29 — "réduis le blanc entre copyright/politique du drop
+         et ajouter au panier" : 48px laissait ~20px d'écart avec le
+         footer/policy-link juste en dessous (à bottom:28px). Réduit. */
+      bottom: calc(24px + env(safe-area-inset-bottom)) !important;
     }
   }
 }
@@ -12243,18 +12246,22 @@ body.has-site-header .simple-lang-switch {
   --scars-mark-platine: var(--scars-neon, #57ff7a);
 }
 
+/* 2026-08-29 — "même notif que les trophées PS Vita" : repris comme
+   format (barre fine centrée qui tombe du tout haut de l'écran, pas une
+   carte qui glisse depuis le coin), pas comme asset copié. */
 .scars-mark-toast {
   position: fixed;
-  top: 14px;
-  right: 14px;
+  top: 0;
+  left: 50%;
   z-index: 15000;
   display: flex;
   align-items: center;
-  gap: 14px;
-  width: min(86vw, 360px);
-  padding: 10px 16px 10px 10px;
+  gap: 12px;
+  width: min(92vw, 420px);
+  padding: 8px 18px 8px 8px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
   background: rgba(6, 9, 14, 0.94);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -12262,13 +12269,13 @@ body.has-site-header .simple-lang-switch {
   font-family: "Courier New", monospace;
   pointer-events: none;
   opacity: 0;
-  transform: translateX(calc(100% + 28px));
+  transform: translate(-50%, -100%);
   transition: opacity 0.32s ease, transform 0.32s ease;
 }
 
 .scars-mark-toast.is-visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate(-50%, 0);
 }
 
 .scars-mark-toast--bronze { --scars-mark-accent: var(--scars-mark-bronze); }
@@ -12276,27 +12283,44 @@ body.has-site-header .simple-lang-switch {
 .scars-mark-toast--or { --scars-mark-accent: var(--scars-mark-or); }
 .scars-mark-toast--platine { --scars-mark-accent: var(--scars-mark-platine); }
 
-/* Badge plein façon médaille PS : la couleur du palier vit dans l'icône
+/* Badge plein façon médaille : la couleur du palier vit dans l'icône
    elle-même (comme un vrai trophée bronze/argent/or/platine), pas dans
-   une bande à côté de la carte. */
+   une bande à côté de la carte. Relief plus métallique (double reflet +
+   anneau creusé) pour se rapprocher d'une vraie médaille embossée
+   plutôt qu'un rond plat de couleur. */
 .scars-mark-toast__icon {
+  position: relative;
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--scars-mark-accent, var(--scars-mark-or)) 65%, white), var(--scars-mark-accent, var(--scars-mark-or)) 70%);
+    radial-gradient(circle at 32% 26%, color-mix(in srgb, var(--scars-mark-accent, var(--scars-mark-or)) 70%, white), var(--scars-mark-accent, var(--scars-mark-or)) 55%, color-mix(in srgb, var(--scars-mark-accent, var(--scars-mark-or)) 70%, black) 100%);
   box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(0,0,0,.4),
+    inset 0 -3px 5px rgba(0,0,0,.35),
+    inset 0 2px 3px rgba(255,255,255,.4),
     0 0 16px color-mix(in srgb, var(--scars-mark-accent, var(--scars-mark-or)) 60%, transparent);
 }
 
+/* Reflet diagonal fixe (pas d'animation ici, juste le relief) */
+.scars-mark-toast__icon::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(115deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 30%);
+  pointer-events: none;
+}
+
 .scars-mark-toast__trophy-icon {
-  width: 20px;
-  height: 20px;
-  fill: none;
+  position: relative;
+  z-index: 1;
+  width: 19px;
+  height: 19px;
+  fill: rgba(0,0,0,.18);
   stroke: #0a0a0a;
   stroke-width: 1.8;
   stroke-linecap: round;
@@ -12333,19 +12357,18 @@ body.has-site-header .simple-lang-switch {
 
 @media (max-width: 700px) {
   .scars-mark-toast {
-    top: 10px;
-    right: 10px;
-    width: min(90vw, 320px);
-    padding: 8px 14px 8px 8px;
-    gap: 10px;
+    top: 0;
+    width: min(94vw, 340px);
+    padding: 7px 14px 7px 7px;
+    gap: 9px;
   }
   .scars-mark-toast__icon {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
   .scars-mark-toast__trophy-icon {
-    width: 17px;
-    height: 17px;
+    width: 15px;
+    height: 15px;
   }
   .scars-mark-toast__name {
     font-size: 12px;
@@ -12354,23 +12377,26 @@ body.has-site-header .simple-lang-switch {
 
 /* Palier du haut (327's Archives) : révélation en glitch au lieu du
    simple slide, cohérent avec l'esthétique terminal déjà associée
-   aux Archives. Respecte prefers-reduced-motion (voir plus bas). */
+   aux Archives. Respecte prefers-reduced-motion (voir plus bas).
+   2026-08-29 — adapté à la nouvelle direction (tombe du haut, centré)
+   au lieu de glisser depuis la droite : mêmes à-coups/skew/RVB-split,
+   juste réorientés sur l'axe vertical. */
 @keyframes scarsMarkGlitchIn {
-  0%   { opacity: 0; transform: translateX(calc(100% + 28px)) skewX(0deg); clip-path: inset(0); }
-  4%   { opacity: 1;   transform: translate(calc(100% + 6px), -3px) skewX(-11deg); clip-path: inset(0 0 72% 0); }
-  7%   { opacity: 0.15; transform: translate(18px, 4px) skewX(9deg);   clip-path: inset(52% 0 8% 0); text-shadow: -3px 0 var(--scars-mark-platine), 3px 0 #ff2d2d; }
-  10%  { opacity: 1;   transform: translate(-12px, -2px) skewX(-5deg); clip-path: inset(0 0 42% 0); }
-  13%  { opacity: 0.25; transform: translate(7px, 3px) skewX(6deg);    clip-path: inset(66% 0 0 0); text-shadow: 3px 0 var(--scars-mark-platine), -3px 0 #ff2d2d; }
-  17%  { opacity: 1;   transform: translate(-5px, 0) skewX(-3deg);     clip-path: inset(0 0 16% 0); }
-  21%  { opacity: 1;   transform: translate(4px, -1px) skewX(2deg);    clip-path: inset(22% 0 0 0); text-shadow: -2px 0 var(--scars-mark-platine), 2px 0 #ff2d2d; }
+  0%   { opacity: 0; transform: translate(-50%, -100%) skewX(0deg); clip-path: inset(0); }
+  4%   { opacity: 1;   transform: translate(calc(-50% + 6px), -70%) skewX(-11deg); clip-path: inset(0 0 72% 0); }
+  7%   { opacity: 0.15; transform: translate(calc(-50% - 10px), -18%) skewX(9deg);   clip-path: inset(52% 0 8% 0); text-shadow: -3px 0 var(--scars-mark-platine), 3px 0 #ff2d2d; }
+  10%  { opacity: 1;   transform: translate(calc(-50% + 8px), -6%) skewX(-5deg); clip-path: inset(0 0 42% 0); }
+  13%  { opacity: 0.25; transform: translate(calc(-50% - 5px), 3%) skewX(6deg);    clip-path: inset(66% 0 0 0); text-shadow: 3px 0 var(--scars-mark-platine), -3px 0 #ff2d2d; }
+  17%  { opacity: 1;   transform: translate(calc(-50% + 3px), 0) skewX(-3deg);     clip-path: inset(0 0 16% 0); }
+  21%  { opacity: 1;   transform: translate(calc(-50% - 3px), 0) skewX(2deg);    clip-path: inset(22% 0 0 0); text-shadow: -2px 0 var(--scars-mark-platine), 2px 0 #ff2d2d; }
   /* deuxième à-coup, plus bref, avant stabilisation */
-  27%  { opacity: 0.1; transform: translate(-16px, 2px) skewX(8deg);   clip-path: inset(0 0 58% 0); }
-  30%  { opacity: 1;   transform: translate(9px, 0) skewX(-4deg);      clip-path: inset(32% 0 0 0); text-shadow: 2px 0 var(--scars-mark-platine), -2px 0 #ff2d2d; }
-  34%  { transform: translate(-4px, 0) skewX(1deg); clip-path: inset(0); text-shadow: none; }
-  40%  { transform: translateX(3px); }
-  46%  { transform: translateX(-2px); }
-  52%  { transform: translateX(1px); }
-  100% { opacity: 1; transform: translateX(0); clip-path: inset(0); text-shadow: none; }
+  27%  { opacity: 0.1; transform: translate(calc(-50% + 12px), 0) skewX(8deg);   clip-path: inset(0 0 58% 0); }
+  30%  { opacity: 1;   transform: translate(calc(-50% - 6px), 0) skewX(-4deg);      clip-path: inset(32% 0 0 0); text-shadow: 2px 0 var(--scars-mark-platine), -2px 0 #ff2d2d; }
+  34%  { transform: translate(calc(-50% + 3px), 0) skewX(1deg); clip-path: inset(0); text-shadow: none; }
+  40%  { transform: translate(-50%, 3px); }
+  46%  { transform: translate(-50%, -2px); }
+  52%  { transform: translate(-50%, 1px); }
+  100% { opacity: 1; transform: translate(-50%, 0); clip-path: inset(0); text-shadow: none; }
 }
 
 .scars-mark-toast--glitch {
@@ -12385,7 +12411,7 @@ body.has-site-header .simple-lang-switch {
   .scars-mark-toast--glitch.is-visible {
     animation: none;
     opacity: 1;
-    transform: translateX(0);
+    transform: translate(-50%, 0);
   }
 }
 
@@ -12825,6 +12851,18 @@ body.has-site-header .simple-lang-switch {
   gap: 26px !important;
   width: min(640px, 92vw) !important;
   margin: 0 auto !important;
+}
+
+/* 2026-08-29 — "descends tous les éléments de quelques pixels" sur
+   mobile, hors drapeaux FR/EN, retour aux starters, copyright et
+   politique du drop : ces quatre-là sont hors de .product-file-layout
+   (siblings dans .product-file-page), donc un simple margin-top ici
+   déplace tout le reste (boutons 360, t-shirt, patch de prix, icônes
+   S/mensurations, titre, description, bouton panier) sans y toucher. */
+@media (max-width: 700px) {
+  .product-file-layout {
+    margin-top: 50px !important;
+  }
 }
 
 .viewer-column {

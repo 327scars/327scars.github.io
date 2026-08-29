@@ -150,6 +150,36 @@
   }
 
   let audioCtx = null;
+
+  /* 2026-08-29 — "même bruit que les trophées PS Vita" : impossible de
+     reprendre le sample de Sony (propriété de Sony, hors de question de
+     le voler pour un site de marque), donc on pousse la synthèse maison
+     vers la même sensation plutôt que la même mélodie : un vrai timbre
+     de cloche/carillon (fondamentale + partiels harmoniques, comme une
+     vraie cloche) plutôt que les notes courtes et sèches d'avant, avec
+     une traîne qui sonne au lieu de s'arrêter net. */
+  function playBellNote(now, freq, start, dur, vol) {
+    const partials = [
+      { mult: 1, type: "triangle", gain: 1 },
+      { mult: 2.42, type: "sine", gain: 0.3 },
+      { mult: 3.8, type: "sine", gain: 0.13 }
+    ];
+    partials.forEach((p) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = p.type;
+      osc.frequency.setValueAtTime(freq * p.mult, now + start);
+      const peak = vol * p.gain;
+      gain.gain.setValueAtTime(0.0001, now + start);
+      gain.gain.exponentialRampToValueAtTime(peak, now + start + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + start);
+      osc.stop(now + start + dur + 0.03);
+    });
+  }
+
   function playMarkSound(isGlitch) {
     try {
       const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -157,23 +187,38 @@
       if (!audioCtx) audioCtx = new Ctx();
       if (audioCtx.state === "suspended") audioCtx.resume();
       const now = audioCtx.currentTime;
-      const notes = isGlitch
-        ? [[220, 0, 0.04, 0.05], [640, 0.03, 0.03, 0.045], [180, 0.06, 0.05, 0.05],
-           [900, 0.1, 0.04, 0.04], [720, 0.16, 0.09, 0.05], [980, 0.24, 0.09, 0.045], [1280, 0.33, 0.15, 0.045]]
-        : [[720, 0, 0.07, 0.05], [980, 0.07, 0.09, 0.045], [1280, 0.16, 0.13, 0.04]];
-      notes.forEach(([freq, start, dur, vol]) => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = isGlitch ? "square" : "triangle";
-        osc.frequency.setValueAtTime(freq, now + start);
-        gain.gain.setValueAtTime(0.0001, now + start);
-        gain.gain.exponentialRampToValueAtTime(vol, now + start + 0.012);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now + start);
-        osc.stop(now + start + dur + 0.02);
-      });
+
+      if (isGlitch) {
+        /* Palier Archives : garde le glitch existant tel quel, propre à
+           cette révélation-là, pas concerné par le carillon ci-dessous. */
+        const notes = [[220, 0, 0.04, 0.05], [640, 0.03, 0.03, 0.045], [180, 0.06, 0.05, 0.05],
+           [900, 0.1, 0.04, 0.04], [720, 0.16, 0.09, 0.05], [980, 0.24, 0.09, 0.045], [1280, 0.33, 0.15, 0.045]];
+        notes.forEach(([freq, start, dur, vol]) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(freq, now + start);
+          gain.gain.setValueAtTime(0.0001, now + start);
+          gain.gain.exponentialRampToValueAtTime(vol, now + start + 0.012);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + start);
+          osc.stop(now + start + dur + 0.02);
+        });
+        return;
+      }
+
+      // carillon ascendant à 4 notes, traîne longue qui se superpose
+      // (comme une vraie cloche qu'on laisse sonner) au lieu de notes
+      // courtes qui se coupent.
+      const bellNotes = [
+        [660, 0, 0.42, 0.05],
+        [880, 0.09, 0.5, 0.046],
+        [1100, 0.19, 0.6, 0.043],
+        [1320, 0.3, 0.75, 0.04]
+      ];
+      bellNotes.forEach(([freq, start, dur, vol]) => playBellNote(now, freq, start, dur, vol));
     } catch (e) {
       /* pas d'audio dispo, silencieux */
     }
